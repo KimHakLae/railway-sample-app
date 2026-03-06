@@ -1,12 +1,25 @@
-# Railway Sample App
+# Node.js Backend Template
 
-## Install
+Express + TypeScript + Prisma backend starter template.
+
+## Stack
+
+- Node.js 20
+- TypeScript
+- Express
+- Prisma ORM
+- SQLite (default)
+
+## Setup
+
 npm install
+npx prisma generate
+npx prisma db push
+npm run dev
 
-## Run locally
-npm start
+## API
 
-## Deploy
-1. Push to GitHub
-2. Deploy on Railway
-3. Add DATABASE_URL in Variables
+GET /notes  
+POST /notes  
+GET /notes/:id  
+DELETE /notes/:id

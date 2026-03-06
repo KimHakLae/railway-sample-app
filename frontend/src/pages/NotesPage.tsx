@@ -5,7 +5,7 @@ export default function Notes() {
   const token = localStorage.getItem("token")
 
   const fetchNotes = async () => {
-    const res = await fetch("http://localhost:3000/notes", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/notes`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -8,16 +8,18 @@ datasource db {
 }
 
 model Note {
-  id        Int      @id @default(autoincrement())
+  note_id   Int      @default(autoincrement())
+  user_id   Int
   title     String
   content   String?
   createdAt DateTime @default(now())
 
+  @@id([note_id, user_id])
   @@map("notes")
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  user_id   Int      @id @default(autoincrement())
   email     String   @unique
   password  String
   createdAt DateTime @default(now())

@@ -1,23 +1,24 @@
-import prisma from "../lib/prisma";
+import prisma from "../lib/prisma"
 
-export const getAllNotes = async () => {
-  return prisma.note.findMany();
-};
+export const getUserNotes = async (user_id: number) => {
+  return prisma.note.findMany({
+    where: { user_id },
+    orderBy: { createdAt: "desc" }
+  })
+}
 
-export const getNoteById = async (id: number) => {
-  return prisma.note.findUnique({
-    where: { id }
-  });
-};
-
-export const createNote = async (title: string, content?: string) => {
+export const createNote = async (
+  user_id: number,
+  title: string,
+  content?: string
+) => {
   return prisma.note.create({
-    data: { title, content }
-  });
-};
+    data: { user_id, title, content }
+  })
+}
 
-export const deleteNote = async (id: number) => {
+export const deleteNote = async (id: number, user_id: number) => {
   return prisma.note.delete({
-    where: { id }
-  });
-};
+    where: { id },
+  })
+}

@@ -1,17 +1,11 @@
-import { Router } from "express";
-import { authMiddleware } from "../middlewares/authMiddleware";
-import {
-  getNotes,
-  getNote,
-  createNote,
-  deleteNote
-} from "../controllers/notesController";
+import { Router } from "express"
+import * as controller from "../controllers/notesController"
+import { authMiddleware } from "../middlewares/authMiddleware"
 
-const router = Router();
+const router = Router()
 
-router.get("/", authMiddleware, getNotes);
-router.get("/:id", authMiddleware, getNote);
-router.post("/", authMiddleware, createNote);
-router.delete("/:id", authMiddleware, deleteNote);
+router.get("/", authMiddleware, controller.getNotes)
+router.post("/", authMiddleware, controller.createNoteHandler)
+router.delete("/:id", authMiddleware, controller.deleteNoteHandler)
 
-export default router;
+export default router

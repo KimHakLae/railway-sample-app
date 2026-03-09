@@ -1,36 +1,103 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import NoteCard from "../components/NoteCard"
+import NewNoteForm from "../components/NewNoteForm"
 
-export default function Notes() {
-  const [notes, setNotes] = useState<any[]>([])
+interface Note {
+  id: number
+  title: string
+  content?: string
+}
+
+export default function NotesPage() {
+  const navigate = useNavigate()
+  const [notes, setNotes] = useState<Note[]>([])
+  const [loading, setLoading] = useState(true)
+
   const token = localStorage.getItem("token")
 
   const fetchNotes = async () => {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/notes`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    setLoading(true)
 
-    const data = await res.json()
-    setNotes(data)
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/notes`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      // ✅ HTTP 에러 체크
+      if (!res.ok) {
+        throw new Error("API Error")
+      }
+
+      const data = await res.json()
+
+      // ✅ 빈 배열은 정상 상태
+      setNotes(Array.isArray(data) ? data : [])
+
+    } catch (e) {
+      alert("서버 연결 실패 😥")
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
     fetchNotes()
   }, [])
 
-  return (
-    <div className="mx-auto max-w-xl p-6">
-      <h1 className="mb-6 text-2xl font-bold">My Notes</h1>
+  const handleDelete = async (id: number) => {
+    if (!confirm("삭제할까요?")) return
 
-      <div className="space-y-3">
-        {notes.map((note) => (
-          <div
+    await fetch(`${import.meta.env.VITE_API_URL}/notes/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    setNotes(notes.filter(n => n.id !== id))
+  }
+
+  const handleCreated = (note: Note) => {
+    setNotes([note, ...notes])
+  }
+
+  const handleLogout = () => {
+    if (!confirm("로그아웃 하시겠습니까?")) return
+    localStorage.removeItem("token")
+    navigate("/")
+  }
+
+  return (
+    <div className="max-w-3xl mx-auto p-6">
+      {/* 헤더 */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold mb-6">📝 My Notes</h1>
+        <button
+          onClick={handleLogout}
+          className="!bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm shadow"
+        >
+          로그아웃
+        </button>
+      </div>
+
+      <NewNoteForm onCreated={handleCreated} />
+
+      {loading && <p className="mt-6">불러오는 중...</p>}
+
+      {!loading && notes.length === 0 && (
+        <p className="mt-6 text-gray-500">노트가 없습니다.</p>
+      )}
+
+      <div className="mt-6 space-y-4">
+        {notes.map(note => (
+          <NoteCard
             key={note.id}
-            className="rounded-lg border bg-white p-4 shadow"
-          >
-            {note.title}
-          </div>
+            note={note}
+            onDelete={handleDelete}
+          />
         ))}
       </div>
     </div>

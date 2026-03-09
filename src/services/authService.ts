@@ -2,7 +2,7 @@ import prisma from "../lib/prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = "secret";
+const JWT_SECRET = "supersecretkey";
 
 export const register = async (email: string, password: string) => {
   const hashed = await bcrypt.hash(password, 10);
@@ -33,7 +33,7 @@ export const login = async (email: string, password: string) => {
   }
 
   const token = jwt.sign(
-    { userId: user.id },
+    { id: user.user_id },
     JWT_SECRET,
     { expiresIn: "1d" }
   );

@@ -1,34 +1,29 @@
-import { Request, Response } from "express";
-import * as notesService from "../services/notesService";
+import { Response } from "express"
+import { AuthRequest } from "../middlewares/authMiddleware"
+import * as noteService from "../services/notesService"
 
-export const getNotes = async (req: Request, res: Response) => {
-  const notes = await notesService.getAllNotes();
-  res.json(notes);
-};
+export const getNotes = async (req: AuthRequest, res: Response) => {
+  const user_id = req.user!.id
+  const notes = await noteService.getUserNotes(user_id)
+  res.json(notes)
+}
 
-export const getNote = async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-  const note = await notesService.getNoteById(id);
+export const createNoteHandler = async (req: AuthRequest, res: Response) => {
+  const user_id = req.user!.id
+  const { title, content } = req.body
 
-  if (!note) {
-    return res.status(404).json({ message: "Note not found" });
+  if (!title) {
+    return res.status(400).json({ message: "title required" })
   }
 
-  res.json(note);
-};
+  const note = await noteService.createNote(user_id, title, content)
+  res.status(201).json(note)
+}
 
-export const createNote = async (req: Request, res: Response) => {
-  const { title, content } = req.body;
+export const deleteNoteHandler = async (req: AuthRequest, res: Response) => {
+  const user_id = req.user!.id
+  const id = Number(req.params.id)
 
-  const note = await notesService.createNote(title, content);
-
-  res.status(201).json(note);
-};
-
-export const deleteNote = async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
-
-  await notesService.deleteNote(id);
-
-  res.json({ message: "Deleted" });
-};
+  await noteService.deleteNote(id, user_id)
+  res.json({ message: "deleted" })
+}

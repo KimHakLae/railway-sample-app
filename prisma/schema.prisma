@@ -8,14 +8,15 @@ datasource db {
 }
 
 model Note {
-  note_id   Int      @default(autoincrement())
+  id        Int      @id @default(autoincrement()) // ✅ 단일 PK
   user_id   Int
   title     String
   content   String?
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@id([note_id, user_id])
-  @@map("notes")
+  @@index([user_id]) // 유저별 조회 빠르게
+  @@map("notes") // ← 실제 테이블명
 }
 
 model User {

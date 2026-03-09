@@ -13,7 +13,9 @@ export default function RegisterForm() {
     setErrorMessage("") // 제출 시 초기화
 
     try {
-      const data = await register(email, password)
+      await register(email, password)
+
+      alert("회원가입 요청이 완료되었습니다!\n관리자 승인 후 이용 가능합니다.");
       navigate("/login") // 회원가입 성공 시 로그인 페이지 이동
     } catch (err: any) {
       setErrorMessage(err.message) // 입력 밑에 노출

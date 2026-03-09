@@ -9,7 +9,8 @@ export const login = async (email:string,password:string) => {
   });
 
   if(!res.ok){
-    throw new Error("login failed");
+    const data = await res.json()
+    throw new Error(data.message || "로그인 실패");
   }
 
   return res.json();

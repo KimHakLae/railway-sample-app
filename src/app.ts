@@ -3,6 +3,7 @@ import cors from "cors";
 import { errorHandler } from "./middlewares/errorHandler";
 import authRoutes from "./routes/authRoutes";
 import notesRoutes from "./routes/notesRoutes";
+import adminRoutes from "./routes/adminRoutes";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use("/notes", notesRoutes);
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
 
 app.use(errorHandler);
 

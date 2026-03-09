@@ -74,10 +74,10 @@ export default function NotesPage() {
     <div className="max-w-3xl mx-auto p-6">
       {/* 헤더 */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold mb-6">📝 My Notes</h1>
+        <h1 className="!text-3xl mb-0 font-bold">📝 My Notes</h1>
         <button
           onClick={handleLogout}
-          className="!bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm shadow"
+          className="!bg-red-500 hover:bg-red-600 text-white !px-3 !py-1.5 !rounded-md !text-xs shadow"
         >
           로그아웃
         </button>

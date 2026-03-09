@@ -12,7 +12,7 @@ export default function RegisterPage(){
 
     await register(email,password);
 
-    alert("회원가입 성공!");
+    alert("회원가입 요청이 완료되었습니다!\n관리자 승인 후 이용 가능합니다.");
 
     window.location.href="/";
 

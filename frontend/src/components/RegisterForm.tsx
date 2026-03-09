@@ -23,7 +23,7 @@ export default function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <input
           type="email"
@@ -55,7 +55,7 @@ export default function RegisterForm() {
         type="submit"
         className="w-full !bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
       >
-        회원가입
+        Register
       </button>
     </form>
   )

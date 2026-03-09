@@ -69,3 +69,5 @@ Desktop.ini
 # Optional npm cache directory
 .npm
 .npmrc
+
+README*.md

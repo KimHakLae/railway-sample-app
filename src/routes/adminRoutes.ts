@@ -12,21 +12,43 @@ const adminOnly = (req: any, res: any, next: any) => {
   next()
 }
 
-// 인증 요청 사용자 목록
-router.get(
-  "/notes",
-  authMiddleware,
-  adminOnly,
-  async (req, res) => {
-    const notes = await prisma.note.findMany({
-      include: {
-        user: { select: { email: true } }
-      },
-      orderBy: { createdAt: "desc" }
-    })
+// 사용자 목록
+router.get("/users", authMiddleware, adminOnly, async (req, res) => {
+  const users = await prisma.user.findMany({
+    select: {
+      user_id: true,
+      email: true,
+      auth_status: true,
+      is_admin: true,
+    },
+    orderBy: { user_id: "desc" }
+  })
 
-    res.json(notes)
-  }
-)
+  res.json(users)
+})
+
+// 사용자 승인 처리
+router.patch("/users/:id/approve", authMiddleware, adminOnly, async (req, res) => {
+  const user_id = Number(req.params.id)
+
+  await prisma.user.update({
+    where: { user_id },
+    data: { auth_status: "V" }
+  })
+
+  res.json({ message: "승인 완료" })
+})
+
+// 사용자 거절 처리
+router.patch("/users/:id/reject", authMiddleware, adminOnly, async (req, res) => {
+  const user_id = Number(req.params.id)
+
+  await prisma.user.update({
+    where: { user_id },
+    data: { auth_status: "F" }
+  })
+
+  res.json({ message: "거절 완료" })
+})
 
 export default router

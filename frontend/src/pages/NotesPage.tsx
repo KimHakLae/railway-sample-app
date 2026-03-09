@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import NoteCard from "../components/NoteCard"
 import NewNoteForm from "../components/NewNoteForm"
-import LogoutForm from "../components/LogoutForm"
 
 interface Note {
   id: number
@@ -66,10 +65,7 @@ export default function NotesPage() {
   return (
     <div className="max-w-3xl mx-auto p-6">
       {/* 헤더 */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="!text-3xl mb-0 font-bold">📝 My Notes</h1>
-        <LogoutForm />
-      </div>
+      <h1 className="!text-3xl mb-6 font-bold">📝 My Notes</h1>
 
       <NewNoteForm onCreated={handleCreated} />
 

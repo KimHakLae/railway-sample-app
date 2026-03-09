@@ -1,39 +1,47 @@
-import { Link } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import { getUserFromToken } from "../utils/auth"
+import LogoutForm from "../components/LogoutForm"
 
-export default function Layout({ children }: any) {
+export default function Layout() {
   const user = getUserFromToken()
+  const navigate = useNavigate()
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 헤더 */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between">
-          <h1 className="text-lg font-bold">📘 Notes System</h1>
+      {/* 🔝 고정 상단바 */}
+      <header
+        className="fixed top-0 left-0 right-0 h-12
+                   bg-white border-b
+                   flex items-center justify-between
+                   px-4 z-5"
+      >
+        {/* 🔹 왼쪽 영역 */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate(-1)}
+            className="w-8 h-8 flex items-center justify-center
+                      rounded-full hover:bg-gray-100
+                      text-gray-600 hover:text-black"
+          >
+            ←
+          </button>
 
-          <nav className="flex gap-4 text-sm">
-            {/* 일반 사용자 메뉴 */}
-            <Link to="/notes" className="hover:underline">
-              내 노트
-            </Link>
-
-            {/* 관리자 전용 메뉴 */}
-            {user?.is_admin && (
-              <>
-                <Link to="/admin/users" className="text-blue-600 hover:underline">
-                  인증 요청 관리
-                </Link>
-
-                <Link to="/admin/notes" className="text-blue-600 hover:underline">
-                  전체 노트 관리
-                </Link>
-              </>
-            )}
-          </nav>
+        {/* (선택) 관리자 표시 */}
+        {user?.is_admin && (
+          <span className="text-xs text-red-500 font-semibold">
+            ADMIN
+          </span>
+        )}
         </div>
+
+        {/* 로그아웃 버튼 */}
+        <LogoutForm/>
       </header>
 
-      <main className="max-w-5xl mx-auto p-6">{children}</main>
+      {/* 🔽 본문 (상단바 높이만큼 여백 필수) */}
+      <main className="w-screen pt-12 max-w-5xl mx-auto p-6">
+        <Outlet />
+      </main>
     </div>
   )
 }

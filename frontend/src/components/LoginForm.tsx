@@ -28,7 +28,7 @@ export default function LoginForm() {
       if (user?.is_admin) {
         navigate("/admin")   // 관리자 페이지
       } else {
-        navigate("/notes")         // 일반 사용자
+        navigate("/user")   // 일반 사용자
       }
     } catch (e: any) {
       setError(e.message);

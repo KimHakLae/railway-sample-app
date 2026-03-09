@@ -7,6 +7,8 @@ import NotesPage from "./pages/NotesPage"
 import AdminHomePage from "./pages/AdminHomePage"
 import AdminUsersPage from "./pages/AdminUsersPage"
 import AdminNotesPage from "./pages/AdminNotesPage"
+import Layout from "./pages/Layout";
+import UserHomePage from "./pages/UserHomePage";
 
 function App(){
 
@@ -20,21 +22,27 @@ function App(){
 
         <Route path="/register" element={<RegisterPage />} />
         
-
-        {/* 일반 사용자 */}
-        <Route
-          path="/notes"
-          element={
-            <ProtectedRoute>
-              <NotesPage />
-            </ProtectedRoute>
-          }
-        />
+        {/* 사용자 */}
+        <Route path="/user" element={<UserHomePage />} />
 
         {/* 관리자 */}
         <Route path="/admin" element={<AdminHomePage />} />
-        <Route path="/admin/users" element={<AdminUsersPage />} />
-        <Route path="/admin/notes" element={<AdminNotesPage />} />
+
+        <Route element={<Layout />}>
+          {/* 일반 사용자 */}
+          <Route
+            path="/notes"
+            element={
+              <ProtectedRoute>
+                <NotesPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 관리자 */}
+          <Route path="/admin/users" element={<AdminUsersPage />} />
+          <Route path="/admin/notes" element={<AdminNotesPage />} />
+        </Route>
 
       </Routes>
 

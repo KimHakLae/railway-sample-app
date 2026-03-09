@@ -21,12 +21,12 @@ export default function AdminHomePage() {
         </Link>
 
         <Link
-          to="/admin/notes"
+          to="/notes"
           className="p-6 bg-white rounded-xl shadow hover:shadow-md border"
         >
           <h2 className="text-lg font-semibold mb-2">📝 노트 관리</h2>
           <p className="text-sm text-gray-500">
-            전체 사용자 노트 조회
+            노트 작성 및 조회
           </p>
         </Link>
       </div>

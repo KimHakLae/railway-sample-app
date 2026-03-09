@@ -26,5 +26,12 @@ export const register = async (email:string,password:string) => {
     body:JSON.stringify({email,password})
   });
 
-  return res.json();
+  const data = await res.json()
+
+  if (!res.ok) {
+    // 400: 이미 존재, 500: 서버 에러 등 처리
+    throw new Error(data.message || "회원가입 실패")
+  }
+
+  return data
 };

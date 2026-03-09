@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { register } from "../api/auth";
+import RegisterForm from "../components/RegisterForm";
 
 export default function RegisterPage(){
 
@@ -22,36 +23,13 @@ export default function RegisterPage(){
 
     <div className="flex h-screen items-center justify-center bg-gray-100">
 
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow">
+      <div className="w-screen max-w-md bg-white p-8 rounded-xl shadow">
 
-        <h1 className="text-2xl font-bold text-center mb-6">
+        <h1 className="!text-3xl font-bold text-center mb-6">
           Register
         </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-
-          <input
-            className="w-full border rounded p-2"
-            placeholder="Email"
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}
-          />
-
-          <input
-            type="password"
-            className="w-full border rounded p-2"
-            placeholder="Password"
-            value={password}
-            onChange={(e)=>setPassword(e.target.value)}
-          />
-
-          <button
-            className="w-full !bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-          >
-            Register
-          </button>
-
-        </form>
+        <RegisterForm />
 
       </div>
 

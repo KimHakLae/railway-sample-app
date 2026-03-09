@@ -23,8 +23,6 @@ export default function LoginForm() {
       // 🔥 사용자 정보 확인
       const user = getUserFromToken()
 
-      console.log(user)
-
       if (user?.is_admin) {
         navigate("/admin")   // 관리자 페이지
       } else {

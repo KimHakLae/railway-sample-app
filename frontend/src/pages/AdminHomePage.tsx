@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom"
+import LogoutForm from "../components/LogoutForm"
 
 export default function AdminHomePage() {
   return (
-    <div className="max-w-3xl mx-auto p-8">
-      <h1 className="text-2xl font-bold mb-8">🛠 관리자 메뉴</h1>
+    <div className="w-screen mx-auto p-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="!text-2xl font-bold mb-0">🛠 관리자 메뉴</h1>
+        <LogoutForm />
+      </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
         <Link

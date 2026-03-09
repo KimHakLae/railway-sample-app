@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 import NoteCard from "../components/NoteCard"
 import NewNoteForm from "../components/NewNoteForm"
+import LogoutForm from "../components/LogoutForm"
 
 interface Note {
   id: number
@@ -10,7 +10,6 @@ interface Note {
 }
 
 export default function NotesPage() {
-  const navigate = useNavigate()
   const [notes, setNotes] = useState<Note[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -64,23 +63,12 @@ export default function NotesPage() {
     setNotes([note, ...notes])
   }
 
-  const handleLogout = () => {
-    if (!confirm("로그아웃 하시겠습니까?")) return
-    localStorage.removeItem("token")
-    navigate("/")
-  }
-
   return (
     <div className="max-w-3xl mx-auto p-6">
       {/* 헤더 */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="!text-3xl mb-0 font-bold">📝 My Notes</h1>
-        <button
-          onClick={handleLogout}
-          className="!bg-red-500 hover:bg-red-600 text-white !px-3 !py-1.5 !rounded-md !text-xs shadow"
-        >
-          로그아웃
-        </button>
+        <LogoutForm />
       </div>
 
       <NewNoteForm onCreated={handleCreated} />

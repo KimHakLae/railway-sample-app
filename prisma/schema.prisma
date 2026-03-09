@@ -1,3 +1,8 @@
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "./ERD.png"
+}
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -25,7 +30,7 @@ model User {
   user_id     Int       @id @default(autoincrement())
   email       String    @unique
   password    String
-  auth_status String    @default("P") @db.Char(1) // V: 인증완료, P: 인증대기, F: 인증실패, E: 인증완료, R: 인증취소
+  auth_status String    @default("P") @db.Char(1) // V: 인증완료, P: 인증대기, F: 거졀, E: 완료, R: 취소
   is_admin    Boolean   @default(false) // 관리자인지 여부 (관리자는 유저 관리)
   createdAt   DateTime  @default(now())
 

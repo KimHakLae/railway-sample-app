@@ -42,11 +42,13 @@ model User {
 
 // 카테고리 enum
 enum Category {
-  VEG   // 야채
-  SPICE // 조미료
-  SAUCE // 양념장
-  MEAT  // 고기
-  ETC   // 기타
+  VEG     // 야채
+  FRUIT   // 과일   ← 추가
+  SPICE   // 조미료
+  SAUCE   // 양념장
+  MEAT    // 고기
+  SNACK   // 간식   ← 추가
+  ETC     // 기타
 }
 
 // 보관방법 enum
@@ -56,16 +58,19 @@ enum Storage {
 }
 
 model Inventory {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(50)
-  entryDate DateTime  // 입고일자
-  price     Int?
-  category  Category
-  storage   Storage
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  user      User?     @relation(fields: [user_id], references: [user_id])
-  user_id   Int?
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(50)
+  entryDate   DateTime  // 입고일자
+  expiryDate  DateTime? // ✅ 유효일자 추가
+  price       Int?
+  quantity    Int       @default(0)   // ✅ 재고 수량 추가
+  category    Category
+  storage     Storage
+  is_urgent   Boolean   @default(false) // 긴급 여부
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  user        User?     @relation(fields: [user_id], references: [user_id])
+  user_id     Int?
 
   @@map("inventories") // 테이블명을 정식 복수형으로
 }

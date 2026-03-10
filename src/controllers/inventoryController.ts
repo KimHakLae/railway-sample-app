@@ -49,3 +49,14 @@ export const deleteInventory = async (req: Request, res: Response) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+export const toggleUrgent = async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+
+  try {
+    const result = await inventoryService.toggleUrgent(id)
+    res.json(result)
+  } catch (err) {
+    res.status(500).json({ message: "긴급 상태 변경 실패" })
+  }
+}

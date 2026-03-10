@@ -5,7 +5,8 @@ import {
   getInventoryById,
   createInventory,
   updateInventory,
-  deleteInventory
+  deleteInventory,
+  toggleUrgent
 } from "../controllers/inventoryController";
 
 const router = Router();
@@ -15,5 +16,6 @@ router.get("/:id", getInventoryById);
 router.post("/", createInventory);
 router.put("/:id", updateInventory);
 router.delete("/:id", deleteInventory);
+router.patch("/:id/urgent", toggleUrgent)
 
 export default router;

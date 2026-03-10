@@ -1,10 +1,21 @@
-export type Category =
-  | "VEG"
-  | "FRUIT"
-  | "SPICE"
-  | "SAUCE"
-  | "MEAT"
-  | "SNACK"
-  | "ETC"
+import type { Item } from "./item";
 
-export type Storage = "R" | "F"
+export interface Inventory {
+  id: number;
+  itemId: number;
+  entryDate: string;
+  expiryDate?: string;
+  quantity: number;
+  price?: number;
+  is_urgent: boolean;
+}
+
+export interface InventoryWithItem {
+  id: number;
+  item: Item;
+  entryDate: string;
+  expiryDate?: string;
+  quantity: number;
+  price?: number;
+  is_urgent: boolean;
+}

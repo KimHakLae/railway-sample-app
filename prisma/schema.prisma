@@ -57,20 +57,36 @@ enum Storage {
   F  // 냉동
 }
 
+model Item {
+  id        Int        @id @default(autoincrement())
+  name      String     @db.VarChar(50)
+  category  Category   @default(ETC)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  inventories Inventory[] // 유저별 재고와 연결
+
+  @@map("items")
+}
+
 model Inventory {
   id          Int       @id @default(autoincrement())
-  name        String    @db.VarChar(50)
-  entryDate   DateTime  // 입고일자
-  expiryDate  DateTime? // ✅ 유효일자 추가
+  user        User      @relation(fields: [user_id], references: [user_id])
+  user_id     Int
+
+  item        Item      @relation(fields: [item_id], references: [id])
+  item_id     Int
+
+  storage     Storage   @default(R)
+  entryDate   DateTime
+  expiryDate  DateTime?
   price       Int?
-  quantity    Int       @default(0)   // ✅ 재고 수량 추가
-  category    Category
-  storage     Storage
-  is_urgent   Boolean   @default(false) // 긴급 여부
+  quantity    Int       @default(0)
+  is_urgent   Boolean   @default(false)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  user        User?     @relation(fields: [user_id], references: [user_id])
-  user_id     Int?
 
-  @@map("inventories") // 테이블명을 정식 복수형으로
+  @@map("inventories")
+  @@index([user_id])
+  @@index([item_id])
 }

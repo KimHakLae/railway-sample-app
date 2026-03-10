@@ -9,6 +9,7 @@ import AdminUsersPage from "./pages/AdminUsersPage"
 import AdminNotesPage from "./pages/AdminNotesPage"
 import Layout from "./pages/Layout";
 import UserHomePage from "./pages/UserHomePage";
+import InventoryPage from "./pages/InventoryPage"; // ← 새로 추가
 
 function App(){
 
@@ -35,6 +36,16 @@ function App(){
             element={
               <ProtectedRoute>
                 <NotesPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 재고 관리 페이지 (공동 접근 가능) */}
+          <Route
+            path="/inventory"
+            element={
+              <ProtectedRoute>
+                <InventoryPage />
               </ProtectedRoute>
             }
           />

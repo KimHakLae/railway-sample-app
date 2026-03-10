@@ -20,6 +20,17 @@ export default function UserHomePage() {
                 노트 작성 및 조회
             </p>
         </Link>
+
+        {/* 재고 관리 메뉴 추가 */}
+        <Link
+          to="/inventory"
+          className="p-6 bg-white rounded-xl shadow hover:shadow-md border"
+        >
+          <h2 className="text-lg font-semibold mb-2">📦 재고 관리</h2>
+          <p className="text-sm text-gray-500">
+            재고 등록, 조회, 수정, 삭제
+          </p>
+        </Link>
         </div>
     </div>
   )

@@ -35,6 +35,37 @@ model User {
   createdAt   DateTime  @default(now())
 
   notes       Note[]    // 역참조
+  inventories Inventory[] // ← Inventory와의 관계 추가
 
   @@map("users")
+}
+
+// 카테고리 enum
+enum Category {
+  VEG   // 야채
+  SPICE // 조미료
+  SAUCE // 양념장
+  MEAT  // 고기
+  ETC   // 기타
+}
+
+// 보관방법 enum
+enum Storage {
+  R  // 냉장
+  F  // 냉동
+}
+
+model Inventory {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(50)
+  entryDate DateTime  // 입고일자
+  price     Int?
+  category  Category
+  storage   Storage
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User?     @relation(fields: [user_id], references: [user_id])
+  user_id   Int?
+
+  @@map("inventories") // 테이블명을 정식 복수형으로
 }

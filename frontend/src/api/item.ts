@@ -25,4 +25,8 @@ export const createItem = async (body:any) => {
     },
     body: JSON.stringify(body)
   })
+
+  const data = await res.json()
+  if(!res.ok) throw new Error(data.message || "재고 항목 등록 실패")
+  return data
 }

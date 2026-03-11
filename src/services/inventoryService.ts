@@ -1,6 +1,6 @@
 // inventoryService.ts
 import prisma from '../lib/prisma';
-import { Inventory, Item } from '@prisma/client';
+import { Inventory, Item, Storage } from '@prisma/client';
 
 export type InventoryWithItem = Inventory & { item: Item };
 
@@ -29,6 +29,7 @@ export const createInventory = async (data: {
   price?: number;
   quantity: number;
   is_urgent?: boolean;
+  storage?: Storage;
 }): Promise<InventoryWithItem> => {
   const created = await prisma.inventory.create({
     data: {
@@ -39,6 +40,7 @@ export const createInventory = async (data: {
       price: data.price ?? null,
       quantity: data.quantity,
       is_urgent: data.is_urgent ?? false,
+      storage: data.storage
     },
     include: { item: true },
   });
@@ -54,6 +56,7 @@ export const updateInventory = async (id: number, data: {
   quantity?: number;
   is_urgent?: boolean;
   userId?: number;
+  storage?: Storage;
 }): Promise<InventoryWithItem> => {
   const updated = await prisma.inventory.update({
     where: { id },
@@ -65,6 +68,7 @@ export const updateInventory = async (id: number, data: {
       quantity: data.quantity,
       is_urgent: data.is_urgent,
       user_id: data.userId,
+      storage: data.storage
     },
     include: { item: true },
   });

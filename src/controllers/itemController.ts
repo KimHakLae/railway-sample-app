@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import * as itemService from "../services/itemSErvice"
+import * as itemService from "../services/itemService"
 
 export const fetchItems = async (req: Request, res: Response) => {
   try {
@@ -10,3 +10,13 @@ export const fetchItems = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to fetch items" })
   }
 }
+
+export const createIitem = async (req: Request, res: Response) => {
+  try {
+    console.log(req.body)
+    const newItem = await itemService.createItem(req.body);
+    res.status(201).json(newItem);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+};

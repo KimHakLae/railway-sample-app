@@ -13,7 +13,6 @@ export const fetchItems = async (req: Request, res: Response) => {
 
 export const createIitem = async (req: Request, res: Response) => {
   try {
-    console.log(req.body)
     const newItem = await itemService.createItem(req.body);
     res.status(201).json(newItem);
   } catch (err: any) {

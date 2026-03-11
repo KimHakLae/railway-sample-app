@@ -13,27 +13,20 @@ import type { InventoryWithItem } from "../types/inventory";
 import type { Item } from "../types/item";
 import { getUserFromToken } from "../utils/auth"
 
-const CATEGORY_LABEL: Record<string, string> = {
-  VEG: "야채",
-  FRUIT: "과일",
-  SPICE: "조미료",
-  SAUCE: "양념장",
-  MEAT: "고기",
-  SNACK: "간식",
-  ETC: "기타",
+const CATEGORY_INFO: Record<string, { label: string; style: string }> = {
+  VEG:   { label: "🥬 야채",   style: "!bg-green-100 text-green-700" },
+  FRUIT: { label: "🍎 과일",   style: "!bg-pink-100 text-pink-700" },
+  SPICE: { label: "🧂 조미료", style: "!bg-yellow-100 text-yellow-700" },
+  SAUCE: { label: "🥫 양념장", style: "!bg-orange-100 text-orange-700" },
+  MEAT:  { label: "🥩 고기",   style: "!bg-red-100 text-red-700" },
+  SNACK: { label: "🍪 간식",   style: "!bg-purple-100 text-purple-700" },
+  ETC:   { label: "📦 기타",   style: "!bg-gray-100 text-gray-700" },
 };
 
-const CATEGORY_COLOR: Record<string, string> = {
-  VEG: "!bg-green-100 text-green-700",
-  FRUIT: "!bg-pink-100 text-pink-700",
-  SPICE: "!bg-yellow-100 text-yellow-700",
-  SAUCE: "!bg-orange-100 text-orange-700",
-  MEAT: "!bg-red-100 text-red-700",
-  SNACK: "!bg-purple-100 text-purple-700",
-  ETC: "!bg-gray-100 text-gray-700",
+const STORAGE_INFO: Record<string, { label: string; style: string }> = {
+  R: { label: "🧊 냉장", style: "!bg-cyan-100 text-cyan-700" },
+  F: { label: "❄️ 냉동", style: "!bg-indigo-100 text-indigo-700" },
 };
-
-const STORAGE_LABEL: Record<string, string> = { R: "냉장", F: "냉동" };
 
 export default function InventoryPage() {
   const [inventoryList, setInventoryList] = useState<InventoryWithItem[]>([]);
@@ -215,8 +208,8 @@ export default function InventoryPage() {
         {!filterOpen && (
           <div className="flex flex-wrap gap-2 text-xs">
             {keyword && <span className="px-2 py-1 rounded !bg-gray-200">검색: {keyword}</span>}
-            {categoryFilter !== "ALL" && <span className="px-2 py-1 rounded !bg-gray-200">카테고리: {CATEGORY_LABEL[categoryFilter]}</span>}
-            {storageFilter !== "ALL" && <span className="px-2 py-1 rounded !bg-gray-200">보관: {STORAGE_LABEL[storageFilter]}</span>}
+            {categoryFilter !== "ALL" && <span className="px-2 py-1 rounded !bg-gray-200">카테고리: {CATEGORY_INFO[categoryFilter].label}</span>}
+            {storageFilter !== "ALL" && <span className="px-2 py-1 rounded !bg-gray-200">보관: {STORAGE_INFO[storageFilter].label}</span>}
             {urgentOnly && <span className="px-2 py-1 rounded !bg-red-100 text-red-700">긴급만</span>}
             {!keyword && categoryFilter === "ALL" && storageFilter === "ALL" && !urgentOnly && <span className="px-2 py-1 rounded !bg-gray-100 text-gray-400">전체 보기</span>}
             <button onClick={resetFilters} className={`px-3 py-2 text-xs rounded border ${isFiltered ? "!bg-red-500 text-white border-red-500" : "bg-white"}`}>
@@ -303,8 +296,10 @@ export default function InventoryPage() {
                 </div>
               </div>
               <div className="flex gap-1 flex-wrap justify-end">
-                <span className={`text-xs px-2 py-1 rounded ${CATEGORY_COLOR[item.item.category]}`}>{CATEGORY_LABEL[item.item.category]}</span>
-                <span className="text-xs px-2 py-1 rounded !bg-blue-100 text-blue-700">{STORAGE_LABEL[item.storage]}</span>
+                <span className={`text-xs px-2 py-1 rounded ${CATEGORY_INFO[item.item.category].style}`}>{CATEGORY_INFO[item.item.category].label}</span>
+                <span className={`text-xs px-2 py-1 rounded ${STORAGE_INFO[item.storage].style}`}>
+                  {STORAGE_INFO[item.storage].label}
+              </span>
               </div>
             </div>
 

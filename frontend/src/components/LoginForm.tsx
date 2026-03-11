@@ -15,7 +15,6 @@ export default function LoginForm() {
 
     try {
       const data = await login(email, password);
-      console.log(data)
 
       // 토큰 저장
       localStorage.setItem("token", data.token)

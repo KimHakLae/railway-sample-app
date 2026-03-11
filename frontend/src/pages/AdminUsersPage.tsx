@@ -19,7 +19,6 @@ export default function AdminUsersPage() {
     })
     const data = await res.json()
     setUsers(data)
-    console.log(data);
   }
 
   const approveUser = async (id: number) => {

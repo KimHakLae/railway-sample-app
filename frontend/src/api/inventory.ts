@@ -28,7 +28,6 @@ export const getInventories = async () => {
 
 /** 재고 항목 등록 */
 export const createItem = async (body:any) => {
-  console.log(body);
   const res = await fetch(`${API_URL}/item`,{
     method:"POST",
     headers:{

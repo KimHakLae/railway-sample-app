@@ -88,9 +88,6 @@ export default function InventoryModal({
       return;
     }
 
-    console.log(form);
-    // return;
-
     onSubmit({
       ...form,
       itemId: form.itemId,
@@ -159,7 +156,17 @@ export default function InventoryModal({
               />
               <button
                 onClick={addNewItem}
-                className="px-4 rounded-xl !bg-emerald-500 text-white font-medium"
+                className="
+                  px-4 py-2
+                  rounded-xl
+                  bg-gradient-to-r from-emerald-500 to-emerald-600
+                  text-white
+                  font-semibold
+                  shadow-md
+                  transition
+                  hover:from-emerald-600 hover:to-emerald-700
+                  active:scale-95
+                "
               >
                 추가
               </button>
@@ -230,26 +237,25 @@ export default function InventoryModal({
           </section>
 
           {/* 날짜 카드 */}
-          <section className="!bg-white rounded-2xl p-4 shadow-sm">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm text-gray-600">입고일</label>
-                <input
-                  type="date"
-                  className="w-full border rounded-xl p-3 !bg-gray-50"
-                  value={form.entryDate}
-                  onChange={e=>change("entryDate", e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm text-gray-600">유통기한</label>
-                <input
-                  type="date"
-                  className="w-full border rounded-xl p-3 !bg-gray-50"
-                  value={form.expiryDate}
-                  onChange={e=>change("expiryDate", e.target.value)}
-                />
-              </div>
+          <section className="!bg-white rounded-2xl p-4 shadow-sm space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm text-gray-600">입고일</label>
+              <input
+                type="date"
+                className="w-full border rounded-xl p-3 !bg-gray-50"
+                value={form.entryDate}
+                onChange={e => change("entryDate", e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm text-gray-600">유통기한</label>
+              <input
+                type="date"
+                className="w-full border rounded-xl p-3 !bg-gray-50"
+                value={form.expiryDate}
+                onChange={e => change("expiryDate", e.target.value)}
+              />
             </div>
           </section>
 
@@ -292,15 +298,40 @@ export default function InventoryModal({
 
         {/* 하단 버튼바 */}
         <div className="p-4 border-t !bg-white flex gap-3">
+          {/* 취소 버튼 */}
           <button
             onClick={onClose}
-            className="flex-1 py-3 border rounded-xl"
+            className="
+              flex-1 py-3
+              border border-gray-300
+              rounded-xl
+              bg-white
+              text-gray-700
+              font-medium
+              shadow-sm
+              transition
+              hover:bg-gray-50
+              hover:shadow
+              active:scale-95
+            "
           >
             취소
           </button>
+
+          {/* 저장 버튼 */}
           <button
             onClick={handleSubmit}
-            className="flex-1 py-3 !bg-blue-600 text-white rounded-xl font-semibold shadow-md"
+            className="
+              flex-1 py-3
+              rounded-xl
+              bg-gradient-to-r from-blue-500 to-blue-600
+              text-white
+              font-semibold
+              shadow-lg
+              transition
+              hover:from-blue-600 hover:to-blue-700
+              active:scale-95
+            "
           >
             저장
           </button>

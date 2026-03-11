@@ -12,6 +12,7 @@ import { getItems } from "../api/item";
 import type { InventoryWithItem } from "../types/inventory";
 import type { Item } from "../types/item";
 import { getUserFromToken } from "../utils/auth"
+import { useSnackbar } from "../components/ui/SnackbarProvider";
 
 const CATEGORY_INFO: Record<string, { label: string; style: string }> = {
   VEG:   { label: "🥬 야채",   style: "!bg-green-100 text-green-700" },
@@ -40,6 +41,11 @@ export default function InventoryPage() {
   const [openEdit, setOpenEdit] = useState(false);
   const [editItem, setEditItem] = useState<InventoryWithItem | null>(null);
   const [filterOpen, setFilterOpen] = useState(true);
+  const [loadingId, setLoadingId] = useState<number | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  // const [successToast, setSuccessToast] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
+  const { showSnackbar } = useSnackbar();
   
   // 🔥 사용자 정보 확인
   const user = getUserFromToken()
@@ -66,49 +72,92 @@ export default function InventoryPage() {
     fetchInventory();
     fetchItems();
   }, []);
-
+    
   const createItemHandler = async (data: any) => {
-    if (!user) return alert("사용자 정보가 없습니다.");
-
-    let itemId = data.itemId; // 기존 아이템일 경우
-
-    if (data.isNewItem) {
-      // 신규 아이템 생성
-      try {
-        const newItem = await createItem({ name: data.itemName, category: data.category }); // createItem은 새 아이템을 DB에 저장하고 { id: number, name: string } 반환한다고 가정
-        itemId = newItem.id; // 생성된 아이템 ID 사용
-      } catch (err) {
-        console.error("아이템 생성 실패", err);
-        return alert("아이템 생성에 실패했습니다.");
-      }
+    if (!user) {
+      alert("사용자 정보가 없습니다.");
+      return;
     }
 
-    // inventory 생성
+    let itemId = data.itemId;
+
     try {
-      await createInventory({ ...data, itemId, userId: user.id });
-      fetchInventory(); // 리스트 새로고침
+      // 1️⃣ 신규 아이템 생성
+      if (data.isNewItem) {
+        const newItem = await createItem({
+          name: data.itemName,
+          category: data.category,
+        });
+        itemId = newItem.id;
+      }
+
+      // 2️⃣ 재고 생성
+      await createInventory({
+        ...data,
+        itemId,
+        userId: user.id,
+      });
+
+      // 3️⃣ 목록 조회까지 기다림 (⭐ 중요)
+      await fetchInventory();
+      showSnackbar("재고가 등록되었습니다", {type: "success"});
+
     } catch (err) {
-      console.error("재고 생성 실패", err);
-      alert("재고 생성에 실패했습니다.");
+      console.error(err);
+      showSnackbar("요청 처리에 실패했습니다", {type: "error"});
+      throw err; // 👉 바깥에서 로딩 종료 제어하려고 throw
     }
   };
 
   const updateItemHandler = async (id: number, data: any) => {
     await updateInventory(id, data);
-    fetchInventory();
+    await fetchInventory();
+    showSnackbar("수정이 완료되었습니다", {type: "success"});
   };
 
   const deleteItemHandler = async (id: number) => {
-    if (!confirm("삭제할까요?")) return;
-    await deleteInventory(id);
-    fetchInventory();
+    setSubmitting(true);
+    setToastMsg("삭제중입니다...");
+
+    try {
+      await deleteInventory(id);   // API 호출
+      await fetchInventory();      // 리스트 새로고침
+      showSnackbar("삭제되었습니다", {type: "success"});
+    } catch (err) {
+      console.error(err);
+      showSnackbar("삭제 실패 😢", {type: "error"});
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const toggleUrgent = async (id: number) => {
-    await toggleUrgentInventory(id);
-    setInventoryList((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, is_urgent: !i.is_urgent } : i))
+    if (loadingId) return;
+    setLoadingId(id);
+
+    // 1️⃣ 이전 상태 백업
+    const prevList = inventoryList;
+
+    // 2️⃣ UI 먼저 변경 (즉시 반응)
+    setInventoryList((list) =>
+      list.map((i) =>
+        i.id === id ? { ...i, is_urgent: !i.is_urgent } : i
+      )
     );
+
+    // 3️⃣ API 호출
+    try {
+      await toggleUrgentInventory(id);
+    } catch (err) {
+      console.error("긴급 토글 실패", err);
+
+      // 4️⃣ 실패 시 롤백
+      setInventoryList(prevList);
+
+      alert("긴급 상태 변경 실패 😢");
+    } finally {
+      setLoadingId(null);
+    }
   };
 
   const dday = (date?: string) => {
@@ -165,14 +214,44 @@ export default function InventoryPage() {
 
   return (
     <div className="p-4 max-w-md mx-auto space-y-4">
+      {/* 🔥 등록중 토스트 */}
+      {submitting && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
+          <div className="px-4 py-2 rounded-full shadow bg-black text-white text-sm animate-pulse">
+            {toastMsg}
+          </div>
+        </div>
+      )}
+
+      {/* ✅ 등록완료 토스트 */}
+      {/* {successToast && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
+          <div className="px-4 py-2 rounded-full shadow !bg-green-600 text-white text-sm animate-fade-in">
+            ✅ {toastMsg}
+          </div>
+        </div>
+      )} */}
       <h1 className="!text-xl font-bold">📦 재고 관리</h1>
 
       {/* 재고 등록 버튼 */}
       <button
         onClick={() => setOpenCreate(true)}
-        className="fixed bottom-5 right-5 w-12 h-12 rounded-full !bg-blue-600 text-white text-xl shadow-lg z-50"
+        className="
+          fixed bottom-5 right-5
+          w-14 h-14
+          rounded-full
+          !border-3 !border-blue-500
+          bg-white
+          text-blue-500
+          flex items-center justify-center
+          shadow-md
+          hover:!border-blue-400 hover:text-blue-400 hover:shadow-lg hover:scale-105
+          transition-all duration-200
+          z-50
+        "
+        aria-label="재고 등록"
       >
-        +
+        <span className="text-xl">➕</span>
       </button>
 
       {/* 통계 */}
@@ -198,11 +277,44 @@ export default function InventoryPage() {
       <div className={`rounded-xl border p-3 space-y-3 ${urgentOnly ? "border-red-400 !bg-red-50" : "!bg-white"}`}>
         <div className="flex items-center justify-between">
           <div className="font-semibold">🔎 검색 & 필터</div>
-          <button onClick={() => setFilterOpen((v) => !v)} className="p-1 rounded-full hover:bg-gray-100 transition">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className={`transition-transform ${filterOpen ? "rotate-180" : ""}`}>
-              <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
+
+          <div className="flex items-center gap-2">
+            {isFiltered && (
+              <button
+                onClick={resetFilters}
+                className="
+                  !text-sm
+                  text-gray-400
+                  hover:text-red-500
+                  !transition-colors
+                "
+                title="검색조건 초기화"
+              >
+                ↺
+              </button>
+            )}
+
+            <button
+              onClick={() => setFilterOpen((v) => !v)}
+              className="p-1 rounded-full hover:bg-gray-100 transition"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                className={`transition-transform ${filterOpen ? "rotate-180" : ""}`}
+              >
+                <path
+                  d="M6 9l6 6 6-6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
 
         {!filterOpen && (
@@ -212,9 +324,9 @@ export default function InventoryPage() {
             {storageFilter !== "ALL" && <span className="px-2 py-1 rounded !bg-gray-200">보관: {STORAGE_INFO[storageFilter].label}</span>}
             {urgentOnly && <span className="px-2 py-1 rounded !bg-red-100 text-red-700">긴급만</span>}
             {!keyword && categoryFilter === "ALL" && storageFilter === "ALL" && !urgentOnly && <span className="px-2 py-1 rounded !bg-gray-100 text-gray-400">전체 보기</span>}
-            <button onClick={resetFilters} className={`px-3 py-2 text-xs rounded border ${isFiltered ? "!bg-red-500 text-white border-red-500" : "bg-white"}`}>
+            {/* <button onClick={resetFilters} className={`px-3 py-2 text-xs rounded border ${isFiltered ? "!bg-red-500 text-white border-red-500" : "bg-white"}`}>
               초기화
-            </button>
+            </button> */}
           </div>
         )}
 
@@ -224,21 +336,63 @@ export default function InventoryPage() {
             {filterOpen && (
               <>
                 <input placeholder="재고명 검색" className="w-full p-2 border rounded" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-                <div className="flex gap-2">
-                  <label className="flex-1 flex items-center justify-center gap-2 p-2 rounded border bg-white cursor-pointer select-none">
-                    <span className={`text-sm ${urgentOnly ? "text-red-600 font-semibold" : "text-gray-500"}`}>긴급만</span>
-                    <input type="checkbox" checked={urgentOnly} onChange={() => setUrgentOnly((v) => !v)} className="sr-only peer" />
-                    <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-checked:!bg-red-500 relative transition-colors">
-                      <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5" />
+                {/* 긴급 필터 (iOS 설정 행 스타일) */}
+                <div className="py-2">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className={`text-sm font-medium ${urgentOnly ? "text-red-600" : "text-gray-700"}`}>
+                        긴급만 보기
+                      </div>
+                      <div className="text-xs text-gray-400">
+                        긴급 표시된 재고만 표시
+                      </div>
                     </div>
-                  </label>
-                  <select className="flex-1 p-2 border rounded" value={sort} onChange={(e) => setSort(e.target.value)}>
-                    <option value="latest">최신순</option>
-                    <option value="oldest">오래된순</option>
-                    <option value="name">이름순</option>
-                    <option value="qty">수량순</option>
-                  </select>
+
+                    <div className="relative">
+                      <label className="relative inline-block cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={urgentOnly}
+                          onChange={() => setUrgentOnly(v => !v)}
+                          className="sr-only peer"
+                        />
+
+                        {/* 트랙 */}
+                        <div className="
+                          w-12 h-7
+                          bg-gray-200
+                          rounded-full
+                          transition-colors
+                          peer-checked:!bg-red-500
+                        "></div>
+
+                        {/* 썸 */}
+                        <div className="
+                          absolute top-1 left-1
+                          w-5 h-5
+                          bg-white rounded-full shadow
+                          transition-all
+                          peer-checked:translate-x-5
+                        "></div>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* 구분선 */}
+                  <div className="border-t mt-3"></div>
                 </div>
+
+                {/* 정렬 */}
+                <select
+                  className="w-full p-2 border rounded"
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value)}
+                >
+                  <option value="latest">최신순</option>
+                  <option value="oldest">오래된순</option>
+                  <option value="name">이름순</option>
+                  <option value="qty">수량순</option>
+                </select>
                 <div className="flex gap-2">
                   <select className="flex-1 p-2 border rounded" value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
                     <option value="ALL">전체 카테고리</option>
@@ -267,13 +421,38 @@ export default function InventoryPage() {
         {filtered.map((item) => (
           <div key={item.id} className={`relative p-3 rounded-xl shadow border space-y-2 transition-colors ${item.is_urgent ? "!bg-pink-50 border-pink-200" : "bg-white"}`}>
             <div className="flex items-center justify-between">
-              <label className="flex items-center gap-1 cursor-pointer select-none">
-                <input type="checkbox" checked={item.is_urgent} onChange={() => toggleUrgent(item.id)} className="sr-only peer" />
-                <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:!bg-red-500 relative transition-colors">
-                  <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-4" />
-                </div>
-                <span className={`text-xs ${item.is_urgent ? "text-red-600 font-semibold" : "text-gray-400"}`}>긴급</span>
-              </label>
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+              <span className={`text-xs ${item.is_urgent ? "text-red-600 font-semibold" : "text-gray-400"}`}>
+                긴급
+              </span>
+
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  checked={item.is_urgent}
+                  onChange={() => toggleUrgent(item.id)}
+                  className="sr-only peer"
+                />
+
+                {/* 트랙 */}
+                <div className="
+                  w-10 h-6
+                  bg-gray-200
+                  rounded-full
+                  transition-colors
+                  peer-checked:!bg-red-500
+                "></div>
+
+                {/* 썸 */}
+                <div className="
+                  absolute top-0.5 left-0.5
+                  w-5 h-5
+                  bg-white rounded-full shadow
+                  transition-all
+                  peer-checked:translate-x-4
+                "></div>
+              </div>
+            </label>
 
               <button
                 onClick={() => {
@@ -330,9 +509,16 @@ export default function InventoryPage() {
           <InventoryModal
             title="재고 등록"
             onClose={() => setOpenCreate(false)}
-            onSubmit={(data) => {
-              createItemHandler(data);
+            onSubmit={async (data) => {
               setOpenCreate(false);
+              setSubmitting(true);
+              setToastMsg("등록중입니다...")
+
+              try {
+                await createItemHandler(data);
+              } finally {
+                setSubmitting(false);
+              }
             }}
             itemList={itemList}
           />
@@ -343,9 +529,16 @@ export default function InventoryPage() {
             title="재고 수정"
             initialData={editItem}
             onClose={() => setOpenEdit(false)}
-            onSubmit={(data) => {
-              updateItemHandler(editItem.id, data);
+            onSubmit={async (data) => {
               setOpenEdit(false);
+              setSubmitting(true);
+              setToastMsg("수정중입니다...")
+
+              try {
+                await updateItemHandler(editItem.id, data);
+              } finally {
+                setSubmitting(false);
+              }
             }}
             itemList={itemList}
           />

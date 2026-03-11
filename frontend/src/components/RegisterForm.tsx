@@ -1,12 +1,14 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { register } from "../api/auth"
+import { useSnackbar } from "../components/ui/SnackbarProvider" // ✅ 스낵바
 
 export default function RegisterForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [errorMessage, setErrorMessage] = useState("") // ✅ 에러 상태
   const navigate = useNavigate()
+  const { showSnackbar } = useSnackbar() // ✅ 훅 사용
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -15,8 +17,12 @@ export default function RegisterForm() {
     try {
       await register(email, password)
 
-      alert("회원가입 요청이 완료되었습니다!\n관리자 승인 후 이용 가능합니다.");
-      navigate("/login") // 회원가입 성공 시 로그인 페이지 이동
+      // ✅ alert 대신 스낵바
+      showSnackbar("회원가입 요청이 완료되었습니다!\n관리자 승인 후 이용 가능합니다.", {
+        type: "success",
+        duration: 4000,
+      })
+      navigate("/") // 회원가입 성공 시 로그인 페이지 이동
     } catch (err: any) {
       setErrorMessage(err.message) // 입력 밑에 노출
     }

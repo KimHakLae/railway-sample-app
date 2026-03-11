@@ -10,12 +10,13 @@ import AdminNotesPage from "./pages/AdminNotesPage"
 import Layout from "./pages/Layout";
 import UserHomePage from "./pages/UserHomePage";
 import InventoryPage from "./pages/InventoryPage"; // ← 새로 추가
+import { SnackbarProvider } from "./components/ui/SnackbarProvider";
 
 function App(){
 
   return(
-
     <BrowserRouter>
+      <SnackbarProvider>
 
       <Routes>
 
@@ -57,7 +58,9 @@ function App(){
 
       </Routes>
 
+      </SnackbarProvider>
     </BrowserRouter>
+
 
   );
 }

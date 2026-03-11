@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import InventoryModal from "./InventoryModal";
 import {
+  createItem,
   getInventories,
   createInventory,
   updateInventory,
@@ -34,10 +35,7 @@ const CATEGORY_COLOR: Record<string, string> = {
 
 const STORAGE_LABEL: Record<string, string> = { R: "냉장", F: "냉동" };
 
-// 🔥 유저 정보 타입
-interface User { id: number; name?: string }
-
-export default function InventoryPage({ currentUser }: { currentUser: User }) {
+export default function InventoryPage() {
   const [inventoryList, setInventoryList] = useState<InventoryWithItem[]>([]);
   const [itemList, setItemList] = useState<Item[]>([]);
   const [keyword, setKeyword] = useState("");
@@ -78,8 +76,28 @@ export default function InventoryPage({ currentUser }: { currentUser: User }) {
 
   const createItemHandler = async (data: any) => {
     if (!user) return alert("사용자 정보가 없습니다.");
-    await createInventory({ ...data, userId: user.id });
-    fetchInventory();
+
+    let itemId = data.itemId; // 기존 아이템일 경우
+
+    if (data.isNewItem) {
+      // 신규 아이템 생성
+      try {
+        const newItem = await createItem({ name: data.itemName, category: data.category }); // createItem은 새 아이템을 DB에 저장하고 { id: number, name: string } 반환한다고 가정
+        itemId = newItem.id; // 생성된 아이템 ID 사용
+      } catch (err) {
+        console.error("아이템 생성 실패", err);
+        return alert("아이템 생성에 실패했습니다.");
+      }
+    }
+
+    // inventory 생성
+    try {
+      await createInventory({ ...data, itemId, userId: user.id });
+      fetchInventory(); // 리스트 새로고침
+    } catch (err) {
+      console.error("재고 생성 실패", err);
+      alert("재고 생성에 실패했습니다.");
+    }
   };
 
   const updateItemHandler = async (id: number, data: any) => {
@@ -112,7 +130,7 @@ export default function InventoryPage({ currentUser }: { currentUser: User }) {
     let list = [...inventoryList];
     if (keyword) list = list.filter((i) => i.item.name.includes(keyword));
     if (categoryFilter !== "ALL") list = list.filter((i) => i.item.category === categoryFilter);
-    if (storageFilter !== "ALL") list = list.filter((i) => i.item.storage === storageFilter);
+    if (storageFilter !== "ALL") list = list.filter((i) => i.storage === storageFilter);
     if (urgentOnly) list = list.filter((i) => i.is_urgent);
 
     list.sort((a, b) => {
@@ -286,7 +304,7 @@ export default function InventoryPage({ currentUser }: { currentUser: User }) {
               </div>
               <div className="flex gap-1 flex-wrap justify-end">
                 <span className={`text-xs px-2 py-1 rounded ${CATEGORY_COLOR[item.item.category]}`}>{CATEGORY_LABEL[item.item.category]}</span>
-                <span className="text-xs px-2 py-1 rounded !bg-blue-100 text-blue-700">{STORAGE_LABEL[item.item.storage]}</span>
+                <span className="text-xs px-2 py-1 rounded !bg-blue-100 text-blue-700">{STORAGE_LABEL[item.storage]}</span>
               </div>
             </div>
 

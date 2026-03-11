@@ -29,15 +29,17 @@ export default function InventoryModal({
   const [itemList, setItemList] = useState<Item[]>(initialItemList);
   const [newItemName, setNewItemName] = useState(""); // 신규항목 입력
   const [form, setForm] = useState({
-    itemId: initialData?.item.id || (initialItemList[0]?.id ?? 0),
+    itemId: initialData?.item.id || 0, // 신규이면 0
+    itemName: initialData?.item.name || "", // ← 추가
     quantity: initialData?.quantity || 1,
     price: initialData?.price ?? undefined,
-    category: initialData?.item.category ?? "",
-    storage: initialData?.item.storage ?? "R",
+    category: initialData?.item.category || "", // ""이면 선택하세요
+    storage: initialData?.storage || "", // ""이면 선택하세요
     is_urgent: initialData?.is_urgent || false,
-    entryDate: initialData?.entryDate.slice(0,10) || new Date().toISOString().slice(0,10),
+    entryDate: initialData?.entryDate?.slice(0,10) || new Date().toISOString().slice(0,10),
     expiryDate: initialData?.expiryDate?.slice(0,10) || ""
   });
+  const [isExistingItem, setIsExistingItem] = useState(!!initialData);
 
   const change = (key: string, value: any) => {
     setForm(prev => ({ ...prev, [key]: value }));
@@ -50,11 +52,18 @@ export default function InventoryModal({
     const newItem: Item = {
       id: newId,
       name: newItemName.trim(),
-      category: "VEG",
-      storage: "R"
+      category: "ETC",
     };
+    setIsExistingItem(false); // ⭐ 신규 생성 → 활성화
+
     setItemList(prev => [...prev, newItem]);
-    setForm(prev => ({ ...prev, itemId: newId }));
+    setForm(prev => ({
+      ...prev,
+      itemId: newId,
+      itemName: newItem.name, // ← 여기서 추가
+      category: newItem.category,
+      isNewItem: true
+    }));
     setNewItemName(""); // 입력 초기화
   };
 
@@ -62,6 +71,9 @@ export default function InventoryModal({
     if(!form.itemId) { alert("재고 항목을 선택해주세요"); return; }
     if(!form.quantity || form.quantity<=0) { alert("수량을 입력해주세요"); return; }
     if(!form.entryDate) { alert("입고일을 입력해주세요"); return; }
+
+    console.log(form);
+    // return;
 
     onSubmit({
       ...form,
@@ -81,11 +93,18 @@ export default function InventoryModal({
         <div className="space-y-2">
           <label className="block text-sm font-medium">재고 항목</label>
           <div className="flex gap-2">
+            {/* 재고 항목 */}
             <select
               className="flex-1 border rounded p-2"
               value={form.itemId}
-              onChange={e => change("itemId", Number(e.target.value))}
+              onChange={e => {
+                const selectedId = Number(e.target.value);
+                const selectedItem = itemList.find(i => i.id === selectedId);
+                change("itemId", selectedId);
+                change("itemName", selectedItem?.name || "");
+              }}
             >
+              {!initialData && <option value={0}>선택하세요</option>}
               {itemList.map(item => (
                 <option key={item.id} value={item.id}>{item.name}</option>
               ))}
@@ -112,11 +131,18 @@ export default function InventoryModal({
         </div>
         <div className="space-y-1">
           <label className="text-sm text-gray-600">카테고리</label>
+          {/* 카테고리 */}
           <select
-            className="w-full p-2 border rounded"
+            className={`w-full p-2 border rounded transition
+              ${isExistingItem
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
+                : "bg-white text-black"
+              }`}
             value={form.category}
             onChange={e=>change("category",e.target.value)}
+            disabled={isExistingItem}
           >
+            {!form.category && <option value="">선택하세요</option>}
             <option value="VEG">야채</option>
             <option value="FRUIT">과일</option>
             <option value="SPICE">조미료</option>
@@ -128,7 +154,13 @@ export default function InventoryModal({
         </div>
         <div className="space-y-2">
           <label className="block text-sm font-medium">보관</label>
-          <select className="w-full border rounded p-2" value={form.storage} onChange={e=>change("storage", e.target.value)}>
+          {/* 보관 */}
+          <select
+            className="w-full border rounded p-2"
+            value={form.storage}
+            onChange={e=>change("storage", e.target.value)}
+          >
+            {!initialData && <option value="">선택하세요</option>}
             <option value="R">냉장</option>
             <option value="F">냉동</option>
           </select>

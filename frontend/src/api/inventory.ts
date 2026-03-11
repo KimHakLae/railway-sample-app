@@ -26,6 +26,23 @@ export const getInventories = async () => {
   return data
 }
 
+/** 재고 항목 등록 */
+export const createItem = async (body:any) => {
+  console.log(body);
+  const res = await fetch(`${API_URL}/item`,{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      ...authHeader()
+    },
+    body: JSON.stringify(body)
+  })
+
+  const data = await res.json()
+  if(!res.ok) throw new Error(data.message || "재고 등록 실패")
+  return data
+}
+
 /** 재고 등록 */
 export const createInventory = async (body:any) => {
   const res = await fetch(`${API_URL}/inventory`,{

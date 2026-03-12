@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { InventoryWithItem } from "../types/inventory";
-import type { Item } from "../types/item";
-import { useSnackbar } from "../components/ui/SnackbarProvider";
+import type { InventoryWithItem } from "../../types/inventory";
+import type { Item } from "../../types/item";
+import { useSnackbar } from "../ui/SnackbarProvider";
 
 interface InventoryModalProps {
   title: string;
@@ -100,7 +100,7 @@ export default function InventoryModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 !bg-black/30 backdrop-blur-sm flex items-end sm:items-center justify-center">
+    <div className="fixed inset-0 z-60 !bg-black/30 backdrop-blur-sm flex items-end sm:items-center justify-center">
       
       {/* 모달 */}
       <div className="

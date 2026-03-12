@@ -16,23 +16,41 @@ export default function LogoutForm() {
       duration: null, // 사용자가 선택할 때까지 유지
       action: (
         <div className="flex gap-2 items-center">
+          {/* 취소 버튼 */}
           <button
             onClick={() => {
               setConfirming(false);
-              hideSnackbar(); // ✅ 스낵바 닫기
+              hideSnackbar();
             }}
-            className="px-3 py-1 rounded-md border border-gray-300 text-gray-700 !text-xs hover:bg-gray-100"
+            className="
+              px-3 py-1 rounded-md !text-xs
+              border border-gray-300
+              text-gray-700
+              shadow-sm
+              transition
+              hover:bg-gray-100 hover:shadow
+              active:scale-95
+            "
           >
             취소
           </button>
 
+          {/* 로그아웃 버튼 */}
           <button
             onClick={() => {
               localStorage.removeItem("token");
               navigate("/");
-              hideSnackbar(); // ✅ 스낵바 닫기
+              hideSnackbar();
             }}
-            className="px-3 py-1 rounded-md !bg-red-500 text-white !text-xs hover:bg-red-600"
+            className="
+              px-3 py-1 rounded-md !text-xs
+              bg-gradient-to-r from-red-500 to-red-600
+              text-white font-semibold
+              shadow
+              transition
+              hover:from-red-600 hover:to-red-700
+              active:scale-95
+            "
           >
             로그아웃
           </button>
@@ -44,7 +62,16 @@ export default function LogoutForm() {
   return (
     <button
       onClick={handleLogout}
-      className="!bg-red-500 hover:bg-red-600 text-white !px-3 !py-1.5 !rounded-md !text-xs shadow"
+      className="
+        !px-3 !py-1.5 !rounded-md !text-xs
+        bg-gradient-to-r from-red-500 to-red-600
+        text-white
+        font-semibold
+        shadow
+        transition
+        hover:from-red-600 hover:to-red-700
+        active:scale-95
+      "
     >
       로그아웃
     </button>

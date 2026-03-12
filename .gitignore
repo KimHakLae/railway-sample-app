@@ -71,3 +71,7 @@ Desktop.ini
 .npmrc
 
 README*.md
+
+# Copy files
+*copy.tsx
+*.copy.tsx

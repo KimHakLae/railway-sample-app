@@ -1,4 +1,5 @@
-export const APP_VERSION = "v1.1.0";
+export const APP_VERSION = "v1.1.1";
+
 export const LAST_UPDATED = "2026-03-12";
 
 export interface VersionChange {
@@ -9,7 +10,17 @@ export interface VersionChange {
 
 export const VERSION_HISTORY: VersionChange[] = [
   {
+    version: "v1.1.1",
+    date: "2026-03-12",
+    changes: [
+      "재고 삭제 확인 UI 버튼 가독성 개선",
+      "모달 창 위에서 스낵바(알림 창)가 보이지 않던 문제 수정",
+      "스낵바 시각적 계층(z-index) 최적화"
+    ]
+  },
+  {
     version: "v1.1.0",
+
     date: "2026-03-12",
     changes: [
       "전체적인 UI 디자인 시스템 통일 및 반응형 레이아웃 개선",

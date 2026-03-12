@@ -47,11 +47,12 @@ export const SnackbarProvider = ({ children }: { children: ReactNode }) => {
       {/* 하단 스낵바 */}
       <div
         className={`
-          fixed left-1/2 -translate-x-1/2 bottom-6 z-50
+          fixed left-1/2 -translate-x-1/2 bottom-6 z-[9999]
           transition-all duration-300
           ${snackbar.show ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 pointer-events-none"}
         `}
       >
+
         <div
           className={`
             px-5 py-3 rounded-xl shadow-lg text-sm font-medium

@@ -68,11 +68,46 @@ export default function InventoryPage() {
       type: "info",
       duration: null,
       action: (
-        <div className="flex gap-2 items-center">
-          <button onClick={() => hideSnackbar()} className="px-3 py-1 rounded-md border border-gray-300 text-gray-700 !text-xs hover:bg-gray-100">취소</button>
-          <button onClick={async () => { hideSnackbar(); setSubmitting(true); setToastMsg("삭제중입니다..."); try { await deleteInventory(id); await fetchInventory(); showSnackbar("삭제되었습니다", { type: "success" }); } catch (err) { console.error(err); showSnackbar("삭제 실패 😢", { type: "error" }); } finally { setSubmitting(false); } }} className="px-3 py-1 rounded-md !bg-red-500 text-white !text-xs hover:bg-red-600">삭제</button>
+        <div className="flex gap-2 items-center pt-1">
+          <button
+            onClick={() => hideSnackbar()}
+            className="
+              px-4 py-1.5 rounded-lg text-xs font-bold
+              bg-white/10 hover:bg-white/20
+              text-white border border-white/20
+              transition-all active:scale-95
+            "
+          >
+            취소
+          </button>
+          <button
+            onClick={async () => {
+              hideSnackbar();
+              setSubmitting(true);
+              setToastMsg("삭제중입니다...");
+              try {
+                await deleteInventory(id);
+                await fetchInventory();
+                showSnackbar("삭제되었습니다", { type: "success" });
+              } catch (err) {
+                console.error(err);
+                showSnackbar("삭제 실패 😢", { type: "error" });
+              } finally {
+                setSubmitting(false);
+              }
+            }}
+            className="
+              px-4 py-1.5 rounded-lg text-xs font-bold
+              bg-red-500 hover:bg-red-600
+              text-white shadow-lg shadow-red-900/20
+              transition-all active:scale-95
+            "
+          >
+            삭제
+          </button>
         </div>
       ),
+
     });
   };
 

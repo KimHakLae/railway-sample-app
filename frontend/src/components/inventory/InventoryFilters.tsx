@@ -28,8 +28,6 @@ interface Props {
   sort: string;
   setSort: (v: string) => void;
   isFiltered: boolean;
-  filterOpen: boolean;
-  setFilterOpen: React.Dispatch<React.SetStateAction<boolean>>; // ✅ 여기 수정
   resetFilters: () => void;
 }
 
@@ -40,114 +38,111 @@ export default function InventoryFilters({
   urgentOnly, setUrgentOnly,
   sort, setSort,
   isFiltered,
-  filterOpen, setFilterOpen,
   resetFilters
 }: Props) {
   return (
-    <div className={`rounded-xl border p-3 space-y-3 ${urgentOnly ? "border-red-400 !bg-red-50" : "!bg-white"}`}>
+    <div className={`premium-card p-4 space-y-6 transition-all duration-300 ${urgentOnly ? "ring-1 ring-red-400 bg-red-50/20" : ""}`}>
+      {/* 칩 섹터: 카테고리 필터 */}
+      <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <div className="font-semibold">🔎 검색 & 필터</div>
-          <div className="flex items-center gap-2">
-            {isFiltered && (
-              <button
-                onClick={resetFilters}
-                className="text-gray-400 hover:text-red-500 !text-sm transition-colors"
-                title="검색조건 초기화"
-              >
-                ↺
-              </button>
-            )}
+          <div className="text-xs font-black text-gray-400 uppercase tracking-widest">Categories</div>
+          {categoryFilter !== "ALL" && (
+            <button onClick={() => setCategoryFilter("ALL")} className="text-[10px] font-bold text-brand-600 hover:underline">Reset</button>
+          )}
+        </div>
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-1 px-1">
+          <button
+            onClick={() => setCategoryFilter("ALL")}
+            className={`
+              flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all
+              ${categoryFilter === "ALL" 
+                ? "bg-brand-600 text-white shadow-lg shadow-brand-200" 
+                : "bg-gray-50 text-gray-500 hover:bg-gray-100"}
+            `}
+          >
+            전체
+          </button>
+          {Object.entries(CATEGORY_INFO).map(([key, info]) => (
             <button
-              onClick={() => setFilterOpen((v) => !v)}
-              className="p-1 rounded-full hover:bg-gray-100 transition"
+              key={key}
+              onClick={() => setCategoryFilter(key)}
+              className={`
+                flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap
+                ${categoryFilter === key 
+                  ? `${info.style} shadow-lg ring-2 ring-current ring-offset-2` 
+                  : "bg-gray-50 text-gray-500 hover:bg-gray-100"}
+              `}
             >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                className={`transition-transform ${filterOpen ? "rotate-180" : ""}`}
-              >
-                <path
-                  d="M6 9l6 6 6-6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              {info.label}
             </button>
-          </div>
+          ))}
         </div>
+      </div>
 
-      {!filterOpen && (
-        <div className="flex flex-wrap gap-2 text-xs">
-          {keyword && <span className="px-2 py-1 rounded !bg-gray-200">검색: {keyword}</span>}
-          {categoryFilter !== "ALL" && <span className="px-2 py-1 rounded !bg-gray-200">카테고리: {CATEGORY_INFO[categoryFilter].label}</span>}
-          {storageFilter !== "ALL" && <span className="px-2 py-1 rounded !bg-gray-200">보관: {STORAGE_INFO[storageFilter].label}</span>}
-          {urgentOnly && <span className="px-2 py-1 rounded !bg-red-100 text-red-700">긴급만</span>}
-          {!keyword && categoryFilter === "ALL" && storageFilter === "ALL" && !urgentOnly && <span className="px-2 py-1 rounded !bg-gray-100 text-gray-400">전체 보기</span>}
-        </div>
-      )}
+      <div className="border-t border-gray-50"></div>
 
-      {filterOpen && (
-        <div className="space-y-2">
-          <input placeholder="재고명 검색" className="w-full p-2 border rounded" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-          {/* <label className="flex items-center justify-between">
-            <span className={`text-sm font-medium ${urgentOnly ? "text-red-600" : "text-gray-700"}`}>긴급만 보기</span>
-            <input type="checkbox" checked={urgentOnly} onChange={() => setUrgentOnly(!urgentOnly)} />
-          </label> */}
-          <div className="py-2">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className={`text-sm font-medium ${urgentOnly ? "text-red-600" : "text-gray-700"}`}>
-                  긴급만 보기
-                </div>
-                <div className="text-xs text-gray-400">긴급 표시된 재고만 표시</div>
-              </div>
-              <div className="relative">
-                <label className="relative inline-block cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={urgentOnly}
-                    onChange={() => setUrgentOnly(!urgentOnly)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-12 h-7 bg-gray-200 rounded-full transition-colors peer-checked:!bg-red-500"></div>
-                  <div className="absolute top-1 left-1 w-5 h-5 bg-white rounded-full shadow transition-all peer-checked:translate-x-5"></div>
-                </label>
-              </div>
-            </div>
-            <div className="border-t mt-3"></div>
+      {/* 기타 검색 및 필터 파트 */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="relative flex-1 group">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-600 transition-colors" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input 
+              placeholder="재고명을 입력하세요" 
+              className="w-full pl-10 pr-4 py-3 bg-gray-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-brand-100 focus:bg-white transition-all outline-none" 
+              value={keyword} 
+              onChange={(e) => setKeyword(e.target.value)} 
+            />
           </div>
-          <select className="w-full p-2 border rounded" value={sort} onChange={(e) => setSort(e.target.value)}>
+          <select 
+            className="px-4 py-3 bg-gray-50 border-none rounded-2xl text-sm font-bold focus:ring-2 focus:ring-brand-100 outline-none appearance-none cursor-pointer" 
+            value={sort} 
+            onChange={(e) => setSort(e.target.value)}
+          >
             <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
             <option value="name">이름순</option>
             <option value="qty">수량순</option>
           </select>
-          <div className="flex gap-2">
-            <select className="flex-1 p-2 border rounded" value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
-              <option value="ALL">전체 카테고리</option>
-              <option value="VEG">야채</option>
-              <option value="FRUIT">과일</option>
-              <option value="SPICE">조미료</option>
-              <option value="SAUCE">양념장</option>
-              <option value="MEAT">고기</option>
-              <option value="SNACK">간식</option>
-              <option value="FOOD">음식</option>
-              <option value="FROZEN_FOOD">냉동식품</option>
-              <option value="ETC">기타</option>
-            </select>
-            <select className="flex-1 p-2 border rounded" value={storageFilter} onChange={(e) => setStorageFilter(e.target.value)}>
-              <option value="ALL">전체 보관</option>
-              <option value="R">냉장</option>
-              <option value="F">냉동</option>
-              <option value="RT">상온</option>
-            </select>
-          </div>
         </div>
-      )}
+
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <select 
+              className="px-4 py-2 bg-gray-50 border-none rounded-xl text-xs font-bold focus:ring-2 focus:ring-brand-100 outline-none cursor-pointer" 
+              value={storageFilter} 
+              onChange={(e) => setStorageFilter(e.target.value)}
+            >
+              <option value="ALL">전체 보관방식</option>
+              <option value="R">❄️ 냉장</option>
+              <option value="F">🧊 냉동</option>
+              <option value="RT">🌡️ 상온</option>
+            </select>
+            {isFiltered && (
+               <button
+                onClick={resetFilters}
+                className="p-2 rounded-xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all"
+                title="필터 초기화"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              </button>
+            )}
+          </div>
+
+          <label className="flex items-center gap-2 cursor-pointer group">
+            <span className={`text-xs font-bold transition-colors ${urgentOnly ? "text-red-500" : "text-gray-400 group-hover:text-gray-600"}`}>긴급항목</span>
+            <div className="relative">
+              <input
+                type="checkbox"
+                checked={urgentOnly}
+                onChange={() => setUrgentOnly(!urgentOnly)}
+                className="sr-only peer"
+              />
+              <div className="w-10 h-6 bg-gray-200 rounded-full transition-colors peer-checked:bg-red-500"></div>
+              <div className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all peer-checked:translate-x-4"></div>
+            </div>
+          </label>
+        </div>
+      </div>
     </div>
   );
-}
+}

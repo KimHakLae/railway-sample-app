@@ -22,7 +22,6 @@ export default function InventoryPage() {
   const [openCreate, setOpenCreate] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [editItem, setEditItem] = useState<InventoryWithItem | null>(null);
-  const [filterOpen, setFilterOpen] = useState(true);
   const [loadingId, setLoadingId] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
@@ -136,7 +135,16 @@ export default function InventoryPage() {
     return list;
   }, [inventoryList, keyword, urgentOnly, sort, categoryFilter, storageFilter]);
 
-  const stats = useMemo(() => ({ total: inventoryList.length, urgent: inventoryList.filter(i => i.is_urgent).length, qty: inventoryList.reduce((s, i) => s + i.quantity, 0) }), [inventoryList]);
+  const stats = useMemo(() => {
+    const today = new Date().setHours(0,0,0,0);
+    return { 
+      total: inventoryList.length, 
+      urgent: inventoryList.filter(i => i.is_urgent).length, 
+      expired: inventoryList.filter(i => i.expiryDate && new Date(i.expiryDate).getTime() < today).length,
+      qty: inventoryList.reduce((s, i) => s + i.quantity, 0) 
+    };
+  }, [inventoryList]);
+
   const isFiltered =
     Boolean(keyword) ||
     categoryFilter !== "ALL" ||
@@ -156,7 +164,7 @@ export default function InventoryPage() {
       <InventoryStats {...stats} />
       
       <div className="space-y-4">
-        <InventoryFilters keyword={keyword} setKeyword={setKeyword} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} storageFilter={storageFilter} setStorageFilter={setStorageFilter} urgentOnly={urgentOnly} setUrgentOnly={setUrgentOnly} sort={sort} setSort={setSort} isFiltered={isFiltered} filterOpen={filterOpen} setFilterOpen={setFilterOpen} resetFilters={resetFilters} />
+        <InventoryFilters keyword={keyword} setKeyword={setKeyword} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} storageFilter={storageFilter} setStorageFilter={setStorageFilter} urgentOnly={urgentOnly} setUrgentOnly={setUrgentOnly} sort={sort} setSort={setSort} isFiltered={isFiltered} resetFilters={resetFilters} />
         <InventoryList items={filtered} toggleUrgent={toggleUrgent} confirmDeleteHandler={confirmDeleteHandler} setEditItem={setEditItem} setOpenEdit={setOpenEdit} />
       </div>
 

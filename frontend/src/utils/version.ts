@@ -1,4 +1,4 @@
-export const APP_VERSION = "v1.1.1";
+export const APP_VERSION = "v1.2.0";
 
 export const LAST_UPDATED = "2026-03-12";
 
@@ -9,6 +9,17 @@ export interface VersionChange {
 }
 
 export const VERSION_HISTORY: VersionChange[] = [
+  {
+    version: "v1.2.0",
+    date: "2026-03-12",
+    changes: [
+      "재고 관리 UI 대규모 고도화",
+      "유통기한 D-Day 뱃지 및 상태별 시각화 도입",
+      "긴급(Urgent) 항목 시각적 강조 강화 (글로우 효과, 전용 뱃지)",
+      "필터 UI 현대화 (카테고리 선택 칩 시스템 도입)",
+      "스테이터스 대시보드 프리미엄화 및 만료 항목 카운트 추가"
+    ]
+  },
   {
     version: "v1.1.1",
     date: "2026-03-12",

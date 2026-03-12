@@ -218,6 +218,8 @@ export default function InventoryModal({
                 <option value="SAUCE">🥫 양념장</option>
                 <option value="MEAT">🥩 고기</option>
                 <option value="SNACK">🍪 간식</option>
+                <option value="FOOD">🍱 음식</option>
+                <option value="FROZEN_FOOD">🧊 냉동식품</option>
                 <option value="ETC">📦 기타</option>
               </select>
             </div>

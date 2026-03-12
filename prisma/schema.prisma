@@ -42,13 +42,15 @@ model User {
 
 // 카테고리 enum
 enum Category {
-  VEG     // 야채
-  FRUIT   // 과일   ← 추가
-  SPICE   // 조미료
-  SAUCE   // 양념장
-  MEAT    // 고기
-  SNACK   // 간식   ← 추가
-  ETC     // 기타
+  VEG         // 야채
+  FRUIT       // 과일
+  SPICE       // 조미료
+  SAUCE       // 양념장
+  MEAT        // 고기
+  SNACK       // 간식
+  FOOD        // 음식
+  FROZEN_FOOD // 냉동식품
+  ETC         // 기타
 }
 
 // 보관방법 enum

@@ -234,6 +234,7 @@ export default function InventoryModal({
                 {!initialData && <option value="">선택하세요</option>}
                 <option value="R">🧊 냉장</option>
                 <option value="F">❄️ 냉동</option>
+                <option value="RT">🌡️ 상온</option>
               </select>
             </div>
           </section>

@@ -33,22 +33,22 @@ export default function RegisterForm() {
       <div>
         <input
           type="email"
-          placeholder="Email"
+          placeholder="이메일 주소"
           value={email}
           onChange={e => setEmail(e.target.value)}
           required
-          className="w-full p-2 border rounded"
+          className="premium-input"
         />
       </div>
 
       <div>
         <input
           type="password"
-          placeholder="Password"
+          placeholder="비밀번호"
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
-          className="w-full p-2 border rounded"
+          className="premium-input"
         />
       </div>
 

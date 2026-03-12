@@ -13,9 +13,9 @@ export default function LogoutForm() {
 
     showSnackbar("정말 로그아웃하시겠습니까?", {
       type: "info",
-      duration: null, // 사용자가 선택할 때까지 유지
+      duration: null,
       action: (
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center pt-1">
           {/* 취소 버튼 */}
           <button
             onClick={() => {
@@ -23,13 +23,10 @@ export default function LogoutForm() {
               hideSnackbar();
             }}
             className="
-              px-3 py-1 rounded-md !text-xs
-              border border-gray-300
-              text-gray-700
-              shadow-sm
-              transition
-              hover:bg-gray-100 hover:shadow
-              active:scale-95
+              px-4 py-1.5 rounded-lg text-xs font-bold
+              bg-white/10 hover:bg-white/20
+              text-white border border-white/20
+              transition-all active:scale-95
             "
           >
             취소
@@ -43,13 +40,10 @@ export default function LogoutForm() {
               hideSnackbar();
             }}
             className="
-              px-3 py-1 rounded-md !text-xs
-              bg-gradient-to-r from-red-500 to-red-600
-              text-white font-semibold
-              shadow
-              transition
-              hover:from-red-600 hover:to-red-700
-              active:scale-95
+              px-4 py-1.5 rounded-lg text-xs font-bold
+              bg-red-500 hover:bg-red-600
+              text-white shadow-lg shadow-red-900/20
+              transition-all active:scale-95
             "
           >
             로그아웃
@@ -57,23 +51,22 @@ export default function LogoutForm() {
         </div>
       ),
     });
+
   };
 
   return (
     <button
       onClick={handleLogout}
       className="
-        !px-3 !py-1.5 !rounded-md !text-xs
-        bg-gradient-to-r from-red-500 to-red-600
-        text-white
-        font-semibold
-        shadow
-        transition
-        hover:from-red-600 hover:to-red-700
+        px-4 py-1.5 rounded-xl text-xs font-extrabold
+        bg-red-50 text-red-600 border border-red-100
+        shadow-sm transition-all
+        hover:bg-red-500 hover:text-white
         active:scale-95
       "
     >
       로그아웃
     </button>
+
   );
 }

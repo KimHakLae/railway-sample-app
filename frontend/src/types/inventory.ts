@@ -1,6 +1,6 @@
 import type { Item } from "./item";
 
-export type Storage = "R" | "F";
+export type Storage = "R" | "F" | "RT";
 export interface Inventory {
   id: number;
   itemId: number;

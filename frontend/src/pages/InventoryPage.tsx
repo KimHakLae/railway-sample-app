@@ -110,37 +110,43 @@ export default function InventoryPage() {
     sort !== "latest";
 
   return (
-    <div className="p-4 max-w-md mx-auto space-y-4">
-      {submitting && <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50"><div className="px-4 py-2 rounded-full shadow bg-black text-white text-sm animate-pulse">{toastMsg}</div></div>}
-      <h1 className="!text-xl font-bold">📦 재고 관리</h1>
+    <div className="space-y-6">
+      {submitting && <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[100]"><div className="px-6 py-3 rounded-full shadow-2xl bg-black text-white text-sm font-bold animate-fade-in">{toastMsg}</div></div>}
+      
+      <div className="flex flex-col gap-1">
+        <h1 className="text-3xl font-black tracking-tight text-gray-900">📦 재고 관리</h1>
+        <p className="text-gray-500">실시간 재고 상태 및 보관 정보를 관리합니다.</p>
+      </div>
+
       <InventoryStats {...stats} />
-      <InventoryFilters keyword={keyword} setKeyword={setKeyword} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} storageFilter={storageFilter} setStorageFilter={setStorageFilter} urgentOnly={urgentOnly} setUrgentOnly={setUrgentOnly} sort={sort} setSort={setSort} isFiltered={isFiltered} filterOpen={filterOpen} setFilterOpen={setFilterOpen} resetFilters={resetFilters} />
-      <InventoryList items={filtered} toggleUrgent={toggleUrgent} confirmDeleteHandler={confirmDeleteHandler} setEditItem={setEditItem} setOpenEdit={setOpenEdit} />
+      
+      <div className="space-y-4">
+        <InventoryFilters keyword={keyword} setKeyword={setKeyword} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} storageFilter={storageFilter} setStorageFilter={setStorageFilter} urgentOnly={urgentOnly} setUrgentOnly={setUrgentOnly} sort={sort} setSort={setSort} isFiltered={isFiltered} filterOpen={filterOpen} setFilterOpen={setFilterOpen} resetFilters={resetFilters} />
+        <InventoryList items={filtered} toggleUrgent={toggleUrgent} confirmDeleteHandler={confirmDeleteHandler} setEditItem={setEditItem} setOpenEdit={setOpenEdit} />
+      </div>
 
       {openCreate && <InventoryModal title="재고 등록" onClose={() => setOpenCreate(false)} onSubmit={async (data) => { setOpenCreate(false); setSubmitting(true); setToastMsg("등록중입니다..."); try { await createItemHandler(data); } finally { setSubmitting(false); } }} itemList={itemList} />}
       {openEdit && editItem && <InventoryModal title="재고 수정" initialData={editItem} onClose={() => setOpenEdit(false)} onSubmit={async (data) => { setOpenEdit(false); setSubmitting(true); setToastMsg("수정중입니다..."); try { await updateItemHandler(editItem.id, data); } finally { setSubmitting(false); } }} itemList={itemList} />}
 
-      {/* <button onClick={() => setOpenCreate(true)} className="fixed bottom-5 right-5 w-14 h-14 rounded-full border-3 border-blue-500 bg-white text-blue-500 flex items-center justify-center shadow-md hover:border-blue-400 hover:text-blue-400 hover:shadow-lg hover:scale-105 transition-all duration-200 z-50" aria-label="재고 등록"><span className="text-xl">➕</span></button> */}
-      {/* 재고 등록 버튼 */}
+      {/* 재고 등록 버튼 (플로팅 버튼 스타일 개선) */}
       <button
         onClick={() => setOpenCreate(true)}
         className="
-          fixed bottom-5 right-5
-          w-14 h-14
-          rounded-full
-          border-3 border-blue-500
-          bg-white
-          text-blue-500
+          fixed bottom-8 right-8
+          w-16 h-16
+          rounded-2xl
+          bg-brand-600
+          text-white
           flex items-center justify-center
-          shadow-md
-          hover:border-blue-400 hover:text-blue-400 hover:shadow-lg hover:scale-105
-          transition-all duration-200
-          z-50
+          shadow-2xl shadow-brand-200
+          hover:bg-brand-700 hover:scale-110 active:scale-95
+          transition-all duration-300
+          z-40
         "
         aria-label="재고 등록"
       >
-        <span className="text-xl">➕</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       </button>
     </div>
   );
-}
+}

@@ -13,6 +13,7 @@ export const CATEGORY_INFO: Record<string, { label: string; style: string }> = {
 export const STORAGE_INFO: Record<string, { label: string; style: string }> = {
   R: { label: "🧊 냉장", style: "!bg-cyan-100 text-cyan-700" },
   F: { label: "❄️ 냉동", style: "!bg-indigo-100 text-indigo-700" },
+  RT: { label: "🌡️ 상온", style: "!bg-orange-100 text-orange-700" },
 };
 
 interface Props {
@@ -142,6 +143,7 @@ export default function InventoryFilters({
               <option value="ALL">전체 보관</option>
               <option value="R">냉장</option>
               <option value="F">냉동</option>
+              <option value="RT">상온</option>
             </select>
           </div>
         </div>

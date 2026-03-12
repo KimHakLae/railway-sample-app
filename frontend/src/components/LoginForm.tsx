@@ -37,8 +37,8 @@ export default function LoginForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
 
       <input
-        className="w-full border rounded p-2"
-        placeholder="Email"
+        className="premium-input"
+        placeholder="이메일 주소"
         value={email}
         onChange={(e)=>setEmail(e.target.value)}
         autoFocus
@@ -46,8 +46,8 @@ export default function LoginForm() {
 
       <input
         type="password"
-        className="w-full border rounded p-2"
-        placeholder="Password"
+        className="premium-input"
+        placeholder="비밀번호"
         value={password}
         onChange={(e)=>setPassword(e.target.value)}
       />

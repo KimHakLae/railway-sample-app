@@ -19,19 +19,31 @@ function App(){
       <SnackbarProvider>
 
       <Routes>
-
         <Route path="/" element={<LoginPage />} />
-
         <Route path="/register" element={<RegisterPage />} />
         
-        {/* 사용자 */}
-        <Route path="/user" element={<UserHomePage />} />
-
-        {/* 관리자 */}
-        <Route path="/admin" element={<AdminHomePage />} />
-
         <Route element={<Layout />}>
-          {/* 일반 사용자 */}
+          {/* 사용자 홈 */}
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute>
+                <UserHomePage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 관리자 홈 */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminHomePage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 일반 업무 페이지 */}
           <Route
             path="/notes"
             element={
@@ -41,7 +53,7 @@ function App(){
             }
           />
 
-          {/* 재고 관리 페이지 (공동 접근 가능) */}
+          {/* 재고 관리 페이지 */}
           <Route
             path="/inventory"
             element={
@@ -51,12 +63,12 @@ function App(){
             }
           />
 
-          {/* 관리자 */}
+          {/* 관리자 전용 */}
           <Route path="/admin/users" element={<AdminUsersPage />} />
           <Route path="/admin/notes" element={<AdminNotesPage />} />
         </Route>
-
       </Routes>
+
 
       </SnackbarProvider>
     </BrowserRouter>

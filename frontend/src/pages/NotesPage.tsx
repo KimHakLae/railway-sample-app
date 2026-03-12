@@ -16,26 +16,15 @@ export default function NotesPage() {
 
   const fetchNotes = async () => {
     setLoading(true)
-
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/notes`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       })
-
-      // ✅ HTTP 에러 체크
-      if (!res.ok) {
-        throw new Error("API Error")
-      }
-
+      if (!res.ok) throw new Error("API Error")
       const data = await res.json()
-
-      // ✅ 빈 배열은 정상 상태
       setNotes(Array.isArray(data) ? data : [])
-
     } catch (e) {
-      alert("서버 연결 실패 😥")
+      console.error(e)
     } finally {
       setLoading(false)
     }
@@ -46,15 +35,10 @@ export default function NotesPage() {
   }, [])
 
   const handleDelete = async (id: number) => {
-    if (!confirm("삭제할까요?")) return
-
     await fetch(`${import.meta.env.VITE_API_URL}/notes/${id}`, {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     })
-
     setNotes(notes.filter(n => n.id !== id))
   }
 
@@ -63,27 +47,31 @@ export default function NotesPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      {/* 헤더 */}
-      <h1 className="!text-3xl mb-6 font-bold">📝 My Notes</h1>
+    <div className="space-y-8 max-w-4xl mx-auto">
+      <div className="flex flex-col gap-1 text-center sm:text-left">
+        <h1 className="text-3xl font-black tracking-tight text-gray-900">📝 내 노트 관리</h1>
+        <p className="text-gray-500">생각이나 업무 내용을 자유롭게 기록하세요.</p>
+      </div>
 
       <NewNoteForm onCreated={handleCreated} />
 
-      {loading && <p className="mt-6">불러오는 중...</p>}
-
-      {!loading && notes.length === 0 && (
-        <p className="mt-6 text-gray-500">노트가 없습니다.</p>
-      )}
-
-      <div className="mt-6 space-y-4">
-        {notes.map(note => (
-          <NoteCard
-            key={note.id}
-            note={note}
-            onDelete={handleDelete}
-          />
-        ))}
+      <div className="space-y-4">
+        {loading ? (
+          <div className="flex justify-center py-12">
+            <div className="w-8 h-8 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin"></div>
+          </div>
+        ) : notes.length === 0 ? (
+          <div className="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
+            <p className="text-gray-400 font-medium">작성된 노트가 없습니다.</p>
+          </div>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2">
+            {notes.map(note => (
+              <NoteCard key={note.id} note={note} onDelete={handleDelete} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
-}
+}

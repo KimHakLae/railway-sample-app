@@ -1,6 +1,6 @@
-export const APP_VERSION = "v1.2.0";
+export const APP_VERSION = "v1.3.0";
 
-export const LAST_UPDATED = "2026-03-12";
+export const LAST_UPDATED = "2026-03-13";
 
 export interface VersionChange {
   version: string;
@@ -9,6 +9,16 @@ export interface VersionChange {
 }
 
 export const VERSION_HISTORY: VersionChange[] = [
+  {
+    version: "v1.3.0",
+    date: "2026-03-13",
+    changes: [
+      "전용 '품목 관리' 메뉴 및 페이지 신설",
+      "품목별 개별 버전 관리(Version) 필드 추가",
+      "품목 삭제 시 재고 존재 여부 체크 로직 강화",
+      "품목 리스트 내 전역 재고 합산 수량 시각화"
+    ]
+  },
   {
     version: "v1.2.0",
     date: "2026-03-12",

@@ -40,6 +40,20 @@ export default function AdminHomePage() {
           </Card>
         </Link>
 
+        <Link to="/items" className="group">
+          <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none">
+            <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <span className="text-2xl">📑</span>
+            </div>
+            <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
+              품목 관리
+            </h2>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              품목 등록·수정·삭제 및 버전 관리, 재고 수량 현황을 확인합니다.
+            </p>
+          </Card>
+        </Link>
+
         <Link to="/notes" className="group">
           <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none">
             <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">

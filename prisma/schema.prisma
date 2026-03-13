@@ -63,6 +63,7 @@ enum Storage {
 model Item {
   id        Int        @id @default(autoincrement())
   name      String     @db.VarChar(50)
+  version   String?    @db.VarChar(20) // ← 버전 관리 필드 추가
   category  Category   @default(ETC)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt

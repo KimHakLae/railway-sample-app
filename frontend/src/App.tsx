@@ -10,6 +10,7 @@ import AdminNotesPage from "./pages/AdminNotesPage"
 import Layout from "./pages/Layout";
 import UserHomePage from "./pages/UserHomePage";
 import InventoryPage from "./pages/InventoryPage"; // ← 새로 추가
+import ItemsPage from "./pages/ItemsPage"; // ← 새로 추가
 import { SnackbarProvider } from "./components/ui/SnackbarProvider";
 
 function App(){
@@ -59,6 +60,16 @@ function App(){
             element={
               <ProtectedRoute>
                 <InventoryPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 품목 관리 페이지 */}
+          <Route
+            path="/items"
+            element={
+              <ProtectedRoute>
+                <ItemsPage />
               </ProtectedRoute>
             }
           />

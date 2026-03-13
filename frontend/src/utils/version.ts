@@ -56,7 +56,7 @@ export const VERSION_HISTORY: VersionChange[] = [
     changes: [
       "재고 관리 및 메모 시스템 초기 배포",
       "관리자 승인 시스템(Pending/Approved) 구축",
-      "카테고리(음식, 냉동식품) 초기 추가"
+      "카테고리(반찬, 냉동식품) 초기 추가"
     ]
   }
 ];

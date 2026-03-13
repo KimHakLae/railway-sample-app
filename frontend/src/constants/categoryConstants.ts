@@ -9,7 +9,7 @@ export const CATEGORY_INFO: Record<string, { label: string; style: string }> = {
   SAUCE:       { label: "🥫 양념장",   style: "!bg-orange-100 text-orange-700" },
   MEAT:        { label: "🥩 고기",     style: "!bg-red-100 text-red-700" },
   SNACK:       { label: "🍪 간식",     style: "!bg-purple-100 text-purple-700" },
-  FOOD:        { label: "🍱 음식",     style: "!bg-amber-100 text-amber-700" },
+  FOOD:        { label: "🍱 반찬",     style: "!bg-amber-100 text-amber-700" },
   FROZEN_FOOD: { label: "🧊 냉동식품", style: "!bg-blue-100 text-blue-700" },
   ETC:         { label: "📦 기타",     style: "!bg-gray-100 text-gray-700" },
 };

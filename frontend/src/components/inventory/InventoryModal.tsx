@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { InventoryWithItem } from "../../types/inventory";
 import type { Item } from "../../types/item";
 import { useSnackbar } from "../ui/SnackbarProvider";
+import { CATEGORY_INFO, STORAGE_INFO } from "../../constants/categoryConstants";
 
 interface InventoryModalProps {
   title: string;
@@ -208,19 +209,16 @@ export default function InventoryModal({
                     : "bg-white"
                 }`}
                 value={form.category}
-                onChange={e=>change("category",e.target.value)}
+                onChange={e => change("category", e.target.value)}
                 disabled={!isNewItem}
               >
                 {!form.category && <option value="">선택하세요</option>}
-                <option value="VEG">🥬 야채</option>
-                <option value="FRUIT">🍎 과일</option>
-                <option value="SPICE">🧂 조미료</option>
-                <option value="SAUCE">🥫 양념장</option>
-                <option value="MEAT">🥩 고기</option>
-                <option value="SNACK">🍪 간식</option>
-                <option value="FOOD">🍱 음식</option>
-                <option value="FROZEN_FOOD">🧊 냉동식품</option>
-                <option value="ETC">📦 기타</option>
+
+                {Object.entries(CATEGORY_INFO).map(([key, info]) => (
+                  <option key={key} value={key}>
+                    {info.label}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -232,9 +230,12 @@ export default function InventoryModal({
                 onChange={e=>change("storage", e.target.value)}
               >
                 {!initialData && <option value="">선택하세요</option>}
-                <option value="R">🧊 냉장</option>
-                <option value="F">❄️ 냉동</option>
-                <option value="RT">🌡️ 상온</option>
+
+                {Object.entries(STORAGE_INFO).map(([key, info]) => (
+                  <option key={key} value={key}>
+                    {info.label}
+                  </option>
+                ))}
               </select>
             </div>
           </section>

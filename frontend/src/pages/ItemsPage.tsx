@@ -160,7 +160,7 @@ export default function ItemsPage() {
                   <span className={`px-3 py-1 rounded-full text-[10px] font-black ${CATEGORY_INFO[item.category]?.style || "bg-gray-100 text-gray-500"}`}>
                     {CATEGORY_INFO[item.category]?.label || item.category}
                   </span>
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="flex gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                     <button
                       onClick={() => { setSelectedItem(item); setOpenModal(true); }}
                       className="p-2 hover:bg-brand-50 text-brand-600 rounded-lg transition-colors"

@@ -1,4 +1,3 @@
-export { CATEGORY_INFO, STORAGE_INFO } from "../../constants/categoryConstants";
 import { CATEGORY_INFO, STORAGE_INFO } from "../../constants/categoryConstants";
 
 interface Props {
@@ -92,15 +91,16 @@ export default function InventoryFilters({
 
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <select 
-              className="px-4 py-2 bg-gray-50 border-none rounded-xl text-xs font-bold focus:ring-2 focus:ring-brand-100 outline-none cursor-pointer" 
-              value={storageFilter} 
+            <select
+              value={storageFilter}
               onChange={(e) => setStorageFilter(e.target.value)}
             >
               <option value="ALL">전체 보관방식</option>
-              <option value="R">❄️ 냉장</option>
-              <option value="F">🧊 냉동</option>
-              <option value="RT">🌡️ 상온</option>
+              {Object.entries(STORAGE_INFO).map(([key, info]) => (
+                <option key={key} value={key}>
+                  {info.label}
+                </option>
+              ))}
             </select>
             {isFiltered && (
                <button
@@ -130,4 +130,4 @@ export default function InventoryFilters({
       </div>
     </div>
   );
-}
+}

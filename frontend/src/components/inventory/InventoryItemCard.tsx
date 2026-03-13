@@ -1,5 +1,5 @@
 import type { InventoryWithItem } from "../../types/inventory";
-import { CATEGORY_INFO, STORAGE_INFO } from "./InventoryFilters";
+import { CATEGORY_INFO, STORAGE_INFO } from "../../constants/categoryConstants";
 
 interface Props {
   item: InventoryWithItem;

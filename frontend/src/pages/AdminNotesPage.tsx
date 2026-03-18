@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import AdminNoteCard from "../components/admin/AdminNoteCard"
 
 interface Note {
   id: number
@@ -46,45 +47,39 @@ export default function AdminNotesPage() {
   }, [])
 
   if (loading) {
-    return <div className="p-6">불러오는 중...</div>
+    return (
+      <div className="flex justify-center py-20">
+        <div className="w-8 h-8 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin"></div>
+      </div>
+    )
   }
 
   if (error) {
-    return <div className="p-6 text-red-500">{error}</div>
+    return (
+      <div className="p-8 bg-red-50 rounded-2xl border border-red-100 text-red-600 text-center font-bold">
+        {error}
+      </div>
+    )
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-xl font-bold mb-6">📝 전체 사용자 노트</h1>
+    <div className="space-y-8">
+      <div className="flex flex-col gap-1">
+        <h1 className="text-3xl font-black tracking-tight text-gray-900">📝 전체 사용자 노트</h1>
+        <p className="text-gray-500">시스템의 모든 사용자가 작성한 노트를 한눈에 확인합니다.</p>
+      </div>
 
       {notes.length === 0 ? (
-        <div className="text-gray-400">노트가 없습니다</div>
+        <div className="text-center py-32 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
+          <p className="text-gray-400 font-medium">작성된 노트가 없습니다.</p>
+        </div>
       ) : (
-        <div className="space-y-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {notes.map((note) => (
-            <div
-              key={note.id}
-              className="bg-white p-4 rounded-lg shadow border"
-            >
-              <div className="text-xs text-gray-500 mb-1">
-                작성자: {note.user?.email ?? "알 수 없음"}
-              </div>
-
-              <div className="font-semibold">{note.title}</div>
-
-              {note.content && (
-                <div className="text-sm text-gray-600 mt-1">
-                  {note.content}
-                </div>
-              )}
-
-              <div className="text-xs text-gray-400 mt-2">
-                {new Date(note.createdAt).toLocaleString()}
-              </div>
-            </div>
+            <AdminNoteCard key={note.id} note={note} />
           ))}
         </div>
       )}
     </div>
   )
-}
+}

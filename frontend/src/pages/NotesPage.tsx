@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import NoteCard from "../components/NoteCard"
-import NewNoteForm from "../components/NewNoteForm"
+import NoteCard from "../components/notes/NoteCard"
+import NewNoteForm from "../components/notes/NewNoteForm"
 
 interface Note {
   id: number

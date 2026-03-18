@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { Category } from "../types/item";
-import { CATEGORY_INFO } from "../constants/categoryConstants";
+import type { Category } from "../../types/item";
+import { CATEGORY_INFO } from "../../constants/categoryConstants";
 
 
 // 카테고리 버튼 목록은 CATEGORY_INFO에서 생성

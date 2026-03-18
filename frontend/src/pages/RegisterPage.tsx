@@ -1,4 +1,4 @@
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../components/auth/RegisterForm";
 import Card from "../components/ui/Card";
 import Container from "../components/ui/Container";
 

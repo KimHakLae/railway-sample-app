@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react";
-import { login } from "../api/auth";
-import { getUserFromToken } from "../utils/auth"
+import { login } from "../../api/auth";
+import { getUserFromToken } from "../../utils/auth"
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");

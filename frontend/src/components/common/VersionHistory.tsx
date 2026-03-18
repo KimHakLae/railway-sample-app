@@ -1,4 +1,4 @@
-import { VERSION_HISTORY } from "../utils/version";
+import { VERSION_HISTORY } from "../../utils/version";
 
 interface Props {
   onClose: () => void;
@@ -14,7 +14,7 @@ export default function VersionHistory({ onClose }: Props) {
         </div>
         
         <div className="p-6 max-h-[60vh] overflow-y-auto space-y-8">
-          {VERSION_HISTORY.map((v) => (
+          {VERSION_HISTORY.map((v: any) => (
             <div key={v.version} className="relative pl-6 border-l-2 border-brand-500">
               <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-brand-500 border-4 border-white shadow-sm"></div>
               <div className="flex items-baseline gap-2 mb-2">
@@ -22,7 +22,7 @@ export default function VersionHistory({ onClose }: Props) {
                 <span className="text-xs text-gray-400">{v.date}</span>
               </div>
               <ul className="space-y-1.5">
-                {v.changes.map((change, j) => (
+                {v.changes.map((change: string, j: number) => (
                   <li key={j} className="text-sm text-gray-600 flex gap-2">
                     <span className="text-brand-400">•</span>
                     {change}

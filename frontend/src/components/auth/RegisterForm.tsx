@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { register } from "../api/auth"
-import { useSnackbar } from "../components/ui/SnackbarProvider" // ✅ 스낵바
+import { register } from "../../api/auth"
+import { useSnackbar } from "../ui/SnackbarProvider" // ✅ 스낵바
 
 export default function RegisterForm() {
   const [email, setEmail] = useState("")

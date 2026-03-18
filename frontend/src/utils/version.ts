@@ -1,6 +1,6 @@
-export const APP_VERSION = "v1.3.0";
+export const APP_VERSION = "v1.4.0";
 
-export const LAST_UPDATED = "2026-03-13";
+export const LAST_UPDATED = "2026-03-18";
 
 export interface VersionChange {
   version: string;
@@ -9,6 +9,16 @@ export interface VersionChange {
 }
 
 export const VERSION_HISTORY: VersionChange[] = [
+  {
+    version: "v1.4.0",
+    date: "2026-03-18",
+    changes: [
+      "프론트엔드 파일 구조 전면 개편 및 표준화",
+      "페이지별 전용 컴포넌트 폴더 분리 (auth, notes, admin, items)",
+      "공통 컴포넌트(ui, common) 및 유틸리티 체계화",
+      "전체 애플리케이션 임포트 경로 최적화 및 안정성 강화"
+    ]
+  },
   {
     version: "v1.3.0",
     date: "2026-03-13",

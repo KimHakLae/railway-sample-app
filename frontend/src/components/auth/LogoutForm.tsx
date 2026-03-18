@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSnackbar } from "./ui/SnackbarProvider";
+import { useSnackbar } from "../ui/SnackbarProvider";
 
 export default function LogoutForm() {
   const navigate = useNavigate();

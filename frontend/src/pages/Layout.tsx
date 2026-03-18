@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { getUserFromToken } from "../utils/auth";
-import LogoutForm from "../components/LogoutForm";
+import LogoutForm from "../components/auth/LogoutForm";
 import Container from "../components/ui/Container";
 import { APP_VERSION } from "../utils/version";
-import VersionHistory from "../components/VersionHistory";
+import VersionHistory from "../components/common/VersionHistory";
 
 export default function Layout() {
   const user = getUserFromToken();

@@ -114,6 +114,12 @@ root
      ├─ src
      │   ├─ pages
      │   ├─ components
+     │   │   ├─ auth
+     │   │   ├─ notes
+     │   │   ├─ admin
+     │   │   ├─ items
+     │   │   ├─ common
+     │   │   └─ ui
      │   ├─ layouts
      │   ├─ utils
      │   └─ App.tsx

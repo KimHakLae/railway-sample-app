@@ -43,7 +43,13 @@ export default function InventoryModal({
   });
   const [newItemIds, setNewItemIds] = useState<number[]>([]);
   const [isNewItem, setIsNewItem] = useState(false);
+  const [itmSearch, setItmSearch] = useState(""); // 품목 검색어
   const { showSnackbar } = useSnackbar();
+
+  const filteredItems = useMemo(() => {
+    if (!itmSearch.trim()) return itemList;
+    return itemList.filter(i => i.name.toLowerCase().includes(itmSearch.toLowerCase()));
+  }, [itemList, itmSearch]);
 
   const change = (key: string, value: any) => {
     setForm(prev => ({ ...prev, [key]: value }));
@@ -127,25 +133,40 @@ export default function InventoryModal({
               📦 재고 항목
             </label>
 
-            <select
-              className="w-full border rounded-xl p-3 text-base !bg-gray-50"
-              value={form.itemId}
-              onChange={e => {
-                const selectedId = Number(e.target.value);
-                const selectedItem = itemList.find(i => i.id === selectedId);
-                change("itemId", selectedId);
-                change("itemName", selectedItem?.name || "");
-                change("category", selectedItem?.category || "");
+            <div className="space-y-2">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="품목 검색..."
+                  className="w-full border rounded-xl p-3 text-sm !bg-gray-50 focus:ring-2 focus:ring-brand-500 transition-all pl-10"
+                  value={itmSearch}
+                  onChange={e => setItmSearch(e.target.value)}
+                />
+                <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </div>
 
-                const isNew = newItemIds.includes(selectedId);
-                setIsNewItem(isNew); // ⭐ ID 기준 판별
-              }}
-            >
-              {!initialData && <option value={0}>항목 선택</option>}
-              {itemList.map(item => (
-                <option key={item.id} value={item.id}>{item.name}</option>
-              ))}
-            </select>
+              <select
+                className="w-full border rounded-xl p-3 text-base !bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium"
+                value={form.itemId}
+                onChange={e => {
+                  const selectedId = Number(e.target.value);
+                  const selectedItem = itemList.find(i => i.id === selectedId);
+                  change("itemId", selectedId);
+                  change("itemName", selectedItem?.name || "");
+                  change("category", selectedItem?.category || "");
+
+                  const isNew = newItemIds.includes(selectedId);
+                  setIsNewItem(isNew); // ⭐ ID 기준 판별
+                }}
+              >
+                {!initialData && <option value={0}>항목 선택 ({filteredItems.length})</option>}
+                {filteredItems.map(item => (
+                  <option key={item.id} value={item.id}>{item.name}</option>
+                ))}
+              </select>
+            </div>
 
             <div className="flex gap-2">
               <input

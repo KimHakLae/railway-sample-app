@@ -1,4 +1,4 @@
-export const APP_VERSION = "v1.4.0";
+export const APP_VERSION = "v1.5.0";
 
 export const LAST_UPDATED = "2026-03-18";
 
@@ -9,6 +9,15 @@ export interface VersionChange {
 }
 
 export const VERSION_HISTORY: VersionChange[] = [
+  {
+    version: "v1.5.0",
+    date: "2026-03-18",
+    changes: [
+      "사용자 관리 UI 카드 형식 레이아웃 개편",
+      "재고 등록 모달 내 품목 검색 필터 기능 추가",
+      "관리자 대시보드 및 리스트 로딩/데이터 부재 상태 UI 개선"
+    ]
+  },
   {
     version: "v1.4.0",
     date: "2026-03-18",

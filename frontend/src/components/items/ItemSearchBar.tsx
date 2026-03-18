@@ -1,12 +1,13 @@
+```
 import React from "react";
 
 interface ItemSearchBarProps {
   keyword: string;
   setKeyword: (kw: string) => void;
-  onNewItem: () => void;
+  onOpenAdd: () => void;
 }
 
-const ItemSearchBar: React.FC<ItemSearchBarProps> = ({ keyword, setKeyword, onNewItem }) => {
+const ItemSearchBar: React.FC<ItemSearchBarProps> = ({ keyword, setKeyword, onOpenAdd }) => {
   return (
     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
       <div className="space-y-1">
@@ -28,11 +29,22 @@ const ItemSearchBar: React.FC<ItemSearchBarProps> = ({ keyword, setKeyword, onNe
           </svg>
         </div>
         <button
-          onClick={onNewItem}
-          className="flex items-center gap-2 px-5 py-3 bg-brand-600 text-white rounded-2xl font-bold text-sm shadow-lg shadow-brand-100 hover:bg-brand-700 hover:scale-[1.02] active:scale-95 transition-all"
+          onClick={onOpenAdd}
+          className="
+            flex items-center gap-2
+            px-5 py-3
+            bg-brand-600
+            hover:bg-brand-700
+            text-white
+            rounded-2xl
+            text-sm font-black
+            shadow-lg shadow-brand-100
+            transition-all active:scale-95
+            whitespace-nowrap
+          "
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-          신규 품목
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          식재료 추가
         </button>
       </div>
     </div>

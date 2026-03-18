@@ -60,17 +60,18 @@ export default function RegisterForm() {
       <button
         className="
           w-full
-          !bg-gradient-to-r from-blue-500 to-blue-600
+          !bg-brand-600
+          hover:!bg-brand-700
           text-white
-          p-2 rounded
-          font-semibold
-          shadow
-          transition
-          hover:from-blue-600 hover:to-blue-700
-          active:scale-95
+          py-3 rounded-2xl
+          font-black
+          text-sm
+          shadow-lg shadow-brand-100
+          transition-all
+          active:scale-[0.98]
         "
       >
-        Register
+        가입하기
       </button>
     </form>
   )

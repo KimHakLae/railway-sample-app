@@ -8,12 +8,12 @@ export default function LoginPage() {
       <Container className="max-w-md">
         <div className="text-center mb-10">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-brand-500 text-white shadow-xl shadow-brand-100 mb-6">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Z"/></svg>
           </div>
           <h1 className="text-3xl font-black tracking-tight text-gray-900 mb-2">
-            Railway Inventory
+            Railway 요리 비서
           </h1>
-          <p className="text-gray-500">Smart inventory & notes for your workspace</p>
+          <p className="text-gray-500 font-medium">식재료 관리와 레시피 노트를 스마트하게</p>
         </div>
 
         <Card className="p-8">
@@ -21,12 +21,12 @@ export default function LoginPage() {
 
           <div className="mt-8 pt-6 border-t border-gray-100 text-center">
             <p className="text-gray-500 text-sm">
-              Don't have an account?
+              계정이 없으신가요?
               <a
                 href="/register"
-                className="ml-2 font-semibold text-brand-600 hover:text-brand-700 transition-colors"
+                className="ml-2 font-bold text-brand-600 hover:text-brand-700 transition-colors"
               >
-                Create Account
+                회원가입 하기
               </a>
             </p>
           </div>

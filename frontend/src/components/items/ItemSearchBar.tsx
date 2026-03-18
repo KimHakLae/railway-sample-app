@@ -1,4 +1,3 @@
-```
 import React from "react";
 
 interface ItemSearchBarProps {
@@ -11,8 +10,8 @@ const ItemSearchBar: React.FC<ItemSearchBarProps> = ({ keyword, setKeyword, onOp
   return (
     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
       <div className="space-y-1">
-        <h1 className="text-3xl font-black tracking-tight text-gray-900">📑 품목 관리</h1>
-        <p className="text-gray-500 text-sm">시스템에 등록된 전체 품목과 버전을 관리합니다.</p>
+        <h1 className="text-3xl font-black tracking-tight text-gray-900">🥬 식재료 종류 관리</h1>
+        <p className="text-gray-500 text-sm">자주 사용하는 식재료 종류를 추가하고 재고 현황을 파악합니다.</p>
       </div>
 
       <div className="flex items-center gap-3">

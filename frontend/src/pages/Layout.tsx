@@ -5,6 +5,7 @@ import LogoutForm from "../components/auth/LogoutForm";
 import Container from "../components/ui/Container";
 import { APP_VERSION } from "../utils/version";
 import VersionHistory from "../components/common/VersionHistory";
+import BottomNav from "../components/common/BottomNav";
 
 export default function Layout() {
   const user = getUserFromToken();
@@ -15,6 +16,7 @@ export default function Layout() {
   const navItems = [
     { label: "식재료 관리", path: "/inventory", icon: "🍱" },
     { label: "식재료 종류", path: "/items", icon: "📑" },
+    { label: "레시피 관리", path: "/recipes", icon: "📖" },
     { label: "내 노트", path: "/notes", icon: "📝" }
   ];
 
@@ -30,11 +32,11 @@ export default function Layout() {
         <Container className="flex items-center justify-between">
           <div className="flex items-center gap-6">
             <button
-              onClick={() => navigate(-1)}
-              className="w-10 h-10 flex items-center justify-center
+              onClick={() => (location.pathname === '/user' ? null : navigate(-1))}
+              className={`w-10 h-10 flex items-center justify-center
                         rounded-2xl bg-gray-50 text-gray-400
                         hover:bg-brand-50 hover:text-brand-600
-                        transition-all active:scale-90 shadow-sm"
+                        transition-all active:scale-90 shadow-sm ${location.pathname === '/user' ? 'opacity-0 cursor-default' : ''}`}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
@@ -42,6 +44,30 @@ export default function Layout() {
             </button>
 
             <nav className="hidden md:flex items-center gap-1">
+              <button
+                onClick={() => navigate("/user")}
+                className={`
+                  px-4 py-2 rounded-xl text-sm font-black transition-all duration-300
+                  ${location.pathname === "/user" 
+                    ? "bg-brand-50 text-brand-700 shadow-sm shadow-brand-100" 
+                    : "text-gray-400 hover:text-gray-900 hover:bg-gray-50"}
+                `}
+              >
+                🏠 홈
+              </button>
+              {user?.is_admin && (
+                <button
+                  onClick={() => navigate("/admin")}
+                  className={`
+                    px-4 py-2 rounded-xl text-sm font-black transition-all duration-300
+                    ${location.pathname.startsWith("/admin") 
+                      ? "bg-red-50 text-red-700 shadow-sm shadow-red-100" 
+                      : "text-gray-400 hover:text-red-600 hover:bg-red-50"}
+                  `}
+                >
+                  🛠 관리
+                </button>
+              )}
               {navItems.map((item) => (
                 <button
                   key={item.path}
@@ -73,14 +99,17 @@ export default function Layout() {
       </header>
 
       {/* 🔽 본문 */}
-      <main className="flex-1 pb-12">
+      <main className="flex-1 pb-20 md:pb-12">
         <Container className="py-8">
           <Outlet />
         </Container>
       </main>
 
+      {/* 모바일 하단 네비게이션 */}
+      <BottomNav />
+
       {/* 🏷️ 푸터 */}
-      <footer className="bg-white border-t border-gray-100 py-6">
+      <footer className="hidden md:block bg-white border-t border-gray-100 py-6">
         <Container className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-gray-400 text-sm">
             © 2026 Railway Cooking App

@@ -9,8 +9,9 @@ import AdminUsersPage from "./pages/AdminUsersPage"
 import AdminNotesPage from "./pages/AdminNotesPage"
 import Layout from "./pages/Layout";
 import UserHomePage from "./pages/UserHomePage";
-import InventoryPage from "./pages/InventoryPage"; // ← 새로 추가
-import ItemsPage from "./pages/ItemsPage"; // ← 새로 추가
+import InventoryPage from "./pages/InventoryPage";
+import ItemsPage from "./pages/ItemsPage";
+import RecipePage from "./pages/RecipePage";
 import { SnackbarProvider } from "./components/ui/SnackbarProvider";
 
 function App(){
@@ -70,6 +71,16 @@ function App(){
             element={
               <ProtectedRoute>
                 <ItemsPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 레시피 관리 페이지 */}
+          <Route
+            path="/recipes"
+            element={
+              <ProtectedRoute>
+                <RecipePage />
               </ProtectedRoute>
             }
           />

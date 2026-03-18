@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
-import type { InventoryWithItem } from "../../types/inventory";
-import type { Item } from "../../types/item";
+import type { StockWithIngredient } from "../../types/stock";
+import type { Ingredient as Item } from "../../types/ingredient";
 import { useSnackbar } from "../ui/SnackbarProvider";
 import { CATEGORY_INFO, STORAGE_INFO } from "../../constants/categoryConstants";
 
@@ -18,7 +18,7 @@ interface InventoryModalProps {
     expiryDate?: string;
   }) => void;
   itemList: Item[];
-  initialData?: InventoryWithItem;
+  initialData?: StockWithIngredient;
 }
 
 export default function InventoryModal({
@@ -31,11 +31,11 @@ export default function InventoryModal({
   const [itemList, setItemList] = useState<Item[]>(initialItemList);
   const [newItemName, setNewItemName] = useState(""); // 신규항목 입력
   const [form, setForm] = useState({
-    itemId: initialData?.item.id || 0, // 신규이면 0
-    itemName: initialData?.item.name || "", // ← 추가
+    itemId: initialData?.ingredient.id || 0, // 신규이면 0
+    itemName: initialData?.ingredient.name || "", // ← 추가
     quantity: initialData?.quantity || 1,
     price: initialData?.price ?? undefined,
-    category: initialData?.item.category || "", // ""이면 선택하세요
+    category: initialData?.ingredient.category || "", // ""이면 선택하세요
     storage: initialData?.storage || "", // ""이면 선택하세요
     is_urgent: initialData?.is_urgent || false,
     entryDate: initialData?.entryDate?.slice(0,10) || new Date().toISOString().slice(0,10),

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Category } from "../../types/item";
+import type { Category } from "../../types/ingredient";
 import { CATEGORY_INFO } from "../../constants/categoryConstants";
 
 

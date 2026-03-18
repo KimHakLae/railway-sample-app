@@ -1,11 +1,11 @@
 import InventoryItemCard from "./InventoryItemCard";
-import type { InventoryWithItem } from "../../types/inventory";
+import type { StockWithIngredient } from "../../types/stock";
 
 interface Props {
-  items: InventoryWithItem[];
+  items: StockWithIngredient[];
   toggleUrgent: (id: number) => void;
   confirmDeleteHandler: (id: number) => void;
-  setEditItem: (item: InventoryWithItem) => void;
+  setEditItem: (item: StockWithIngredient) => void;
   setOpenEdit: (v: boolean) => void;
 }
 

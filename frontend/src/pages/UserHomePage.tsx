@@ -1,59 +1,115 @@
-import { Link } from "react-router-dom"
-import Card from "../components/ui/Card"
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Card from "../components/ui/Card";
+import Dashboard from "../components/dashboard/Dashboard";
+import { getStocks } from "../api/stocks";
+import type { Stock } from "../types/stock";
+import { motion } from 'framer-motion';
+import { 
+  ShoppingBagIcon, 
+  Square3Stack3DIcon, 
+  PencilSquareIcon,
+  ChevronRightIcon
+} from '@heroicons/react/24/outline';
 
 export default function UserHomePage() {
+  const [stocks, setStocks] = useState<Stock[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchStocks();
+  }, []);
+
+  const fetchStocks = async () => {
+    try {
+      const data = await getStocks();
+      setStocks(data);
+    } catch (err) {
+      console.error("Failed to fetch stocks:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-black tracking-tight text-gray-900">
-          환영합니다! 👋
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="space-y-10 pb-20"
+    >
+      {/* Header */}
+      <div className="flex flex-col gap-2">
+        <h1 className="text-4xl font-black tracking-tight text-gray-900">
+          오늘의 요리 비서 👋
         </h1>
-        <p className="text-gray-500">원하시는 메뉴를 선택하여 관리를 시작하세요.</p>
+        <p className="text-gray-500 font-medium text-lg">냉장고 상태를 확인하고 맛있는 식사를 준비해 보세요.</p>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <Link to="/inventory" className="group">
-          <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">🍱</span>
-            </div>
-            <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
-              식재료 관리
-            </h2>
-            <p className="text-sm text-gray-500 leading-relaxed">
-              보유 중인 식재료의 신선도, 수량 및 보관 위치(냉장, 냉동)를 실시간으로 확인하고 관리합니다.
-            </p>
-          </Card>
-        </Link>
+      {/* 스마트 대시보드 */}
+      {!loading && <Dashboard stocks={stocks} />}
+      {loading && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[1,2,3].map(i => <div key={i} className="h-32 bg-gray-50 animate-pulse rounded-[2rem]" />)}
+        </div>
+      )}
 
-        <Link to="/items" className="group">
-          <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none">
-            <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">🥬</span>
-            </div>
-            <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
-              식재료 종류
-            </h2>
-            <p className="text-sm text-gray-500 leading-relaxed">
-              자주 사용하는 식재료 종류를 등록하고, 전체적인 재고 현황을 카테고리별로 파악합니다.
-            </p>
-          </Card>
-        </Link>
+      {/* 바로가기 메뉴 */}
+      <div className="space-y-4">
+        <h2 className="text-2xl font-black text-gray-900">바로가기</h2>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <Link to="/inventory" className="group">
+            <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none bg-white shadow-sm hover:shadow-xl hover:shadow-brand-100/50 p-8 rounded-[2.5rem]">
+              <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <ShoppingBagIcon className="w-8 h-8" />
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-2xl font-black text-gray-900 group-hover:text-brand-600 transition-colors">
+                  식재료 관리
+                </h2>
+                <ChevronRightIcon className="w-5 h-5 text-gray-300 group-hover:text-brand-500 group-hover:translate-x-1 transition-all" />
+              </div>
+              <p className="text-gray-500 font-medium leading-relaxed">
+                보유 중인 식재료의 유통기한과 수량을 실시간으로 관리하세요.
+              </p>
+            </Card>
+          </Link>
 
-        <Link to="/notes" className="group">
-          <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none font-bold">
-            <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">📝</span>
-            </div>
-            <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
-              레시피 & 노트
-            </h2>
-            <p className="text-sm text-gray-500 leading-relaxed">
-              나만의 요리 레시피나 식단 계획, 장보기 리스트 등을 자유롭게 메모하고 보관하세요.
-            </p>
-          </Card>
-        </Link>
+          <Link to="/items" className="group">
+            <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none bg-white shadow-sm hover:shadow-xl hover:shadow-brand-100/50 p-8 rounded-[2.5rem]">
+              <div className="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Square3Stack3DIcon className="w-8 h-8" />
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-2xl font-black text-gray-900 group-hover:text-brand-600 transition-colors">
+                  식재료 종류
+                </h2>
+                <ChevronRightIcon className="w-5 h-5 text-gray-300 group-hover:text-brand-500 group-hover:translate-x-1 transition-all" />
+              </div>
+              <p className="text-gray-500 font-medium leading-relaxed">
+                자주 사용하는 식재료 카테고리를 설정하고 현황을 파악합니다.
+              </p>
+            </Card>
+          </Link>
+
+          <Link to="/recipes" className="group">
+            <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none bg-white shadow-sm hover:shadow-xl hover:shadow-brand-100/50 p-8 rounded-[2.5rem]">
+              <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <PencilSquareIcon className="w-8 h-8" />
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-2xl font-black text-gray-900 group-hover:text-brand-600 transition-colors">
+                  요리 레시피
+                </h2>
+                <ChevronRightIcon className="w-5 h-5 text-gray-300 group-hover:text-brand-500 group-hover:translate-x-1 transition-all" />
+              </div>
+              <p className="text-gray-500 font-medium leading-relaxed">
+                보유 식재료 맞춤형 레시피로 매일의 식단을 계획해 보세요.
+              </p>
+            </Card>
+          </Link>
+        </div>
       </div>
-    </div>
-  )
-}
+    </motion.div>
+  );
+}

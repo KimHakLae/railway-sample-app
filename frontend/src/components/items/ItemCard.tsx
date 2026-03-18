@@ -8,7 +8,7 @@ interface Item {
   category: string;
   version?: string;
   totalQuantity?: number;
-  inventoryCount?: number;
+  stockCount?: number;
 }
 
 interface ItemCardProps {
@@ -19,7 +19,7 @@ interface ItemCardProps {
 
 const ItemCard: React.FC<ItemCardProps> = ({ item, onEdit, onDelete }) => {
   const totalQty = item.totalQuantity ?? 0;
-  const entryCount = item.inventoryCount ?? 0;
+  const entryCount = item.stockCount ?? 0;
 
   return (
     <Card className="group hover:scale-[1.02] transition-all cursor-default">

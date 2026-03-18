@@ -1,4 +1,4 @@
-export const APP_VERSION = "v1.6.0";
+export const APP_VERSION = "v2.0.0";
 
 export const LAST_UPDATED = "2026-03-18";
 
@@ -9,6 +9,17 @@ export interface VersionChange {
 }
 
 export const VERSION_HISTORY: VersionChange[] = [
+  {
+    version: "v2.0.0",
+    date: "2026-03-18",
+    changes: [
+      "스마트 레시피 시스템 도입: 보유 식재료 기반 자동 추천 알고리즘",
+      "식재료 소모 로직 강화: 요리 완료 시 유통기한 임박 재고 우선 자동 차감",
+      "스마트 대시보드 구축: 만료 및 임박 식재료 집중 관리 섹션 제공",
+      "모바일 최적화: 한 손 조작을 위한 하단 네비게이션(BottomNav) 도입",
+      "UX 폴리싱: Framer Motion 기반의 부드러운 전환 및 리미엄 UI 인터랙션"
+    ]
+  },
   {
     version: "v1.6.0",
     date: "2026-03-18",

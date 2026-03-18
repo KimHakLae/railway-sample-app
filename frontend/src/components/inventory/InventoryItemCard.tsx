@@ -1,11 +1,11 @@
-import type { InventoryWithItem } from "../../types/inventory";
+import type { StockWithIngredient } from "../../types/stock";
 import { CATEGORY_INFO, STORAGE_INFO } from "../../constants/categoryConstants";
 
 interface Props {
-  item: InventoryWithItem;
+  item: StockWithIngredient;
   toggleUrgent: (id: number) => void;
   confirmDeleteHandler: (id: number) => void;
-  setEditItem: (item: InventoryWithItem) => void;
+  setEditItem: (item: StockWithIngredient) => void;
   setOpenEdit: (v: boolean) => void;
 }
 
@@ -20,7 +20,7 @@ export default function InventoryItemCard({ item, toggleUrgent, confirmDeleteHan
     return { label: `D-${diff}`, status: "safe", text: "상태 양호", color: "bg-emerald-500" };
   };
 
-  const ddayInfo = getDDayInfo(item.expiryDate);
+  const ddayInfo = getDDayInfo(item.expiryDate ?? undefined);
 
   const daysFrom = (date?: string) => {
     if (!date) return null;
@@ -48,8 +48,8 @@ export default function InventoryItemCard({ item, toggleUrgent, confirmDeleteHan
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className={`text-[10px] px-2 py-0.5 rounded-md font-bold uppercase tracking-wider ${CATEGORY_INFO[item.item.category].style}`}>
-              {CATEGORY_INFO[item.item.category].label}
+            <span className={`text-[10px] px-2 py-0.5 rounded-md font-bold uppercase tracking-wider ${CATEGORY_INFO[item.ingredient.category].style}`}>
+              {CATEGORY_INFO[item.ingredient.category].label}
             </span>
             <span className={`text-[10px] px-2 py-0.5 rounded-md font-bold uppercase tracking-wider ${STORAGE_INFO[item.storage].style}`}>
               {STORAGE_INFO[item.storage].label}
@@ -61,7 +61,7 @@ export default function InventoryItemCard({ item, toggleUrgent, confirmDeleteHan
             )}
           </div>
           <h3 className="text-xl font-black text-gray-900 leading-tight">
-            {item.item.name}
+            {item.ingredient.name}
           </h3>
         </div>
 

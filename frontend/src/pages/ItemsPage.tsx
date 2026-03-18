@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import ItemManagementModal from "../components/items/ItemManagementModal";
 import ItemSearchBar from "../components/items/ItemSearchBar";
 import ItemCard from "../components/items/ItemCard";
-import { getItems, createItem, updateItem, deleteItem } from "../api/item";
+import { getIngredients, createIngredient, updateIngredient, deleteIngredient } from "../api/ingredients";
 import { useSnackbar } from "../components/ui/SnackbarProvider";
 import { CATEGORY_INFO } from "../constants/categoryConstants";
 
@@ -17,12 +17,12 @@ export default function ItemsPage() {
   const fetchItems = async () => {
     try {
       setLoading(true);
-      const data = await getItems();
+      const data = await getIngredients();
       setItems(Array.isArray(data) ? data : []);
     } catch (err) {
-      console.error("품목 조회 에러:", err);
+      console.error("식재료 종류 조회 에러:", err);
       setItems([]);
-      showSnackbar("품목 목록을 불러오지 못했습니다.", { type: "error" });
+      showSnackbar("식재료 목록을 불러오지 못했습니다.", { type: "error" });
     } finally {
       setLoading(false);
     }
@@ -34,12 +34,12 @@ export default function ItemsPage() {
 
   const handleAdd = async (data: any) => {
     try {
-      await createItem(data);
+      await createIngredient(data);
       await fetchItems();
       setOpenModal(false);
-      showSnackbar("새로운 품목이 등록되었습니다.", { type: "success" });
+      showSnackbar("새로운 식재료가 등록되었습니다.", { type: "success" });
     } catch (err: any) {
-      showSnackbar(err.message || "품목 등록에 실패했습니다.", { type: "error" });
+      showSnackbar(err.message || "식재료 등록에 실패했습니다.", { type: "error" });
       throw err;
     }
   };
@@ -47,18 +47,18 @@ export default function ItemsPage() {
   const handleUpdate = async (data: any) => {
     if (!selectedItem) return;
     try {
-      await updateItem(selectedItem.id, data);
+      await updateIngredient(selectedItem.id, data);
       await fetchItems();
       setOpenModal(false);
-      showSnackbar("품목 정보가 수정되었습니다.", { type: "success" });
+      showSnackbar("식재료 정보가 수정되었습니다.", { type: "success" });
     } catch (err: any) {
-      showSnackbar(err.message || "품목 수정에 실패했습니다.", { type: "error" });
+      showSnackbar(err.message || "식재료 수정에 실패했습니다.", { type: "error" });
       throw err;
     }
   };
 
   const handleDelete = (id: number) => {
-    showSnackbar("정말 이 품목을 삭제하시겠습니까?", {
+    showSnackbar("정말 이 식재료를 삭제하시겠습니까?", {
       type: "info",
       duration: null,
       action: (
@@ -68,9 +68,9 @@ export default function ItemsPage() {
             onClick={async () => {
               hideSnackbar();
               try {
-                await deleteItem(id);
+                await deleteIngredient(id);
                 await fetchItems();
-                showSnackbar("품목이 삭제되었습니다.", { type: "success" });
+                showSnackbar("식재료가 삭제되었습니다.", { type: "success" });
               } catch (err: any) {
                 showSnackbar(err.message || "삭제에 실패했습니다.", { type: "error" });
               }

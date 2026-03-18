@@ -12,6 +12,20 @@ export default function AdminHomePage() {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <Link to="/user" className="group">
+          <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none bg-brand-50/30">
+            <div className="w-12 h-12 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <span className="text-2xl">⚡️</span>
+            </div>
+            <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
+              나의 요리 대시보드
+            </h2>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              레시피 추천, 유통기한 알림 및 나의 스마트 주방 기능을 사용합니다.
+            </p>
+          </Card>
+        </Link>
+
         <Link to="/admin/users" className="group">
           <Card className="h-full hover:ring-2 hover:ring-red-500 transition-all border-none">
             <div className="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">

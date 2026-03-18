@@ -1,10 +1,11 @@
 // src/pages/InventoryPage.tsx
 import { useEffect, useMemo, useState } from "react";
 import InventoryModal from "../components/inventory/InventoryModal"; // 그대로 사용
-import { createItem, getInventories, createInventory, updateInventory, deleteInventory, toggleUrgentInventory } from "../api/inventory";
-import { getItems } from "../api/item";
-import type { InventoryWithItem } from "../types/inventory";
-import type { Item } from "../types/item";
+import { getStocks, createStock, updateStock, deleteStock, toggleUrgentStock } from "../api/stocks";
+import { createIngredient } from "../api/ingredients";
+import { getIngredients } from "../api/ingredients";
+import type { StockWithIngredient } from "../types/stock";
+import type { Ingredient as Item } from "../types/ingredient";
 import { getUserFromToken } from "../utils/auth";
 import { useSnackbar } from "../components/ui/SnackbarProvider";
 import InventoryStats from "../components/inventory/InventoryStats";
@@ -12,7 +13,7 @@ import InventoryFilters from "../components/inventory/InventoryFilters";
 import InventoryList from "../components/inventory/InventoryList";
 
 export default function InventoryPage() {
-  const [inventoryList, setInventoryList] = useState<InventoryWithItem[]>([]);
+  const [inventoryList, setInventoryList] = useState<StockWithIngredient[]>([]);
   const [itemList, setItemList] = useState<Item[]>([]);
   const [keyword, setKeyword] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("ALL");
@@ -21,7 +22,7 @@ export default function InventoryPage() {
   const [sort, setSort] = useState("latest");
   const [openCreate, setOpenCreate] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const [editItem, setEditItem] = useState<InventoryWithItem | null>(null);
+  const [editItem, setEditItem] = useState<StockWithIngredient | null>(null);
   const [loadingId, setLoadingId] = useState<number | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
@@ -36,8 +37,8 @@ export default function InventoryPage() {
     setSort("latest");
   };
 
-  const fetchInventory = async () => setInventoryList(await getInventories());
-  const fetchItems = async () => setItemList(await getItems());
+  const fetchInventory = async () => setInventoryList(await getStocks());
+  const fetchItems = async () => setItemList(await getIngredients());
 
   useEffect(() => {
     fetchInventory();
@@ -49,10 +50,10 @@ export default function InventoryPage() {
     let itemId = data.itemId;
 
     try {
-      if (data.isNewItem) itemId = (await createItem({ name: data.itemName, category: data.category })).id;
-      await createInventory({ ...data, itemId, userId: user.id });
+      if (data.isNewItem) itemId = (await createIngredient({ name: data.itemName, category: data.category })).id;
+      await createStock({ ...data, ingredientId: itemId, userId: user.id });
       await fetchInventory();
-      showSnackbar("재고가 등록되었습니다", { type: "success" });
+      showSnackbar("식재료가 등록되었습니다", { type: "success" });
     } catch (err) {
       console.error(err);
       showSnackbar("요청 처리에 실패했습니다", { type: "error" });
@@ -60,7 +61,7 @@ export default function InventoryPage() {
     }
   };
 
-  const updateItemHandler = async (id: number, data: any) => { await updateInventory(id, data); await fetchInventory(); showSnackbar("수정이 완료되었습니다", { type: "success" }); };
+  const updateItemHandler = async (id: number, data: any) => { await updateStock(id, data); await fetchInventory(); showSnackbar("수정이 완료되었습니다", { type: "success" }); };
 
   const confirmDeleteHandler = (id: number) => {
     showSnackbar("정말 삭제하시겠습니까?", {
@@ -85,7 +86,7 @@ export default function InventoryPage() {
               setSubmitting(true);
               setToastMsg("삭제중입니다...");
               try {
-                await deleteInventory(id);
+                await deleteStock(id);
                 await fetchInventory();
                 showSnackbar("삭제되었습니다", { type: "success" });
               } catch (err) {
@@ -115,20 +116,20 @@ export default function InventoryPage() {
     setLoadingId(id);
     const prevList = inventoryList;
     setInventoryList(list => list.map(i => i.id === id ? { ...i, is_urgent: !i.is_urgent } : i));
-    try { await toggleUrgentInventory(id); } catch (err) { console.error(err); setInventoryList(prevList); alert("긴급 상태 변경 실패 😢"); } finally { setLoadingId(null); }
+    try { await toggleUrgentStock(id); } catch (err) { console.error(err); setInventoryList(prevList); alert("긴급 상태 변경 실패 😢"); } finally { setLoadingId(null); }
   };
 
   const filtered = useMemo(() => {
     let list = [...inventoryList];
-    if (keyword) list = list.filter(i => i.item.name.includes(keyword));
-    if (categoryFilter !== "ALL") list = list.filter(i => i.item.category === categoryFilter);
+    if (keyword) list = list.filter(i => i.ingredient.name.includes(keyword));
+    if (categoryFilter !== "ALL") list = list.filter(i => i.ingredient.category === categoryFilter);
     if (storageFilter !== "ALL") list = list.filter(i => i.storage === storageFilter);
     if (urgentOnly) list = list.filter(i => i.is_urgent);
     list.sort((a, b) => {
       if (a.is_urgent !== b.is_urgent) return a.is_urgent ? -1 : 1;
       if (sort === "latest") return +new Date(b.entryDate) - +new Date(a.entryDate);
       if (sort === "oldest") return +new Date(a.entryDate) - +new Date(b.entryDate);
-      if (sort === "name") return a.item.name.localeCompare(b.item.name);
+      if (sort === "name") return a.ingredient.name.localeCompare(b.ingredient.name);
       if (sort === "qty") return b.quantity - a.quantity;
       return 0;
     });

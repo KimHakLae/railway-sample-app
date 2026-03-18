@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import type { InventoryWithItem } from "../../types/inventory";
 import type { Item } from "../../types/item";
 import { useSnackbar } from "../ui/SnackbarProvider";
@@ -162,7 +162,7 @@ export default function InventoryModal({
                 }}
               >
                 {!initialData && <option value={0}>항목 선택 ({filteredItems.length})</option>}
-                {filteredItems.map(item => (
+                {filteredItems.map((item: Item) => (
                   <option key={item.id} value={item.id}>{item.name}</option>
                 ))}
               </select>

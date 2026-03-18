@@ -57,7 +57,7 @@ export default function ItemManagementModal({ title, initialData, onClose, onSub
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 ml-1">품목명</label>
+              <label className="text-sm font-bold text-gray-700 ml-1">식재료명</label>
               <input
                 type="text"
                 value={name}

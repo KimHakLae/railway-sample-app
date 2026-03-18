@@ -29,13 +29,13 @@ export default function AdminHomePage() {
         <Link to="/inventory" className="group">
           <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none">
             <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">📦</span>
+              <span className="text-2xl">🍱</span>
             </div>
             <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
-               재고 관리
+               식재료 현황
             </h2>
             <p className="text-sm text-gray-500 leading-relaxed">
-               전체 보관 물품의 실시간 현황을 모니터링하고 수정합니다.
+               전체 유저가 보유한 식재료 신순도와 재고 현황을 모니터링합니다.
             </p>
           </Card>
         </Link>
@@ -43,13 +43,13 @@ export default function AdminHomePage() {
         <Link to="/items" className="group">
           <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none">
             <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">📑</span>
+              <span className="text-2xl">🥬</span>
             </div>
             <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
-              품목 관리
+              식재료 종류 관리
             </h2>
             <p className="text-sm text-gray-500 leading-relaxed">
-              품목 등록·수정·삭제 및 버전 관리, 재고 수량 현황을 확인합니다.
+              표준 식재료 데이터베이스를 구축하고 종류별 재고 합계를 확인합니다.
             </p>
           </Card>
         </Link>
@@ -60,10 +60,10 @@ export default function AdminHomePage() {
               <span className="text-2xl">📝</span>
             </div>
             <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
-              노트 관리
+              시스템 공지
             </h2>
             <p className="text-sm text-gray-500 leading-relaxed">
-               시스템 공지사항 또는 관리용 메모를 작성하고 조회합니다.
+               유저들을 위한 요리 팁이나 시스템 공지사항을 작성하고 전달합니다.
             </p>
           </Card>
         </Link>

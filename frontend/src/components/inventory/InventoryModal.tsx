@@ -127,17 +127,17 @@ export default function InventoryModal({
         {/* 내용 */}
         <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-5">
 
-          {/* 재고 항목 카드 */}
+          {/* 식재료 항목 카드 */}
           <section className="!bg-white rounded-2xl p-4 shadow-sm space-y-3">
             <label className="text-sm font-semibold flex items-center gap-2">
-              📦 재고 항목
+              🥬 식재료 선택
             </label>
 
             <div className="space-y-2">
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="품목 검색..."
+                  placeholder="식재료 검색..."
                   className="w-full border rounded-xl p-3 text-sm !bg-gray-50 focus:ring-2 focus:ring-brand-500 transition-all pl-10"
                   value={itmSearch}
                   onChange={e => setItmSearch(e.target.value)}
@@ -161,7 +161,7 @@ export default function InventoryModal({
                   setIsNewItem(isNew); // ⭐ ID 기준 판별
                 }}
               >
-                {!initialData && <option value={0}>항목 선택 ({filteredItems.length})</option>}
+                {!initialData && <option value={0}>식재료 선택 ({filteredItems.length})</option>}
                 {filteredItems.map((item: Item) => (
                   <option key={item.id} value={item.id}>{item.name}</option>
                 ))}
@@ -171,7 +171,7 @@ export default function InventoryModal({
             <div className="flex gap-2">
               <input
                 type="text"
-                placeholder="새 항목 이름"
+                placeholder="신규 식재료 이름 (직접 입력)"
                 className="flex-1 border rounded-xl p-3 !bg-gray-50"
                 value={newItemName}
                 onChange={e => setNewItemName(e.target.value)}

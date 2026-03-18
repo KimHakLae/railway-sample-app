@@ -1,4 +1,4 @@
-export const APP_VERSION = "v1.5.0";
+export const APP_VERSION = "v1.6.0";
 
 export const LAST_UPDATED = "2026-03-18";
 
@@ -9,6 +9,16 @@ export interface VersionChange {
 }
 
 export const VERSION_HISTORY: VersionChange[] = [
+  {
+    version: "v1.6.0",
+    date: "2026-03-18",
+    changes: [
+      "애플리케이션 도메인 전환: 일반 재고관리 → 요리/식재료 관리 전문 앱",
+      "전체 UI 용어 및 안내 가이드 식재료 특화 문구로 전면 개편",
+      "내비게이션 및 홈 화면 아이콘 식재료 도메인에 맞춰 최적화",
+      "레시피 관리 기능을 위한 토대 마련 (노트 메뉴 개편)"
+    ]
+  },
   {
     version: "v1.5.0",
     date: "2026-03-18",

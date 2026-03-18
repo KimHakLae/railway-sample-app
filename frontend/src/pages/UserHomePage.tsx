@@ -15,13 +15,13 @@ export default function UserHomePage() {
         <Link to="/inventory" className="group">
           <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none">
             <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">📦</span>
+              <span className="text-2xl">🍱</span>
             </div>
             <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
-              재고 관리
+              식재료 관리
             </h2>
             <p className="text-sm text-gray-500 leading-relaxed">
-              모든 보관 물품의 수량, 위치(상온, 냉장, 냉동) 및 긴급도를 실시간으로 관리합니다.
+              보유 중인 식재료의 신선도, 수량 및 보관 위치(냉장, 냉동)를 실시간으로 확인하고 관리합니다.
             </p>
           </Card>
         </Link>
@@ -29,13 +29,13 @@ export default function UserHomePage() {
         <Link to="/items" className="group">
           <Card className="h-full hover:ring-2 hover:ring-brand-500 transition-all border-none">
             <div className="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <span className="text-2xl">📑</span>
+              <span className="text-2xl">🥬</span>
             </div>
             <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
-              품목 관리
+              식재료 종류
             </h2>
             <p className="text-sm text-gray-500 leading-relaxed">
-              시스템에 등록된 품목과 버전을 추가·수정·삭제하고 재고 수량을 한눈에 확인합니다.
+              자주 사용하는 식재료 종류를 등록하고, 전체적인 재고 현황을 카테고리별로 파악합니다.
             </p>
           </Card>
         </Link>
@@ -46,10 +46,10 @@ export default function UserHomePage() {
               <span className="text-2xl">📝</span>
             </div>
             <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
-              내 노트 관리
+              레시피 & 노트
             </h2>
             <p className="text-sm text-gray-500 leading-relaxed">
-              업무에 필요한 개인적인 메모나 기록을 안전하게 관리하고 보관하세요.
+              나만의 요리 레시피나 식단 계획, 장보기 리스트 등을 자유롭게 메모하고 보관하세요.
             </p>
           </Card>
         </Link>

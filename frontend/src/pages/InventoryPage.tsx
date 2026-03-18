@@ -157,8 +157,8 @@ export default function InventoryPage() {
       {submitting && <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[100]"><div className="px-6 py-3 rounded-full shadow-2xl bg-black text-white text-sm font-bold animate-fade-in">{toastMsg}</div></div>}
       
       <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-black tracking-tight text-gray-900">📦 재고 관리</h1>
-        <p className="text-gray-500">실시간 재고 상태 및 보관 정보를 관리합니다.</p>
+        <h1 className="text-3xl font-black tracking-tight text-gray-900">🍱 식재료 관리</h1>
+        <p className="text-gray-500">신선한 요리를 위해 보유 중인 식재료 상태를 관리합니다.</p>
       </div>
 
       <InventoryStats {...stats} />
@@ -186,7 +186,7 @@ export default function InventoryPage() {
           transition-all duration-300
           z-40
         "
-        aria-label="재고 등록"
+        aria-label="식재료 등록"
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       </button>

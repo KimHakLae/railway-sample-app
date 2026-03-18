@@ -13,8 +13,8 @@ export default function Layout() {
   const [showHistory, setShowHistory] = useState(false);
 
   const navItems = [
-    { label: "재고관리", path: "/inventory", icon: "📦" },
-    { label: "품목관리", path: "/items", icon: "📑" },
+    { label: "식재료 관리", path: "/inventory", icon: "🍱" },
+    { label: "식재료 종류", path: "/items", icon: "📑" },
     { label: "내 노트", path: "/notes", icon: "📝" }
   ];
 
@@ -83,7 +83,7 @@ export default function Layout() {
       <footer className="bg-white border-t border-gray-100 py-6">
         <Container className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-gray-400 text-sm">
-            © 2026 Railway Inventory System
+            © 2026 Railway Cooking App
           </div>
           
           <button 

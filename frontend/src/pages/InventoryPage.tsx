@@ -154,8 +154,14 @@ export default function InventoryPage() {
     sort !== "latest";
 
   return (
-    <div className="space-y-6">
-      {submitting && <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[100]"><div className="px-6 py-3 rounded-full shadow-2xl bg-black text-white text-sm font-bold animate-fade-in">{toastMsg}</div></div>}
+    <div className="space-y-6 pb-24 md:pb-6">
+      {submitting && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[100]">
+          <div className="px-6 py-3 rounded-full shadow-2xl bg-black text-white text-sm font-bold animate-fade-in">
+            {toastMsg}
+          </div>
+        </div>
+      )}
       
       <div className="flex flex-col gap-1">
         <h1 className="text-3xl font-black tracking-tight text-gray-900">🍱 식재료 관리</h1>
@@ -169,15 +175,40 @@ export default function InventoryPage() {
         <InventoryList items={filtered} toggleUrgent={toggleUrgent} confirmDeleteHandler={confirmDeleteHandler} setEditItem={setEditItem} setOpenEdit={setOpenEdit} />
       </div>
 
-      {openCreate && <InventoryModal title="재고 등록" onClose={() => setOpenCreate(false)} onSubmit={async (data) => { setOpenCreate(false); setSubmitting(true); setToastMsg("등록중입니다..."); try { await createItemHandler(data); } finally { setSubmitting(false); } }} itemList={itemList} />}
-      {openEdit && editItem && <InventoryModal title="재고 수정" initialData={editItem} onClose={() => setOpenEdit(false)} onSubmit={async (data) => { setOpenEdit(false); setSubmitting(true); setToastMsg("수정중입니다..."); try { await updateItemHandler(editItem.id, data); } finally { setSubmitting(false); } }} itemList={itemList} />}
+      {openCreate && (
+        <InventoryModal 
+          title="재고 등록" 
+          onClose={() => setOpenCreate(false)} 
+          onSubmit={async (data) => { 
+            setOpenCreate(false); 
+            setSubmitting(true); 
+            setToastMsg("등록중입니다..."); 
+            try { await createItemHandler(data); } finally { setSubmitting(false); } 
+          }} 
+          itemList={itemList} 
+        />
+      )}
+      {openEdit && editItem && (
+        <InventoryModal 
+          title="재고 수정" 
+          initialData={editItem} 
+          onClose={() => setOpenEdit(false)} 
+          onSubmit={async (data) => { 
+            setOpenEdit(false); 
+            setSubmitting(true); 
+            setToastMsg("수정중입니다..."); 
+            try { await updateItemHandler(editItem.id, data); } finally { setSubmitting(false); } 
+          }} 
+          itemList={itemList} 
+        />
+      )}
 
       {/* 재고 등록 버튼 (플로팅 버튼 스타일 개선) */}
       <button
         onClick={() => setOpenCreate(true)}
         className="
-          fixed bottom-8 right-8
-          w-16 h-16
+          fixed bottom-24 right-6
+          w-14 h-14
           rounded-2xl
           bg-brand-600
           text-white
@@ -186,6 +217,7 @@ export default function InventoryPage() {
           hover:bg-brand-700 hover:scale-110 active:scale-95
           transition-all duration-300
           z-40
+          md:bottom-8 md:right-8 md:w-16 md:h-16
         "
         aria-label="식재료 등록"
       >

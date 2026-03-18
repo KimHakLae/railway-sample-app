@@ -98,9 +98,9 @@ export default function ItemsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-black tracking-tight text-gray-900">🥬 식재료 종류 관리</h1>
-        <p className="text-gray-500">자주 사용하는 식재료 종류를 추가하고 재고 현황을 파악합니다.</p>
+      <div className="flex flex-col gap-1 mb-2">
+        <h1 className="text-2xl font-black tracking-tight text-gray-900">🥬 식재료 종류</h1>
+        <p className="text-sm text-gray-500 font-medium">자주 사용하는 식재료 종류를 관리합니다.</p>
       </div>
 
       <ItemSearchBar

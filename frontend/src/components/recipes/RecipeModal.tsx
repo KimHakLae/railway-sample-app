@@ -123,38 +123,47 @@ export default function RecipeModal({ isOpen, onClose, onSave, ingredients, init
           </div>
 
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-black text-gray-700 uppercase tracking-wider ml-1">필요 재료</label>
+            <div className="flex items-center justify-between bg-brand-50/50 p-3 rounded-2xl border border-brand-100">
+              <label className="text-sm font-black text-brand-700 uppercase tracking-wider ml-1">필요 재료 목록</label>
               <button 
                 onClick={addIngredient}
-                className="flex items-center gap-1 text-xs font-black text-brand-600 hover:text-brand-700 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-600 text-white text-xs font-black rounded-xl hover:bg-brand-700 transition-all active:scale-95 shadow-sm shadow-brand-100"
               >
-                <PlusIcon className="w-4 h-4" /> 재료 추가
+                <PlusIcon className="w-4 h-4" /> 재료 추가하기
               </button>
             </div>
             
             <div className="space-y-3">
-              {selectedIngredients.map((item, index) => (
-                <div key={index} className="flex gap-3 animate-in slide-in-from-right-4 duration-300">
-                  <select 
-                    value={item.ingredientId}
-                    onChange={(e) => handleIngredientChange(index, 'ingredientId', Number(e.target.value))}
-                    className="flex-1 px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl font-bold text-sm"
-                  >
-                    {ingredients.map(ing => (
-                      <option key={ing.id} value={ing.id}>{ing.name}</option>
-                    ))}
-                  </select>
-                  <input 
-                    type="text"
-                    placeholder="수량 (예: 200g, 1/2개)"
-                    value={item.amount}
-                    onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
-                    className="w-32 px-4 py-3 bg-gray-50 border border-gray-100 rounded-xl font-bold text-sm"
-                  />
+              {selectedIngredients.length === 0 ? (
+                <div className="text-center py-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-100">
+                  <p className="text-sm font-bold text-gray-400">등록된 재료가 없습니다. 상단 버튼을 눌러 추가하세요.</p>
+                </div>
+              ) : selectedIngredients.map((item, index) => (
+                <div key={index} className="flex gap-3 animate-in slide-in-from-right-4 duration-300 items-center">
+                  <div className="flex-1">
+                    <select 
+                      value={item.ingredientId}
+                      onChange={(e) => handleIngredientChange(index, 'ingredientId', Number(e.target.value))}
+                      className="w-full px-4 py-3 bg-white border border-gray-100 rounded-xl font-bold text-sm focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500"
+                    >
+                      <option value="" disabled>식재료 선택</option>
+                      {ingredients.map(ing => (
+                        <option key={ing.id} value={ing.id}>{ing.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="w-32">
+                    <input 
+                      type="text"
+                      placeholder="수량 (예: 200g)"
+                      value={item.amount}
+                      onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
+                      className="w-full px-4 py-3 bg-white border border-gray-100 rounded-xl font-bold text-sm focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500"
+                    />
+                  </div>
                   <button 
                     onClick={() => removeIngredient(index)}
-                    className="p-3 text-gray-300 hover:text-rose-500 transition-colors"
+                    className="p-3 text-gray-300 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all"
                   >
                     <TrashIcon className="w-5 h-5" />
                   </button>

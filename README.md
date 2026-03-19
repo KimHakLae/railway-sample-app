@@ -60,11 +60,6 @@ PORT=3000
 VITE_API_URL=http://localhost:3000
 ```
 
-### Frontend (.env.production)
-
-```
-VITE_API_URL=https://your-backend.up.railway.app
-```
 
 ## API Endpoints
 

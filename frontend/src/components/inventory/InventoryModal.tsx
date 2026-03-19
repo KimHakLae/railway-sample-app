@@ -107,20 +107,20 @@ export default function InventoryModal({
   };
 
   return (
-    <div className="fixed inset-0 z-60 !bg-black/30 backdrop-blur-sm flex items-end sm:items-center justify-center">
+    <div className="fixed inset-0 z-60 !bg-black/30 dark:!bg-black/50 backdrop-blur-sm flex items-end sm:items-center justify-center">
       
       {/* 모달 */}
       <div className="
         w-full sm:max-w-md
         h-[92vh] sm:h-auto
-        !bg-[#f8fafc]
+        !bg-[#f8fafc] dark:!bg-slate-900
         rounded-t-3xl sm:rounded-3xl
-        flex flex-col shadow-2xl
+        flex flex-col shadow-2xl border border-transparent dark:border-slate-700/50
       ">
 
         {/* 헤더 */}
         <div className="p-5 pb-3">
-          <h2 className="text-xl font-bold tracking-tight">{title}</h2>
+          <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h2>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">재고 정보를 입력하세요</p>
         </div>
 
@@ -129,7 +129,7 @@ export default function InventoryModal({
 
           {/* 식재료 항목 카드 */}
           <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm space-y-3">
-            <label className="text-sm font-semibold flex items-center gap-2">
+            <label className="text-sm font-semibold flex items-center gap-2 text-gray-800 dark:text-gray-200">
               🥬 식재료 선택
             </label>
 
@@ -182,9 +182,11 @@ export default function InventoryModal({
                   px-4 py-2
                   rounded-xl
                   bg-gradient-to-r from-emerald-500 to-emerald-600
+                  dark:from-emerald-600 dark:to-emerald-700
+                  dark:hover:from-emerald-500 dark:hover:to-emerald-600
                   text-white
                   font-semibold
-                  shadow-md
+                  shadow-md shadow-emerald-500/30 dark:shadow-emerald-900/40
                   transition
                   hover:from-emerald-600 hover:to-emerald-700
                   active:scale-95
@@ -199,7 +201,7 @@ export default function InventoryModal({
           <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="text-sm text-gray-600">수량</label>
+                <label className="text-sm text-gray-600 dark:text-gray-400">수량</label>
                 <input
                   type="number"
                   className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
@@ -208,7 +210,7 @@ export default function InventoryModal({
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm text-gray-600">가격</label>
+                <label className="text-sm text-gray-600 dark:text-gray-400">가격</label>
                 <input
                   type="number"
                   className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
@@ -222,12 +224,12 @@ export default function InventoryModal({
           {/* 분류 카드 */}
           <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm space-y-4">
             <div className="space-y-2">
-              <label className="text-sm text-gray-600">카테고리</label>
+              <label className="text-sm text-gray-600 dark:text-gray-400">카테고리</label>
               <select
-                className={`w-full p-3 border rounded-lg ${
+                className={`w-full p-3 border dark:border-slate-700 rounded-lg outline-none focus:ring-2 focus:ring-brand-500 ${
                   !isNewItem
-                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-white dark:bg-slate-800"
+                    ? "bg-gray-100 dark:bg-slate-800/50 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                    : "bg-white dark:bg-slate-800 dark:text-white"
                 }`}
                 value={form.category}
                 onChange={e => change("category", e.target.value)}
@@ -244,7 +246,7 @@ export default function InventoryModal({
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm text-gray-600">보관 방법</label>
+              <label className="text-sm text-gray-600 dark:text-gray-400">보관 방법</label>
               <select
                 className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
                 value={form.storage}
@@ -264,7 +266,7 @@ export default function InventoryModal({
           {/* 날짜 카드 */}
           <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm space-y-4">
             <div className="space-y-2">
-              <label className="text-sm text-gray-600">입고일</label>
+              <label className="text-sm text-gray-600 dark:text-gray-400">입고일</label>
               <input
                 type="date"
                 className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
@@ -274,7 +276,7 @@ export default function InventoryModal({
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm text-gray-600">유통기한</label>
+              <label className="text-sm text-gray-600 dark:text-gray-400">유통기한</label>
               <input
                 type="date"
                 className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
@@ -286,8 +288,8 @@ export default function InventoryModal({
 
           {/* 긴급 토글 */}
           <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
-            <label className="flex items-center justify-between">
-              <span className="font-medium flex items-center gap-2">
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="font-medium flex items-center gap-2 text-gray-800 dark:text-gray-200">
                 🚨 긴급 표시
               </span>
               <div className="relative">
@@ -301,9 +303,9 @@ export default function InventoryModal({
                   {/* 트랙 */}
                   <div className="
                     w-12 h-7
-                    bg-gray-300
+                    bg-gray-300 dark:bg-slate-700
                     rounded-full
-                    peer-checked:bg-red-500
+                    peer-checked:bg-red-500 dark:peer-checked:bg-red-600
                     transition-colors
                   "></div>
 
@@ -322,7 +324,7 @@ export default function InventoryModal({
         </div>
 
         {/* 하단 버튼바 */}
-        <div className="p-4 border-t !bg-white dark:bg-slate-800 flex gap-3">
+        <div className="p-4 border-t border-gray-100 dark:border-slate-800/50 !bg-white dark:!bg-slate-800 flex gap-3">
           {/* 취소 버튼 */}
           <button
             onClick={onClose}
@@ -335,7 +337,7 @@ export default function InventoryModal({
               font-medium
               shadow-sm
               transition
-              hover:bg-gray-50 dark:bg-slate-900
+              hover:bg-gray-50 dark:hover:bg-slate-700
               hover:shadow
               active:scale-95
             "
@@ -350,9 +352,11 @@ export default function InventoryModal({
               flex-1 py-3
               rounded-xl
               bg-gradient-to-r from-blue-500 to-blue-600
+              dark:from-blue-600 dark:to-blue-700
+              dark:hover:from-blue-500 dark:hover:to-blue-600
               text-white
               font-semibold
-              shadow-lg
+              shadow-lg shadow-blue-500/30 dark:shadow-blue-900/40
               transition
               hover:from-blue-600 hover:to-blue-700
               active:scale-95

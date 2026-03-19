@@ -61,25 +61,40 @@ VITE_API_URL=http://localhost:3000
 ```
 
 
-## API Endpoints
+## API Endpoints (Prefix: `/api`)
 
-### Notes
+### Auth (`/api/auth`)
+* `POST /register` - 사용자 등록
+* `POST /login` - 로그인 및 토큰 발급
 
-* GET /notes  - Get all notes
-* POST /notes - Create note
-* GET /notes/:id - Get note by ID
-* DELETE /notes/:id - Delete note
+### Notes (`/api/notes`)
+* `GET /` - 모든 노트 조회
+* `POST /` - 새 노트 작성
+* `GET /:id` - 특정 노트 상세 조회
+* `DELETE /:id` - 노트 삭제
 
-### Auth
+### Admin (`/api/admin`)
+* `GET /users` - 전체 사용자 목록 (관리자 전용)
+* `PATCH /users/:id/approve` - 사용자 승인
+* `PATCH /users/:id/reject` - 사용자 거절
 
-* POST /auth/register - Register user
-* POST /auth/login - Login
+### Ingredients (`/api/ingredients/types`)
+* `GET /` - 식재료 품목 목록 조회
+* `POST /` - 새 품목 등록
+* `PUT /:id` - 품목 정보 수정
+* `DELETE /:id` - 품목 삭제
 
-### Admin
+### Stocks (`/api/ingredients/stocks`)
+* `GET /` - 현재 보유 재고 목록
+* `POST /` - 재고 등록
+* `PUT /:id` - 재고 수량/정보 수정
+* `DELETE /:id` - 재고 삭제
+* `PATCH /:id/urgent` - 긴급(유통기한 임박) 상태 토글
 
-* GET /admin/users - Get all users (admin only)
-* PATCH /admin/users/:id/approve - Approve user
-* PATCH /admin/users/:id/reject - Reject user
+### Recipes (`/api/recipes`)
+* `GET /` - 전체 레시피 목록
+* `GET /recommendations` - 맞춤형/공유 재고 기반 추천 요리
+* `POST /:id/cook` - 요리 완료 처리 (재고 자동 소모)
 
 ## Routing Structure
 

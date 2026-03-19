@@ -145,10 +145,12 @@ const RecipePage: React.FC = () => {
       {/* 추천 레시피 섹션 */}
       {!loading && recommendations.length > 0 && (
         <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <SparklesIcon className="w-6 h-6 text-brand-500" />
-            <h2 className="text-2xl font-bold text-gray-900">오늘의 추천 요리</h2>
-            <span className="text-sm text-gray-400 font-medium ml-2">보유하신 식재료를 활용할 수 있는 메뉴입니다.</span>
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <SparklesIcon className="w-6 h-6 text-brand-500" />
+              <h2 className="text-2xl font-bold text-gray-900">오늘의 추천 요리</h2>
+            </div>
+            <p className="text-sm text-gray-400 font-medium ml-8">보유하신 식재료를 활용할 수 있는 메뉴입니다.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {recommendations.slice(0, 3).map(recipe => (

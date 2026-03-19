@@ -1,145 +1,66 @@
-# Fullstack Template (Node.js + React)
+# 🍳 Railway Cooking Assistant (Fullstack)
 
-Backend: Express + TypeScript + Prisma
-Frontend: React + TypeScript + Vite + TailwindCSS
+Backend: Node.js + Express + Prisma (PostgreSQL)
+Frontend: React 19 + Vite + Tailwind CSS 4 + Framer Motion
 
-## Stack
+단순한 식재료 관리를 넘어, 사용자 간 공유되는 DB 데이터를 바탕으로 최적의 레시피를 추천하고 스마트하게 재고를 역추산으로 소모하는 **지능형 주방 관리 솔루션**입니다.
+
+## 🚀 Key Features
+- **스마트 대시보드 (Smart Dashboard)**: 유통기한이 임박한 식재료 알림 및 전체 재고 요약 카드를 애니메이션 기반으로 직관적으로 제공
+- **지능형 레시피 추천 (Global & Shared Stock)**: 사용자가 보유한 재료(전체 사용자 공유 기준)의 30% 이상을 만족하는 최적의 레시피 톱 5 자동 추천
+- **다크 테마 (Dark Mode) 완벽 지원**: 전역 상태 기반의 테마 토글 버튼 추가 및 시인성을 극적으로 확보한 세밀한 다크 톤앤매너 프레젠테이션 디자인 적용
+- **자동 재고 소모 (FIFO)**: '요리하기' 기능을 통해 요리를 완료 시, 가장 유통기한이 짧은(오래된) 재고부터 자동으로 차감하는 스마트 로직 도입
+
+## 🛠️ Stack
 
 ### Backend
-
-* Node.js 20
+* Node.js / Express
 * TypeScript
-* Express
 * Prisma ORM
-* SQLite (default)
+* PostgreSQL
+* JWT Authentication
 
 ### Frontend
-
-* React 18
-* TypeScript
+* React 19 / TypeScript
 * Vite 4
-* TailwindCSS
+* Tailwind CSS 4 / Framer Motion
 * React Router
 
-## Setup
+## ⚙️ Setup
 
-### Backend
-
+### Backend (Root Directory)
 ```bash
-cd backend
 npm install
 npx prisma generate
-npx prisma db push
+npx prisma migrate dev # DB 마이그레이션 필수
 npm run dev
 ```
 
 ### Frontend
-
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-Frontend: [http://localhost:5173](http://localhost:5173)
-Backend: [http://localhost:3000](http://localhost:3000)
+## 📡 API Endpoints (Prefix: `/api`)
+- **Auth**: `/auth/register`, `/auth/login`
+- **Admin**: `/admin/users`, `/admin/users/:id/approve`
+- **Ingredients**: `/ingredients/types` (식재료 품목 관리), `/ingredients/stocks` (내 재고 관리)
+- **Recipes**: `/recipes`, `/recipes/recommendations`, `/recipes/:id/cook`
 
-## Environment Variables
-
-### Backend (.env)
-
+## 📁 Project Structure
+```text
+root/
+ ├─ src/                  # Backend Express 비즈니스 로직 및 서버
+ ├─ prisma/               # Database 스키마 및 마이그레이션 이력
+ ├─ frontend/             # Frontend React 앱 공간
+ │   ├─ src/
+ │   │   ├─ components/   # 재사용 UI 조각 및 특수 모달 (auth, items, recipes, admin 등)
+ │   │   ├─ pages/        # 메인 라우터 진입점 페이지 모음
+ │   │   ├─ api/          # 백엔드 API 통신 레이어
+ │   │   └─ utils/        # 공통 유틸리티 (version 등)
+ │   └─ index.html
+ ├─ PROJECT.md            # 소프트웨어 상세 기획 및 업데이트 체인지로그
+ └─ GEMINI.md             # AI 개발 지시사항(Rules) 및 환경 동기화 문서
 ```
-DATABASE_URL=sqlite:./dev.db
-JWT_SECRET=your_jwt_secret_key
-PORT=3000
-```
-
-### Frontend (.env.development)
-
-```
-VITE_API_URL=http://localhost:3000
-```
-
-
-## API Endpoints (Prefix: `/api`)
-
-### Auth (`/api/auth`)
-* `POST /register` - 사용자 등록
-* `POST /login` - 로그인 및 토큰 발급
-
-### Notes (`/api/notes`)
-* `GET /` - 모든 노트 조회
-* `POST /` - 새 노트 작성
-* `GET /:id` - 특정 노트 상세 조회
-* `DELETE /:id` - 노트 삭제
-
-### Admin (`/api/admin`)
-* `GET /users` - 전체 사용자 목록 (관리자 전용)
-* `PATCH /users/:id/approve` - 사용자 승인
-* `PATCH /users/:id/reject` - 사용자 거절
-
-### Ingredients (`/api/ingredients/types`)
-* `GET /` - 식재료 품목 목록 조회
-* `POST /` - 새 품목 등록
-* `PUT /:id` - 품목 정보 수정
-* `DELETE /:id` - 품목 삭제
-
-### Stocks (`/api/ingredients/stocks`)
-* `GET /` - 현재 보유 재고 목록
-* `POST /` - 재고 등록
-* `PUT /:id` - 재고 수량/정보 수정
-* `DELETE /:id` - 재고 삭제
-* `PATCH /:id/urgent` - 긴급(유통기한 임박) 상태 토글
-
-### Recipes (`/api/recipes`)
-* `GET /` - 전체 레시피 목록
-* `GET /recommendations` - 맞춤형/공유 재고 기반 추천 요리
-* `POST /:id/cook` - 요리 완료 처리 (재고 자동 소모)
-
-## Routing Structure
-
-```
-/login                → 로그인 페이지
-/user                 → 사용자 메뉴
-/notes                → 내 노트 관리
-/admin                → 관리자 메뉴
-/admin/users          → 사용자 관리
-/admin/notes          → 전체 노트 관리
-```
-
-## Project Structure
-
-```
-root
- ├─ backend
- │   ├─ src
- │   │   ├─ routes
- │   │   ├─ services
- │   │   ├─ middleware
- │   │   ├─ lib
- │   │   └─ app.ts
- │   ├─ prisma
- │   └─ package.json
- └─ frontend
-     ├─ src
-     │   ├─ pages
-     │   ├─ components
-     │   │   ├─ auth
-     │   │   ├─ notes
-     │   │   ├─ admin
-     │   │   ├─ items
-     │   │   ├─ common
-     │   │   └─ ui
-     │   ├─ layouts
-     │   ├─ utils
-     │   └─ App.tsx
-     └─ package.json
-```
-
-## Future Improvements
-
-* 사용자 프로필 관리
-* 파일 첨부 기능
-* 노트 검색 및 페이지네이션
-* 관리자 대시보드 및 통계
-* 모바일 반응형 UI

@@ -73,7 +73,7 @@ export default function InventoryPage() {
             onClick={() => hideSnackbar()}
             className="
               px-4 py-1.5 rounded-lg text-xs font-bold
-              bg-white/10 hover:bg-white/20
+              bg-white dark:bg-slate-800/10 hover:bg-white dark:bg-slate-800/20
               text-white border border-white/20
               transition-all active:scale-95
             "
@@ -164,8 +164,8 @@ export default function InventoryPage() {
       )}
       
       <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-black tracking-tight text-gray-900">🍱 식재료 관리</h1>
-        <p className="text-gray-500">신선한 요리를 위해 보유 중인 식재료 상태를 관리합니다.</p>
+        <h1 className="text-3xl font-black tracking-tight text-gray-900 dark:text-white">🍱 식재료 관리</h1>
+        <p className="text-gray-500 dark:text-gray-400">신선한 요리를 위해 보유 중인 식재료 상태를 관리합니다.</p>
       </div>
 
       <InventoryStats {...stats} />

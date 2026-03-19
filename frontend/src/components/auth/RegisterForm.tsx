@@ -54,7 +54,7 @@ export default function RegisterForm() {
 
       {/* ✅ 에러 메시지 노출 */}
       {errorMessage && (
-        <p className="text-red-500 text-sm">{errorMessage}</p>
+        <p className="text-red-500 dark:text-red-400 text-sm">{errorMessage}</p>
       )}
 
       <button
@@ -67,6 +67,7 @@ export default function RegisterForm() {
           font-black
           text-sm
           shadow-lg shadow-brand-100
+          dark:shadow-none
           transition-all
           active:scale-[0.98]
         "

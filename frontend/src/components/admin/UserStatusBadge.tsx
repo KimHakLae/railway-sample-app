@@ -7,10 +7,10 @@ interface UserStatusBadgeProps {
 
 const statusInfo: Record<string, { label: string; color: string }> = {
   P: { label: "승인대기", color: "bg-amber-100 text-amber-700" },
-  V: { label: "승인완료", color: "bg-green-100 text-green-700" },
-  F: { label: "거절됨", color: "bg-red-100 text-red-700" },
-  E: { label: "만료됨", color: "bg-gray-100 text-gray-700" },
-  R: { label: "취소됨", color: "bg-gray-100 text-gray-700" }
+  V: { label: "승인완료", color: "bg-green-100 dark:bg-green-900/50 text-green-700" },
+  F: { label: "거절됨", color: "bg-red-100 dark:bg-red-900/50 text-red-700" },
+  E: { label: "만료됨", color: "bg-gray-100 text-gray-700 dark:text-gray-300" },
+  R: { label: "취소됨", color: "bg-gray-100 text-gray-700 dark:text-gray-300" }
 };
 
 const UserStatusBadge: React.FC<UserStatusBadgeProps> = ({ status, isAdmin }) => {

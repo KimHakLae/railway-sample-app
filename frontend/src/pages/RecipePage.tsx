@@ -128,10 +128,10 @@ const RecipePage: React.FC = () => {
       transition={{ duration: 0.4 }}
       className="p-6 max-w-7xl mx-auto space-y-8"
     >
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-sm border border-gray-100 dark:border-slate-700">
         <div className="space-y-2">
-          <h1 className="text-4xl font-black text-gray-900 tracking-tight">요리 레시피 관리</h1>
-          <p className="text-gray-500 font-medium">나만의 레시피를 등록하고 보유 식재료와 연동하세요.</p>
+          <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight">요리 레시피 관리</h1>
+          <p className="text-gray-500 dark:text-gray-400 font-medium">나만의 레시피를 등록하고 보유 식재료와 연동하세요.</p>
         </div>
         <button 
           onClick={handleOpenAdd}
@@ -148,7 +148,7 @@ const RecipePage: React.FC = () => {
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <SparklesIcon className="w-6 h-6 text-brand-500" />
-              <h2 className="text-2xl font-bold text-gray-900">오늘의 추천 요리</h2>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">오늘의 추천 요리</h2>
             </div>
             <p className="text-sm text-gray-400 font-medium ml-8">보유하신 식재료를 활용할 수 있는 메뉴입니다.</p>
           </div>
@@ -177,8 +177,8 @@ const RecipePage: React.FC = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-xl font-black text-gray-900 line-clamp-1">{recipe.title}</h3>
-                  <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed">
+                  <h3 className="text-xl font-black text-gray-900 dark:text-white line-clamp-1">{recipe.title}</h3>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 leading-relaxed">
                     {recipe.description || '작성된 설명이 없습니다.'}
                   </p>
                 </div>
@@ -204,7 +204,7 @@ const RecipePage: React.FC = () => {
         <input 
           type="text"
           placeholder="레시피 제목 또는 설명으로 검색..."
-          className="w-full pl-12 pr-6 py-4 bg-white border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 shadow-sm transition-all font-medium"
+          className="w-full pl-12 pr-6 py-4 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 shadow-sm transition-all font-medium"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -235,13 +235,13 @@ const RecipePage: React.FC = () => {
                 <div className="flex gap-2">
                   <button 
                     onClick={(e) => handleOpenEdit(e, recipe.id)}
-                    className="p-2 bg-gray-50 rounded-xl text-gray-400 hover:text-brand-600 hover:bg-white hover:shadow-md transition-all opacity-0 group-hover:opacity-100"
+                    className="p-2 bg-gray-50 dark:bg-slate-900 rounded-xl text-gray-400 hover:text-brand-600 hover:bg-white dark:bg-slate-800 hover:shadow-md transition-all opacity-0 group-hover:opacity-100"
                   >
                     <PencilSquareIcon className="w-5 h-5" />
                   </button>
                   <button 
                     onClick={(e) => handleDelete(e, recipe.id)}
-                    className="p-2 bg-gray-50 rounded-xl text-gray-400 hover:text-rose-500 hover:bg-white hover:shadow-md transition-all opacity-0 group-hover:opacity-100"
+                    className="p-2 bg-gray-50 dark:bg-slate-900 rounded-xl text-gray-400 hover:text-rose-500 hover:bg-white dark:bg-slate-800 hover:shadow-md transition-all opacity-0 group-hover:opacity-100"
                   >
                     <TrashIcon className="w-5 h-5" />
                   </button>
@@ -249,8 +249,8 @@ const RecipePage: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <h3 className="text-xl font-black text-gray-900 line-clamp-1">{recipe.title}</h3>
-                <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed">
+                <h3 className="text-xl font-black text-gray-900 dark:text-white line-clamp-1">{recipe.title}</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 leading-relaxed">
                   {recipe.description || '작성된 설명이 없습니다.'}
                 </p>
               </div>
@@ -269,8 +269,8 @@ const RecipePage: React.FC = () => {
           ))}
           
           {filteredRecipes.length === 0 && (
-            <div className="col-span-full py-20 bg-white rounded-[2rem] border border-dashed border-gray-200 flex flex-col items-center justify-center space-y-4">
-              <div className="p-4 bg-gray-50 rounded-full text-gray-300">
+            <div className="col-span-full py-20 bg-white dark:bg-slate-800 rounded-[2rem] border border-dashed border-gray-200 dark:border-slate-700 flex flex-col items-center justify-center space-y-4">
+              <div className="p-4 bg-gray-50 dark:bg-slate-900 rounded-full text-gray-300">
                 <PlusIcon className="w-12 h-12" />
               </div>
               <p className="text-gray-400 font-bold text-lg">아직 등록된 레시피가 없습니다.</p>

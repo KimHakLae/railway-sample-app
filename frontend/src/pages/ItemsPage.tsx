@@ -63,7 +63,7 @@ export default function ItemsPage() {
       duration: null,
       action: (
         <div className="flex gap-2 pt-1">
-          <button onClick={() => hideSnackbar()} className="px-3 py-1 bg-white/10 rounded-lg text-xs font-bold text-white">취소</button>
+          <button onClick={() => hideSnackbar()} className="px-3 py-1 bg-white dark:bg-slate-800/10 rounded-lg text-xs font-bold text-white">취소</button>
           <button
             onClick={async () => {
               hideSnackbar();
@@ -111,9 +111,9 @@ export default function ItemsPage() {
           {[1, 2, 3, 4, 5, 6].map(i => <div key={i} className="h-40 bg-gray-200 rounded-3xl" />)}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-20 bg-gray-50 rounded-[40px] border-2 border-dashed border-gray-200">
+        <div className="text-center py-20 bg-gray-50 dark:bg-slate-900 rounded-[40px] border-2 border-dashed border-gray-200 dark:border-slate-700">
           <p className="text-5xl mb-4">📦</p>
-          <p className="text-gray-500 font-bold">
+          <p className="text-gray-500 dark:text-gray-400 font-bold">
             {keyword ? "검색 결과가 없습니다." : "아직 등록된 품목이 없습니다."}
           </p>
           {!keyword && (

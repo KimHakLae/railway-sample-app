@@ -24,7 +24,7 @@ export default function LogoutForm() {
             }}
             className="
               px-4 py-1.5 rounded-lg text-xs font-bold
-              bg-white/10 hover:bg-white/20
+              bg-white dark:bg-slate-800/10 hover:bg-white dark:bg-slate-800/20
               text-white border border-white/20
               transition-all active:scale-95
             "

@@ -65,12 +65,12 @@ export default function AdminNotesPage() {
   return (
     <div className="space-y-8">
       <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-black tracking-tight text-gray-900">📝 전체 사용자 노트</h1>
-        <p className="text-gray-500">시스템의 모든 사용자가 작성한 노트를 한눈에 확인합니다.</p>
+        <h1 className="text-3xl font-black tracking-tight text-gray-900 dark:text-white">📝 전체 사용자 노트</h1>
+        <p className="text-gray-500 dark:text-gray-400">시스템의 모든 사용자가 작성한 노트를 한눈에 확인합니다.</p>
       </div>
 
       {notes.length === 0 ? (
-        <div className="text-center py-32 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
+        <div className="text-center py-32 bg-gray-50 dark:bg-slate-900 rounded-3xl border-2 border-dashed border-gray-200 dark:border-slate-700">
           <p className="text-gray-400 font-medium">작성된 노트가 없습니다.</p>
         </div>
       ) : (

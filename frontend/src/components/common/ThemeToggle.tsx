@@ -26,7 +26,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="w-10 h-10 flex items-center justify-center rounded-2xl bg-gray-50 text-gray-400 hover:bg-brand-50 hover:text-brand-600 dark:bg-slate-800 dark:text-gray-400 dark:hover:text-amber-400 dark:hover:bg-slate-700 transition-all duration-300 active:scale-90 shadow-sm"
+      className="w-10 h-10 flex items-center justify-center rounded-2xl bg-gray-50 dark:bg-slate-900 text-gray-400 hover:bg-brand-50 hover:text-brand-600 dark:bg-slate-800 dark:text-gray-400 dark:hover:text-amber-400 dark:hover:bg-slate-700 transition-all duration-300 active:scale-90 shadow-sm"
       aria-label="Toggle theme"
       title={isDark ? "라이트 모드로 전환" : "다크 모드로 전환"}
     >

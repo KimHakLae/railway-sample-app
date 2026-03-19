@@ -1,4 +1,4 @@
-export const APP_VERSION = "v2.3.0";
+export const APP_VERSION = "v2.3.1";
 
 export const LAST_UPDATED = "2026-03-19";
 
@@ -9,6 +9,14 @@ export interface VersionChange {
 }
 
 export const VERSION_HISTORY: VersionChange[] = [
+  {
+    version: "v2.3.1",
+    date: "2026-03-19",
+    changes: [
+      "다크 모드 전역 보완: 70여 개 UI 컴포넌트 하드코딩 색상 일괄 수정(방어코드 삽입)",
+      "로그인 및 회원가입 페이지에 다크 모드 토글 버튼 추가"
+    ]
+  },
   {
     version: "v2.3.0",
     date: "2026-03-19",

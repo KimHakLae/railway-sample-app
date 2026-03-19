@@ -7,10 +7,10 @@ interface Props {
 export default function VersionHistory({ onClose }: Props) {
   return (
     <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-fade-in">
-        <div className="p-6 border-b flex justify-between items-center bg-gray-50">
+      <div className="bg-white dark:bg-slate-800 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-fade-in">
+        <div className="p-6 border-b flex justify-between items-center bg-gray-50 dark:bg-slate-900">
           <h2 className="text-xl font-bold">버전 연혁 (Changelog)</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-black text-2xl">×</button>
+          <button onClick={onClose} className="text-gray-400 hover:text-black dark:text-white text-2xl">×</button>
         </div>
         
         <div className="p-6 max-h-[60vh] overflow-y-auto space-y-8">
@@ -33,7 +33,7 @@ export default function VersionHistory({ onClose }: Props) {
           ))}
         </div>
 
-        <div className="p-4 bg-gray-50 text-center">
+        <div className="p-4 bg-gray-50 dark:bg-slate-900 text-center">
           <button 
             onClick={onClose}
             className="w-full py-3 bg-gray-800 text-white rounded-xl font-semibold hover:bg-black transition-all"

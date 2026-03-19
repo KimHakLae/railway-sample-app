@@ -121,14 +121,14 @@ export default function InventoryModal({
         {/* 헤더 */}
         <div className="p-5 pb-3">
           <h2 className="text-xl font-bold tracking-tight">{title}</h2>
-          <p className="text-xs text-gray-500 mt-1">재고 정보를 입력하세요</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">재고 정보를 입력하세요</p>
         </div>
 
         {/* 내용 */}
         <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-5">
 
           {/* 식재료 항목 카드 */}
-          <section className="!bg-white rounded-2xl p-4 shadow-sm space-y-3">
+          <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm space-y-3">
             <label className="text-sm font-semibold flex items-center gap-2">
               🥬 식재료 선택
             </label>
@@ -138,7 +138,7 @@ export default function InventoryModal({
                 <input
                   type="text"
                   placeholder="식재료 검색..."
-                  className="w-full border rounded-xl p-3 text-sm !bg-gray-50 focus:ring-2 focus:ring-brand-500 transition-all pl-10"
+                  className="w-full border rounded-xl p-3 text-sm !bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-brand-500 transition-all pl-10"
                   value={itmSearch}
                   onChange={e => setItmSearch(e.target.value)}
                 />
@@ -148,7 +148,7 @@ export default function InventoryModal({
               </div>
 
               <select
-                className="w-full border rounded-xl p-3 text-base !bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium"
+                className="w-full border rounded-xl p-3 text-base !bg-gray-50 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium"
                 value={form.itemId}
                 onChange={e => {
                   const selectedId = Number(e.target.value);
@@ -172,7 +172,7 @@ export default function InventoryModal({
               <input
                 type="text"
                 placeholder="신규 식재료 이름 (직접 입력)"
-                className="flex-1 border rounded-xl p-3 !bg-gray-50"
+                className="flex-1 border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
                 value={newItemName}
                 onChange={e => setNewItemName(e.target.value)}
               />
@@ -196,13 +196,13 @@ export default function InventoryModal({
           </section>
 
           {/* 수량 가격 카드 */}
-          <section className="!bg-white rounded-2xl p-4 shadow-sm">
+          <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-sm text-gray-600">수량</label>
                 <input
                   type="number"
-                  className="w-full border rounded-xl p-3 !bg-gray-50"
+                  className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
                   value={form.quantity}
                   onChange={e=>change("quantity", Number(e.target.value))}
                 />
@@ -211,7 +211,7 @@ export default function InventoryModal({
                 <label className="text-sm text-gray-600">가격</label>
                 <input
                   type="number"
-                  className="w-full border rounded-xl p-3 !bg-gray-50"
+                  className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
                   value={form.price || ""}
                   onChange={e=>change("price", e.target.value ? Number(e.target.value) : undefined)}
                 />
@@ -220,14 +220,14 @@ export default function InventoryModal({
           </section>
 
           {/* 분류 카드 */}
-          <section className="!bg-white rounded-2xl p-4 shadow-sm space-y-4">
+          <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm space-y-4">
             <div className="space-y-2">
               <label className="text-sm text-gray-600">카테고리</label>
               <select
                 className={`w-full p-3 border rounded-lg ${
                   !isNewItem
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-white"
+                    : "bg-white dark:bg-slate-800"
                 }`}
                 value={form.category}
                 onChange={e => change("category", e.target.value)}
@@ -246,7 +246,7 @@ export default function InventoryModal({
             <div className="space-y-2">
               <label className="text-sm text-gray-600">보관 방법</label>
               <select
-                className="w-full border rounded-xl p-3 !bg-gray-50"
+                className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
                 value={form.storage}
                 onChange={e=>change("storage", e.target.value)}
               >
@@ -262,12 +262,12 @@ export default function InventoryModal({
           </section>
 
           {/* 날짜 카드 */}
-          <section className="!bg-white rounded-2xl p-4 shadow-sm space-y-4">
+          <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm space-y-4">
             <div className="space-y-2">
               <label className="text-sm text-gray-600">입고일</label>
               <input
                 type="date"
-                className="w-full border rounded-xl p-3 !bg-gray-50"
+                className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
                 value={form.entryDate}
                 onChange={e => change("entryDate", e.target.value)}
               />
@@ -277,7 +277,7 @@ export default function InventoryModal({
               <label className="text-sm text-gray-600">유통기한</label>
               <input
                 type="date"
-                className="w-full border rounded-xl p-3 !bg-gray-50"
+                className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
                 value={form.expiryDate}
                 onChange={e => change("expiryDate", e.target.value)}
               />
@@ -285,7 +285,7 @@ export default function InventoryModal({
           </section>
 
           {/* 긴급 토글 */}
-          <section className="!bg-white rounded-2xl p-4 shadow-sm">
+          <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
             <label className="flex items-center justify-between">
               <span className="font-medium flex items-center gap-2">
                 🚨 긴급 표시
@@ -311,7 +311,7 @@ export default function InventoryModal({
                   <div className="
                     absolute top-1 left-1
                     w-5 h-5
-                    bg-white rounded-full shadow
+                    bg-white dark:bg-slate-800 rounded-full shadow
                     transition-transform
                     peer-checked:translate-x-5
                   "></div>
@@ -322,20 +322,20 @@ export default function InventoryModal({
         </div>
 
         {/* 하단 버튼바 */}
-        <div className="p-4 border-t !bg-white flex gap-3">
+        <div className="p-4 border-t !bg-white dark:bg-slate-800 flex gap-3">
           {/* 취소 버튼 */}
           <button
             onClick={onClose}
             className="
               flex-1 py-3
-              border border-gray-300
+              border border-gray-300 dark:border-slate-600
               rounded-xl
-              bg-white
-              text-gray-700
+              bg-white dark:bg-slate-800
+              text-gray-700 dark:text-gray-300
               font-medium
               shadow-sm
               transition
-              hover:bg-gray-50
+              hover:bg-gray-50 dark:bg-slate-900
               hover:shadow
               active:scale-95
             "

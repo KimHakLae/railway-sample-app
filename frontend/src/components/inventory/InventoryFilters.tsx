@@ -41,7 +41,7 @@ export default function InventoryFilters({
               flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all
               ${categoryFilter === "ALL" 
                 ? "bg-brand-600 text-white shadow-lg shadow-brand-200" 
-                : "bg-gray-50 text-gray-500 hover:bg-gray-100"}
+                : "bg-gray-50 dark:bg-slate-900 text-gray-500 dark:text-gray-400 hover:bg-gray-100"}
             `}
           >
             전체
@@ -54,7 +54,7 @@ export default function InventoryFilters({
                 flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap
                 ${categoryFilter === key 
                   ? `${info.style} shadow-lg ring-2 ring-current ring-offset-2` 
-                  : "bg-gray-50 text-gray-500 hover:bg-gray-100"}
+                  : "bg-gray-50 dark:bg-slate-900 text-gray-500 dark:text-gray-400 hover:bg-gray-100"}
               `}
             >
               {info.label}
@@ -72,13 +72,13 @@ export default function InventoryFilters({
             <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-600 transition-colors" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input 
               placeholder="재고명을 입력하세요" 
-              className="w-full pl-10 pr-4 py-3 bg-gray-50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-brand-100 focus:bg-white transition-all outline-none" 
+              className="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-900 border-none rounded-2xl text-sm focus:ring-2 focus:ring-brand-100 focus:bg-white dark:bg-slate-800 transition-all outline-none" 
               value={keyword} 
               onChange={(e) => setKeyword(e.target.value)} 
             />
           </div>
           <select 
-            className="px-4 py-3 bg-gray-50 border-none rounded-2xl text-sm font-bold focus:ring-2 focus:ring-brand-100 outline-none appearance-none cursor-pointer" 
+            className="px-4 py-3 bg-gray-50 dark:bg-slate-900 border-none rounded-2xl text-sm font-bold focus:ring-2 focus:ring-brand-100 outline-none appearance-none cursor-pointer" 
             value={sort} 
             onChange={(e) => setSort(e.target.value)}
           >
@@ -105,7 +105,7 @@ export default function InventoryFilters({
             {isFiltered && (
                <button
                 onClick={resetFilters}
-                className="p-2 rounded-xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all"
+                className="p-2 rounded-xl bg-red-50 text-red-500 dark:text-red-400 hover:bg-red-500 hover:text-white transition-all"
                 title="필터 초기화"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
@@ -114,7 +114,7 @@ export default function InventoryFilters({
           </div>
 
           <label className="flex items-center gap-2 cursor-pointer group">
-            <span className={`text-xs font-bold transition-colors ${urgentOnly ? "text-red-500" : "text-gray-400 group-hover:text-gray-600"}`}>긴급항목</span>
+            <span className={`text-xs font-bold transition-colors ${urgentOnly ? "text-red-500 dark:text-red-400" : "text-gray-400 group-hover:text-gray-600"}`}>긴급항목</span>
             <div className="relative">
               <input
                 type="checkbox"
@@ -123,7 +123,7 @@ export default function InventoryFilters({
                 className="sr-only peer"
               />
               <div className="w-10 h-6 bg-gray-200 rounded-full transition-colors peer-checked:bg-red-500"></div>
-              <div className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all peer-checked:translate-x-4"></div>
+              <div className="absolute top-1 left-1 w-4 h-4 bg-white dark:bg-slate-800 rounded-full shadow-sm transition-all peer-checked:translate-x-4"></div>
             </div>
           </label>
         </div>

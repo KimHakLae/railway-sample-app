@@ -67,35 +67,35 @@ const Dashboard: React.FC<DashboardProps> = ({ stocks }) => {
 
       {/* 요약 카드 */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm space-y-3 group hover:border-brand-500/30 transition-all">
+        <div className="bg-white dark:bg-slate-800 p-6 rounded-[2rem] border border-gray-100 dark:border-slate-700 shadow-sm space-y-3 group hover:border-brand-500/30 transition-all">
           <div className="w-12 h-12 bg-brand-50 rounded-2xl flex items-center justify-center text-brand-600 group-hover:scale-110 transition-transform">
             <ArchiveBoxIcon className="w-6 h-6" />
           </div>
           <div>
             <p className="text-gray-400 font-black text-xs uppercase tracking-widest">전체 보유량</p>
-            <h4 className="text-2xl font-black text-gray-900">{totalQuantity} <span className="text-sm text-gray-400">Items</span></h4>
+            <h4 className="text-2xl font-black text-gray-900 dark:text-white">{totalQuantity} <span className="text-sm text-gray-400">Items</span></h4>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm space-y-3 group hover:border-emerald-500/30 transition-all">
+        <div className="bg-white dark:bg-slate-800 p-6 rounded-[2rem] border border-gray-100 dark:border-slate-700 shadow-sm space-y-3 group hover:border-emerald-500/30 transition-all">
           <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform">
             <CheckCircleIcon className="w-6 h-6" />
           </div>
           <div>
             <p className="text-gray-400 font-black text-xs uppercase tracking-widest">신선 재료</p>
-            <h4 className="text-2xl font-black text-gray-900">
+            <h4 className="text-2xl font-black text-gray-900 dark:text-white">
               {stocks.length - urgentStocks.length - expiredStocks.length} <span className="text-sm text-gray-400">Types</span>
             </h4>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm space-y-3 group hover:border-rose-500/30 transition-all">
+        <div className="bg-white dark:bg-slate-800 p-6 rounded-[2rem] border border-gray-100 dark:border-slate-700 shadow-sm space-y-3 group hover:border-rose-500/30 transition-all">
           <div className="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-600 group-hover:scale-110 transition-transform">
             <ExclamationTriangleIcon className="w-6 h-6" />
           </div>
           <div>
             <p className="text-gray-400 font-black text-xs uppercase tracking-widest">관리 필요</p>
-            <h4 className="text-2xl font-black text-gray-900">
+            <h4 className="text-2xl font-black text-gray-900 dark:text-white">
               {urgentStocks.length + expiredStocks.length} <span className="text-sm text-gray-400">Needs Care</span>
             </h4>
           </div>

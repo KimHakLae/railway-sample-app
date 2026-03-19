@@ -26,7 +26,7 @@ export default function Layout() {
       {/* 🔹 상단 헤더 (Modern & Sticky) */}
       <header
         className="sticky top-0 w-full h-16
-                   bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl
+                   bg-white dark:bg-slate-800/80 dark:bg-slate-900/80 backdrop-blur-xl
                    border-b border-gray-100 dark:border-slate-800
                    flex items-center z-50 transition-all duration-300 shadow-sm"
       >
@@ -113,7 +113,7 @@ export default function Layout() {
       {/* 🏷️ 푸터 (모바일에서도 보이도록 위치 조정) */}
       <footer className="bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-800 py-4 md:py-8 mb-20 md:mb-0 transition-colors">
         <Container className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-gray-400 dark:text-gray-500 text-[10px] md:text-sm order-2 sm:order-1">
+          <div className="text-gray-400 dark:text-gray-500 dark:text-gray-400 text-[10px] md:text-sm order-2 sm:order-1">
             © 2026 Railway Cooking App
           </div>
           

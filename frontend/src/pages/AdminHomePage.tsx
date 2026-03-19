@@ -5,10 +5,10 @@ export default function AdminHomePage() {
   return (
     <div className="space-y-8">
       <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-black tracking-tight text-gray-900">
+        <h1 className="text-3xl font-black tracking-tight text-gray-900 dark:text-white">
           🛠 관리자 콘솔
         </h1>
-        <p className="text-gray-500">시스템 설정 및 사용자 승인 상태를 관리합니다.</p>
+        <p className="text-gray-500 dark:text-gray-400">시스템 설정 및 사용자 승인 상태를 관리합니다.</p>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -20,7 +20,7 @@ export default function AdminHomePage() {
             <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
               나의 요리 대시보드
             </h2>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
               레시피 추천, 유통기한 알림 및 나의 스마트 주방 기능을 사용합니다.
             </p>
           </Card>
@@ -34,7 +34,7 @@ export default function AdminHomePage() {
             <h2 className="text-xl font-bold mb-2 group-hover:text-red-600 transition-colors">
               유저 관리
             </h2>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
               신규 가입 유저의 승인(Approved) 및 권한을 관리합니다.
             </p>
           </Card>
@@ -48,7 +48,7 @@ export default function AdminHomePage() {
             <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
                식재료 현황
             </h2>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
                전체 유저가 보유한 식재료 신순도와 재고 현황을 모니터링합니다.
             </p>
           </Card>
@@ -62,7 +62,7 @@ export default function AdminHomePage() {
             <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
               식재료 종류 관리
             </h2>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
               표준 식재료 데이터베이스를 구축하고 종류별 재고 합계를 확인합니다.
             </p>
           </Card>
@@ -76,7 +76,7 @@ export default function AdminHomePage() {
             <h2 className="text-xl font-bold mb-2 group-hover:text-brand-600 transition-colors">
               시스템 공지
             </h2>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
                유저들을 위한 요리 팁이나 시스템 공지사항을 작성하고 전달합니다.
             </p>
           </Card>

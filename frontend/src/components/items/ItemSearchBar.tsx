@@ -10,8 +10,8 @@ const ItemSearchBar: React.FC<ItemSearchBarProps> = ({ keyword, setKeyword, onOp
   return (
     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
       <div className="space-y-1">
-        <h1 className="text-3xl font-black tracking-tight text-gray-900">🥬 식재료 종류 관리</h1>
-        <p className="text-gray-500 text-sm">자주 사용하는 식재료 종류를 추가하고 재고 현황을 파악합니다.</p>
+        <h1 className="text-3xl font-black tracking-tight text-gray-900 dark:text-white">🥬 식재료 종류 관리</h1>
+        <p className="text-gray-500 dark:text-gray-400 text-sm">자주 사용하는 식재료 종류를 추가하고 재고 현황을 파악합니다.</p>
       </div>
 
       <div className="flex items-center gap-3">
@@ -19,7 +19,7 @@ const ItemSearchBar: React.FC<ItemSearchBarProps> = ({ keyword, setKeyword, onOp
           <input
             type="text"
             placeholder="식재료 종류 검색..."
-            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-100 rounded-2xl text-sm focus:ring-2 focus:ring-brand-500 transition-all shadow-sm"
+            className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl text-sm focus:ring-2 focus:ring-brand-500 transition-all shadow-sm"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
           />

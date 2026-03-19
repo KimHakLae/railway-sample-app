@@ -67,8 +67,8 @@ export default function AdminUsersPage() {
   return (
     <div className="space-y-8">
       <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-black tracking-tight text-gray-900">👥 사용자 승인 관리</h1>
-        <p className="text-gray-500">시스템 가입 요청을 검토하고 승인 여부를 결정합니다.</p>
+        <h1 className="text-3xl font-black tracking-tight text-gray-900 dark:text-white">👥 사용자 승인 관리</h1>
+        <p className="text-gray-500 dark:text-gray-400">시스템 가입 요청을 검토하고 승인 여부를 결정합니다.</p>
       </div>
 
       {loading ? (
@@ -76,7 +76,7 @@ export default function AdminUsersPage() {
           {[1, 2, 3].map(i => <div key={i} className="h-48 bg-gray-100 rounded-[32px]" />)}
         </div>
       ) : users.length === 0 ? (
-        <div className="text-center py-20 bg-gray-50 rounded-[40px] border-2 border-dashed border-gray-200">
+        <div className="text-center py-20 bg-gray-50 dark:bg-slate-900 rounded-[40px] border-2 border-dashed border-gray-200 dark:border-slate-700">
           <p className="text-5xl mb-4">📭</p>
           <p className="text-gray-400 font-bold">관리할 사용자가 없습니다.</p>
         </div>

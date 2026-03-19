@@ -1,4 +1,4 @@
-export const APP_VERSION = "v2.2.0";
+export const APP_VERSION = "v2.3.0";
 
 export const LAST_UPDATED = "2026-03-19";
 
@@ -9,6 +9,15 @@ export interface VersionChange {
 }
 
 export const VERSION_HISTORY: VersionChange[] = [
+  {
+    version: "v2.3.0",
+    date: "2026-03-19",
+    changes: [
+      "다크 모드 시스템 전면 도입: 시스템 환경 설정 감지 및 로컬 스토리지 연동(ThemeProvider)",
+      "테마 토글(해/달 아이콘) 상단 네비게이션 배치 및 부드러운 전환 효과(Framer Motion 등 호환) 적용",
+      "프리미엄 UI 갱신: 카드, 입력창(Input), 하단 바(BottomNav) 등의 컴포넌트에 Tailwind dark: 변형 일괄 적용"
+    ]
+  },
   {
     version: "v2.2.0",
     date: "2026-03-19",

@@ -10,11 +10,11 @@ import { getUserFromToken } from '../../utils/auth';
 
 const BottomNav: React.FC = () => {
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-gray-100 px-6 py-3 z-40 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)]">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-t border-gray-100 dark:border-slate-800 px-6 py-3 z-40 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)] transition-colors duration-300">
       <div className="flex justify-between items-center max-w-md mx-auto">
         <NavLink 
           to="/user" 
-          className={({ isActive }) => `flex flex-col items-center gap-1 transition-all ${isActive ? 'text-brand-600 scale-110' : 'text-gray-400'}`}
+          className={({ isActive }) => `flex flex-col items-center gap-1 transition-all ${isActive ? 'text-brand-600 dark:text-brand-400 scale-110' : 'text-gray-400 dark:text-gray-500'}`}
         >
           <HomeIcon className="w-6 h-6" />
           <span className="text-[10px] font-black uppercase">Home</span>
@@ -22,7 +22,7 @@ const BottomNav: React.FC = () => {
 
         <NavLink 
           to="/inventory" 
-          className={({ isActive }) => `flex flex-col items-center gap-1 transition-all ${isActive ? 'text-brand-600 scale-110' : 'text-gray-400'}`}
+          className={({ isActive }) => `flex flex-col items-center gap-1 transition-all ${isActive ? 'text-brand-600 dark:text-brand-400 scale-110' : 'text-gray-400 dark:text-gray-500'}`}
         >
           <ShoppingBagIcon className="w-6 h-6" />
           <span className="text-[10px] font-black uppercase">Stock</span>
@@ -30,7 +30,7 @@ const BottomNav: React.FC = () => {
 
         <NavLink 
           to="/items" 
-          className={({ isActive }) => `flex flex-col items-center gap-1 transition-all ${isActive ? 'text-brand-600 scale-110' : 'text-gray-400'}`}
+          className={({ isActive }) => `flex flex-col items-center gap-1 transition-all ${isActive ? 'text-brand-600 dark:text-brand-400 scale-110' : 'text-gray-400 dark:text-gray-500'}`}
         >
           <Square3Stack3DIcon className="w-6 h-6" />
           <span className="text-[10px] font-black uppercase">Items</span>
@@ -38,7 +38,7 @@ const BottomNav: React.FC = () => {
 
         <NavLink 
           to="/recipes" 
-          className={({ isActive }) => `flex flex-col items-center gap-1 transition-all ${isActive ? 'text-brand-600 scale-110' : 'text-gray-400'}`}
+          className={({ isActive }) => `flex flex-col items-center gap-1 transition-all ${isActive ? 'text-brand-600 dark:text-brand-400 scale-110' : 'text-gray-400 dark:text-gray-500'}`}
         >
           <BookOpenIcon className="w-6 h-6" />
           <span className="text-[10px] font-black uppercase">Recipe</span>
@@ -47,7 +47,7 @@ const BottomNav: React.FC = () => {
         {getUserFromToken()?.is_admin && (
           <NavLink 
             to="/admin" 
-            className={({ isActive }) => `flex flex-col items-center gap-1 transition-all ${isActive ? 'text-red-500 scale-110' : 'text-gray-400'}`}
+            className={({ isActive }) => `flex flex-col items-center gap-1 transition-all ${isActive ? 'text-red-500 dark:text-red-400 scale-110' : 'text-gray-400 dark:text-gray-500'}`}
           >
             <div className="w-6 h-6 flex items-center justify-center text-xl">🛠</div>
             <span className="text-[10px] font-black uppercase">Admin</span>

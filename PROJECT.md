@@ -1,4 +1,4 @@
-# Railway 요리 비서 (Cooking Assistant) - v2.2.0 [UPDATED]
+# Railway 요리 비서 (Cooking Assistant) - v2.3.0 [UPDATED]
 
 단순한 재고 관리를 넘어, **시스템 전체가 공유하는 전문 식재료 DB**를 기반으로 최적의 레시피를 추천하고 스마트하게 재고를 소모하는 **지능형 주방 관리 솔루션**입니다.
 
@@ -54,3 +54,12 @@ c:\Project\Test\
 │   └── routes/                # API 경로 정의
 └── PROJECT.md                 # 프로젝트 통합 설명서
 ```
+
+---
+
+## ✨ 개발 이력 (Changelog)
+
+### **v2.3.0 (2026-03-19)**
+- **다크 모드 시스템 도입**: `ThemeProvider`를 사용해 시스템 테마 및 사용자 설정(LocalStorage) 연동.
+- **다크 테마 UI 적용**: 글로벌 CSS(카드, 인풋) 및 `BottomNav`, `Layout` 등 핵심 프레젠테이션 영역에 다크 모드(`dark:` 변형) 호환성 반영.
+- **테마 토글 UI**: 네비게이션 바에 실시간으로 모드를 전환할 수 있는 프리미엄 버튼 추가.

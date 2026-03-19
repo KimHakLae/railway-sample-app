@@ -13,10 +13,12 @@ import InventoryPage from "./pages/InventoryPage";
 import ItemsPage from "./pages/ItemsPage";
 import RecipePage from "./pages/RecipePage";
 import { SnackbarProvider } from "./components/ui/SnackbarProvider";
+import { ThemeProvider } from "./components/common/ThemeProvider";
 
 function App(){
 
   return(
+    <ThemeProvider defaultTheme="system" storageKey="railway-theme">
     <BrowserRouter>
       <SnackbarProvider>
 
@@ -94,7 +96,7 @@ function App(){
 
       </SnackbarProvider>
     </BrowserRouter>
-
+    </ThemeProvider>
 
   );
 }

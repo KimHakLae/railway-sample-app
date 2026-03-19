@@ -1,6 +1,6 @@
 {
   "name": "railway-sample-app",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Simple Express + PostgreSQL app for Railway",
   "main": "server.js",
   "scripts": {

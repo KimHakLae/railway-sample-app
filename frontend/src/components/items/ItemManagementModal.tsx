@@ -47,7 +47,7 @@ export default function ItemManagementModal({ title, initialData, onClose, onSub
             <h2 className="text-2xl font-black tracking-tight text-gray-900 dark:text-white">{title}</h2>
             <button 
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+              className="p-2 text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 dark:text-gray-300 rounded-xl transition-colors"
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -80,7 +80,7 @@ export default function ItemManagementModal({ title, initialData, onClose, onSub
                       py-3 rounded-xl text-xs font-bold transition-all text-left px-3
                       ${category === key
                         ? `${CATEGORY_INFO[key].style} shadow-lg ring-2 ring-current ring-offset-1`
-                        : "bg-gray-50 dark:bg-slate-900 text-gray-500 dark:text-gray-400 hover:bg-gray-100"}
+                        : "bg-gray-50 dark:bg-slate-900 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800"}
                     `}
                   >
                     {CATEGORY_INFO[key].label}
@@ -104,14 +104,14 @@ export default function ItemManagementModal({ title, initialData, onClose, onSub
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 py-4 rounded-2xl bg-gray-50 dark:bg-slate-900 text-gray-600 font-bold hover:bg-gray-100 transition-all active:scale-95"
+                className="flex-1 py-4 rounded-2xl bg-gray-50 dark:bg-slate-900 text-gray-600 dark:text-gray-300 font-bold hover:bg-gray-100 dark:hover:bg-slate-800 transition-all active:scale-95"
               >
                 취소
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-[2] py-4 rounded-2xl bg-brand-600 text-white font-bold hover:bg-brand-700 shadow-xl shadow-brand-200 transition-all active:scale-95 disabled:opacity-50"
+                className="flex-[2] py-4 rounded-2xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 dark:from-brand-600 dark:to-brand-700 dark:hover:from-brand-500 dark:hover:to-brand-600 text-white font-bold shadow-xl shadow-brand-500/30 dark:shadow-brand-900/40 transition-all active:scale-95 disabled:opacity-50"
               >
                 {loading ? "처리 중..." : "저장하기"}
               </button>

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-@theme {
+/* Tailwind v4 Explicit Dark Mode Selector */
+@custom-variant dark (&:is(.dark *));@theme {
   --color-brand-50: #f0f9ff;
   --color-brand-100: #e0f2fe;
   --color-brand-500: #0ea5e9;

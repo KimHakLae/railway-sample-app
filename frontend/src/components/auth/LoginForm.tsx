@@ -60,15 +60,16 @@ export default function LoginForm() {
       <button
         className="
           w-full
-          !bg-brand-600
-          hover:!bg-brand-700
+          bg-gradient-to-r from-brand-500 to-brand-600
+          hover:from-brand-600 hover:to-brand-700
+          dark:from-brand-600 dark:to-brand-700
+          dark:hover:from-brand-500 dark:hover:to-brand-600
           text-white
           py-3 rounded-2xl
-          font-black
-          text-sm
-          shadow-lg shadow-brand-100
-          dark:shadow-none
-          transition-all
+          font-black text-sm
+          shadow-lg shadow-brand-500/30
+          dark:shadow-brand-900/40
+          transition-all duration-300
           active:scale-[0.98]
         "
       >

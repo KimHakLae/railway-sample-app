@@ -33,6 +33,7 @@
 ### 6. 버전 관리 및 동기화 (Versioning & Synchronization)
 - **버전 동기화**: 앱 버전 업데이트 시 `package.json` (루트 및 프론트엔드), `PROJECT.md`, 그리고 기타 버전이 명시된 모든 파일의 버전을 상호 동기화하여 일관성을 유지합니다.
 - **PROJECT.md 유지관리**: `PROJECT.md`는 항상 최신 변경 사항과 현재 앱 버전이 반영된 상태를 유지해야 하며, 버전이 오를 때마다 해당 내용을 업데이트합니다.
+- **버전 이력 기록**: 버전 업데이트 시 프론트엔드의 `src/utils/version.ts` 파일에도 최신 버전(`APP_VERSION`, `LAST_UPDATED`)과 수정 내역(`VERSION_HISTORY`)을 반드시 추가하여 사용자 화면에 반영되게 합니다.
 - **Git 커밋 메시지**: 수정 사항을 Git에 올릴 때 가급적 앱 버전을 커밋 메시지에 포함하거나 명시합니다.
 
 ## 💡 유용한 제안 (Assistant Suggestions)

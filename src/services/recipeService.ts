@@ -145,7 +145,7 @@ export const getRecommendedRecipes = async (_userId: number): Promise<(RecipeWit
   // 3. 각 레시피별 점수 계산
   const recommendations = allRecipes.map(recipe => {
     const requiredIngredients = recipe.ingredients;
-    if (requiredIngredients.length === 0) return { ...recipe, score: 0 };
+    if (requiredIngredients.length === 0) return null;
 
     let matchCount = 0;
     let urgencyBonus = 0;
@@ -160,13 +160,17 @@ export const getRecommendedRecipes = async (_userId: number): Promise<(RecipeWit
     });
 
     const baseScore = matchCount / requiredIngredients.length;
+    
+    // 🔥 매칭률이 30% 미만인 경우 추천에서 제외
+    if (baseScore < 0.3) return null;
+
     const finalScore = Math.min(baseScore + urgencyBonus, 1.2);
 
     return {
       ...(recipe as RecipeWithIngredients),
       score: parseFloat(finalScore.toFixed(2))
     };
-  });
+  }).filter((r): r is (RecipeWithIngredients & { score: number }) => r !== null);
 
   // 4. 점수 높은 순(1순위), 최신순(2순위)으로 정렬하여 상위 10개 반환
   return recommendations

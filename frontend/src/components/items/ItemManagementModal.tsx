@@ -111,7 +111,7 @@ export default function ItemManagementModal({ title, initialData, onClose, onSub
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-[2] py-4 rounded-2xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 dark:from-brand-600 dark:to-brand-700 dark:hover:from-brand-500 dark:hover:to-brand-600 text-white font-bold shadow-xl shadow-brand-500/30 dark:shadow-brand-900/40 transition-all active:scale-95 disabled:opacity-50"
+                className="flex-[2] py-4 rounded-2xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 dark:from-brand-600 dark:to-brand-700 dark:hover:from-brand-500 dark:hover:to-brand-600 text-white font-bold shadow-lg shadow-brand-500/20 dark:shadow-none transition-all active:scale-95 disabled:opacity-50"
               >
                 {loading ? "처리 중..." : "저장하기"}
               </button>

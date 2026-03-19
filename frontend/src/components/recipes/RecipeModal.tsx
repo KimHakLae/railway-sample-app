@@ -132,12 +132,12 @@ export default function RecipeModal({ isOpen, onClose, onSave, ingredients, init
           </div>
 
           <div className="space-y-4">
-            <div className="flex items-center justify-between bg-brand-50/50 p-3 rounded-2xl border border-brand-100">
-              <label className="text-sm font-black text-brand-700 uppercase tracking-wider ml-1">필요 재료 목록</label>
+            <div className="flex items-center justify-between bg-brand-50/50 dark:bg-slate-800/50 p-3 rounded-2xl border border-brand-100 dark:border-slate-700">
+              <label className="text-sm font-black text-brand-700 dark:text-brand-400 uppercase tracking-wider ml-1">필요 재료 목록</label>
               <button 
                 type="button"
                 onClick={addIngredient}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-600 text-white text-xs font-black rounded-xl hover:bg-brand-700 transition-all active:scale-95 shadow-sm shadow-brand-100"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-600 text-white text-xs font-black rounded-xl hover:bg-brand-700 transition-all active:scale-95 shadow-sm shadow-brand-500/20 dark:shadow-none"
               >
                 <PlusIcon className="w-4 h-4" /> 재료 추가하기
               </button>
@@ -180,7 +180,7 @@ export default function RecipeModal({ isOpen, onClose, onSave, ingredients, init
                   <button 
                     type="button"
                     onClick={() => removeIngredient(index)}
-                    className="p-3 text-gray-300 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all"
+                    className="p-3 text-gray-400 dark:text-gray-500 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-xl transition-all"
                   >
                     <TrashIcon className="w-5 h-5" />
                   </button>
@@ -212,7 +212,7 @@ export default function RecipeModal({ isOpen, onClose, onSave, ingredients, init
           </button>
           <button 
             type="submit"
-            className="flex-1 py-4 bg-brand-600 text-white font-black rounded-2xl hover:bg-brand-700 shadow-lg shadow-brand-200 transition-all active:scale-[0.98]"
+            className="flex-1 py-4 bg-brand-600 text-white font-black rounded-2xl hover:bg-brand-700 shadow-lg shadow-brand-500/20 dark:shadow-none transition-all active:scale-[0.98]"
           >
             저장하기
           </button>

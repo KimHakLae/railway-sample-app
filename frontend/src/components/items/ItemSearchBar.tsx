@@ -37,7 +37,7 @@ const ItemSearchBar: React.FC<ItemSearchBarProps> = ({ keyword, setKeyword, onOp
             text-white
             rounded-2xl
             text-sm font-black
-            shadow-lg shadow-brand-100
+            shadow-lg shadow-brand-500/20 dark:shadow-none
             transition-all active:scale-95
             whitespace-nowrap
           "

@@ -128,7 +128,7 @@ export default function InventoryModal({
         <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-5">
 
           {/* 식재료 항목 카드 */}
-          <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm space-y-3">
+          <section className="!bg-white dark:!bg-slate-800 rounded-2xl p-4 shadow-sm space-y-3">
             <label className="text-sm font-semibold flex items-center gap-2 text-gray-800 dark:text-gray-200">
               🥬 식재료 선택
             </label>
@@ -138,7 +138,7 @@ export default function InventoryModal({
                 <input
                   type="text"
                   placeholder="식재료 검색..."
-                  className="w-full border rounded-xl p-3 text-sm !bg-gray-50 dark:bg-slate-900 focus:ring-2 focus:ring-brand-500 transition-all pl-10"
+                  className="w-full border rounded-xl p-3 text-sm !bg-gray-50 dark:!bg-slate-900 focus:ring-2 focus:ring-brand-500 transition-all pl-10"
                   value={itmSearch}
                   onChange={e => setItmSearch(e.target.value)}
                 />
@@ -148,7 +148,7 @@ export default function InventoryModal({
               </div>
 
               <select
-                className="w-full border rounded-xl p-3 text-base !bg-gray-50 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium"
+                className="w-full border rounded-xl p-3 text-base !bg-gray-50 dark:!bg-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium"
                 value={form.itemId}
                 onChange={e => {
                   const selectedId = Number(e.target.value);
@@ -172,7 +172,7 @@ export default function InventoryModal({
               <input
                 type="text"
                 placeholder="신규 식재료 이름 (직접 입력)"
-                className="flex-1 border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
+                className="flex-1 border rounded-xl p-3 !bg-gray-50 dark:!bg-slate-900"
                 value={newItemName}
                 onChange={e => setNewItemName(e.target.value)}
               />
@@ -198,13 +198,13 @@ export default function InventoryModal({
           </section>
 
           {/* 수량 가격 카드 */}
-          <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
+          <section className="!bg-white dark:!bg-slate-800 rounded-2xl p-4 shadow-sm">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-sm text-gray-600 dark:text-gray-400">수량</label>
                 <input
                   type="number"
-                  className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
+                  className="w-full border rounded-xl p-3 !bg-gray-50 dark:!bg-slate-900"
                   value={form.quantity}
                   onChange={e=>change("quantity", Number(e.target.value))}
                 />
@@ -213,7 +213,7 @@ export default function InventoryModal({
                 <label className="text-sm text-gray-600 dark:text-gray-400">가격</label>
                 <input
                   type="number"
-                  className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
+                  className="w-full border rounded-xl p-3 !bg-gray-50 dark:!bg-slate-900"
                   value={form.price || ""}
                   onChange={e=>change("price", e.target.value ? Number(e.target.value) : undefined)}
                 />
@@ -222,7 +222,7 @@ export default function InventoryModal({
           </section>
 
           {/* 분류 카드 */}
-          <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm space-y-4">
+          <section className="!bg-white dark:!bg-slate-800 rounded-2xl p-4 shadow-sm space-y-4">
             <div className="space-y-2">
               <label className="text-sm text-gray-600 dark:text-gray-400">카테고리</label>
               <select
@@ -248,7 +248,7 @@ export default function InventoryModal({
             <div className="space-y-2">
               <label className="text-sm text-gray-600 dark:text-gray-400">보관 방법</label>
               <select
-                className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
+                className="w-full border rounded-xl p-3 !bg-gray-50 dark:!bg-slate-900"
                 value={form.storage}
                 onChange={e=>change("storage", e.target.value)}
               >
@@ -264,12 +264,12 @@ export default function InventoryModal({
           </section>
 
           {/* 날짜 카드 */}
-          <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm space-y-4">
+          <section className="!bg-white dark:!bg-slate-800 rounded-2xl p-4 shadow-sm space-y-4">
             <div className="space-y-2">
               <label className="text-sm text-gray-600 dark:text-gray-400">입고일</label>
               <input
                 type="date"
-                className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
+                className="w-full border rounded-xl p-3 !bg-gray-50 dark:!bg-slate-900"
                 value={form.entryDate}
                 onChange={e => change("entryDate", e.target.value)}
               />
@@ -279,7 +279,7 @@ export default function InventoryModal({
               <label className="text-sm text-gray-600 dark:text-gray-400">유통기한</label>
               <input
                 type="date"
-                className="w-full border rounded-xl p-3 !bg-gray-50 dark:bg-slate-900"
+                className="w-full border rounded-xl p-3 !bg-gray-50 dark:!bg-slate-900"
                 value={form.expiryDate}
                 onChange={e => change("expiryDate", e.target.value)}
               />
@@ -287,7 +287,7 @@ export default function InventoryModal({
           </section>
 
           {/* 긴급 토글 */}
-          <section className="!bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm">
+          <section className="!bg-white dark:!bg-slate-800 rounded-2xl p-4 shadow-sm">
             <label className="flex items-center justify-between cursor-pointer">
               <span className="font-medium flex items-center gap-2 text-gray-800 dark:text-gray-200">
                 🚨 긴급 표시

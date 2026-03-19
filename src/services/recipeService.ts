@@ -119,20 +119,11 @@ export const deleteRecipe = async (id: number): Promise<void> => {
   await prisma.recipe.delete({ where: { id } });
 };
 
-/** 추천 레시피 조회 로직 */
-export const getRecommendedRecipes = async (userId: number): Promise<(RecipeWithIngredients & { score: number })[]> => {
-  // 1. 유저의 현재 재고 정보 가져오기
-  const stocks = await prisma.stock.findMany({
-    where: { user_id: userId },
-    include: { ingredient: true }
-  });
-
-  // 보유 식재료 ID 셋 및 유통기한 임박(긴급) 여부 맵 생성
-  const possessedIngredientIds = new Set(stocks.map(s => s.ingredient_id));
-  const urgentIngredientIds = new Set(stocks.filter(s => s.is_urgent).map(s => s.ingredient_id));
-
-  // 2. 모든 레시피(재료 포함) 가져오기
-  const allRecipes = await prisma.recipe.findMany({
+/** 추천 레시피 조회 로직 (모든 사용자 공통: 최신순 10개) */
+export const getRecommendedRecipes = async (_userId: number): Promise<(RecipeWithIngredients & { score: number })[]> => {
+  const recipes = await prisma.recipe.findMany({
+    take: 10,
+    orderBy: { createdAt: 'desc' },
     include: {
       ingredients: {
         include: {
@@ -142,39 +133,10 @@ export const getRecommendedRecipes = async (userId: number): Promise<(RecipeWith
     }
   });
 
-  // 3. 각 레시피별 점수 계산
-  const recommendations = allRecipes.map(recipe => {
-    const requiredIngredients = recipe.ingredients;
-    if (requiredIngredients.length === 0) return { ...recipe, score: 0 };
-
-    let matchCount = 0;
-    let urgencyBonus = 0;
-
-    requiredIngredients.forEach(ri => {
-      if (possessedIngredientIds.has(ri.ingredient_id)) {
-        matchCount++;
-        // 보유한 재료가 긴급(유통기한 임박)인 경우 보너스 점수
-        if (urgentIngredientIds.has(ri.ingredient_id)) {
-          urgencyBonus += 0.2; // 재료당 20% 보너스
-        }
-      }
-    });
-
-    // 기본 점수: (보유 재료 수 / 전체 필요 재료 수) + 보너스
-    const baseScore = matchCount / requiredIngredients.length;
-    const finalScore = Math.min(baseScore + urgencyBonus, 1.2); // 최대 1.2점(120%)
-
-    return {
-      ...(recipe as RecipeWithIngredients),
-      score: parseFloat(finalScore.toFixed(2))
-    };
-  });
-
-  // 4. 점수 높은 순으로 정렬하여 상위 10개 반환
-  return recommendations
-    .filter(r => r.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 10);
+  return recipes.map(recipe => ({
+    ...(recipe as RecipeWithIngredients),
+    score: 1.0 // 공통 추천이므로 기본 점수 부여
+  }));
 };
 
 /** 요리 완료 시 재료 소모 로직 */

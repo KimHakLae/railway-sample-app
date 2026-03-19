@@ -172,10 +172,10 @@ export const getRecommendedRecipes = async (_userId: number): Promise<(RecipeWit
     };
   }).filter((r): r is (RecipeWithIngredients & { score: number }) => r !== null);
 
-  // 4. 점수 높은 순(1순위), 최신순(2순위)으로 정렬하여 상위 10개 반환
+  // 4. 점수 높은 순(1순위), 최신순(2순위)으로 정렬하여 상위 5개 반환
   return recommendations
     .sort((a, b) => b.score - a.score)
-    .slice(0, 10);
+    .slice(0, 5);
 };
 
 /** 요리 완료 시 재료 소모 로직 */

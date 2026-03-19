@@ -98,8 +98,8 @@ export default function Layout() {
         </Container>
       </header>
 
-      {/* 🔽 본문 */}
-      <main className="flex-1 pb-20 md:pb-12">
+      {/* 🔽 본문 - 하단 모바일 바에 가리지 않게 pb-32 추가 */}
+      <main className="flex-1 pb-32 md:pb-12">
         <Container className="py-8">
           <Outlet />
         </Container>
@@ -108,19 +108,19 @@ export default function Layout() {
       {/* 모바일 하단 네비게이션 */}
       <BottomNav />
 
-      {/* 🏷️ 푸터 */}
-      <footer className="hidden md:block bg-white border-t border-gray-100 py-6">
+      {/* 🏷️ 푸터 (모바일에서도 보이도록 위치 조정) */}
+      <footer className="bg-white border-t border-gray-100 py-4 md:py-8 mb-20 md:mb-0">
         <Container className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-gray-400 text-sm">
+          <div className="text-gray-400 text-[10px] md:text-sm order-2 sm:order-1">
             © 2026 Railway Cooking App
           </div>
           
           <button 
             onClick={() => setShowHistory(true)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors group"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors group order-1 sm:order-2"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span className="text-sm font-medium text-gray-500 group-hover:text-black">
+            <span className="text-[10px] md:text-sm font-medium text-gray-500 group-hover:text-black">
               App Version: <span className="text-brand-600 font-bold">{APP_VERSION}</span>
             </span>
           </button>
@@ -130,4 +130,4 @@ export default function Layout() {
       {showHistory && <VersionHistory onClose={() => setShowHistory(false)} />}
     </div>
   );
-}
+}

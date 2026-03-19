@@ -22,7 +22,7 @@ export default function AdminNotesPage() {
         const token = localStorage.getItem("token")
 
         const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/admin/notes`,
+          `/api/admin/notes`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

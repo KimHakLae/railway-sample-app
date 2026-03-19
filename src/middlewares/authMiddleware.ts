@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
 
 export interface AuthRequest extends Request {
-  user?: { id: number, is_admin: boolean }
+  user?: { user_id: number, is_admin: boolean }
 }
 
 export const authMiddleware = (
@@ -17,7 +17,7 @@ export const authMiddleware = (
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any
-    req.user = { id: decoded.id, is_admin: decoded.is_admin }
+    req.user = { user_id: decoded.id, is_admin: decoded.is_admin }
     next()
   } catch {
     res.status(401).json({ message: "Invalid token" })

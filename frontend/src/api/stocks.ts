@@ -1,12 +1,14 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000"
+const API_URL_BASE = import.meta.env.VITE_API_URL || ""
+const API_URL = `${API_URL_BASE}/api/ingredients/stocks`
 
 const authHeader = () => ({
   Authorization: `Bearer ${localStorage.getItem("token")}`
 })
 
-/** 식재료 재고 목록 조회 */
-export const getStocks = async () => {
-  const res = await fetch(`${API_URL}/api/ingredients/stocks`, {
+/** 특정 식재료의 모든 재고 조회 */
+export const getStocks = async (ingredientId?: number) => {
+  const url = ingredientId ? `${API_URL}?ingredientId=${ingredientId}` : API_URL
+  const res = await fetch(url, {
     headers: authHeader()
   })
 
@@ -17,7 +19,7 @@ export const getStocks = async () => {
 
 /** 식재료 재고 등록 */
 export const createStock = async (body: any) => {
-  const res = await fetch(`${API_URL}/api/ingredients/stocks`, {
+  const res = await fetch(API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -33,7 +35,7 @@ export const createStock = async (body: any) => {
 
 /** 식재료 재고 수정 */
 export const updateStock = async (id: number, body: any) => {
-  const res = await fetch(`${API_URL}/api/ingredients/stocks/${id}`, {
+  const res = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -49,7 +51,7 @@ export const updateStock = async (id: number, body: any) => {
 
 /** 식재료 재고 삭제 */
 export const deleteStock = async (id: number) => {
-  const res = await fetch(`${API_URL}/api/ingredients/stocks/${id}`, {
+  const res = await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
     headers: authHeader()
   })
@@ -62,7 +64,7 @@ export const deleteStock = async (id: number) => {
 
 /** 긴급 상태 토글 */
 export const toggleUrgentStock = async (id: number) => {
-  const res = await fetch(`${API_URL}/api/ingredients/stocks/${id}/urgent`, {
+  const res = await fetch(`${API_URL}/${id}/urgent`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

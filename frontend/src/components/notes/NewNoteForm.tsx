@@ -15,15 +15,13 @@ export default function NewNoteForm({ onCreated }: Props) {
     e.preventDefault()
     if (!title.trim()) return alert("제목 입력")
 
-    setLoading(true)
-
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/notes`, {
+    const res = await fetch(`/api/notes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({ title, content })
     })
 
     const data = await res.json()

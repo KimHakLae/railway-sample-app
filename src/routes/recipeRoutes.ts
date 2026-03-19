@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import * as recipeController from '../controllers/recipeController';
+import { authMiddleware } from '../middlewares/authMiddleware';
 
 const router = Router();
+
+router.use(authMiddleware);
 
 router.get('/', recipeController.getAllRecipes);
 router.get('/recommendations', recipeController.getRecommendations);

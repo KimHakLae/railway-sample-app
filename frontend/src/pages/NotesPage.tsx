@@ -17,7 +17,7 @@ export default function NotesPage() {
   const fetchNotes = async () => {
     setLoading(true)
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/notes`, {
+      const res = await fetch(`/notes`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (!res.ok) throw new Error("API Error")
@@ -35,7 +35,7 @@ export default function NotesPage() {
   }, [])
 
   const handleDelete = async (id: number) => {
-    await fetch(`${import.meta.env.VITE_API_URL}/notes/${id}`, {
+    await fetch(`/notes/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     })

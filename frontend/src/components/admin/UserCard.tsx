@@ -1,9 +1,6 @@
-import React from "react";
-import Card from "../ui/Card";
-import UserStatusBadge from "./UserStatusBadge";
 
 interface User {
-  id: number;
+  user_id: number;
   email: string;
   auth_status: string;
   is_admin: boolean;
@@ -15,51 +12,41 @@ interface UserCardProps {
   onReject: (id: number) => void;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ user, onApprove, onReject }) => {
-  const isPending = !user.is_admin && user.auth_status === "P";
-
+export default function UserCard({ user, onApprove, onReject }: UserCardProps) {
   return (
-    <Card className="group hover:shadow-lg transition-all border-none relative flex flex-col justify-between h-full">
-      <div className="space-y-4">
-        <div className="flex justify-between items-start">
-          <div className="p-2.5 bg-gray-50 rounded-xl group-hover:bg-brand-50 transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400 group-hover:text-brand-500 transition-colors">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-            </svg>
-          </div>
-          <UserStatusBadge status={user.auth_status} isAdmin={user.is_admin} />
-        </div>
-        
-        <div>
-          <h3 className="text-sm font-bold text-gray-400 uppercase tracking-tight mb-1">User Account</h3>
-          <p className="text-lg font-bold text-gray-900 break-all">{user.email}</p>
+    <div className="bg-white p-6 rounded-[32px] border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="w-12 h-12 rounded-2xl bg-brand-50 flex items-center justify-center text-xl">👤</div>
+        <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
+          user.auth_status === 'P' ? 'bg-orange-100 text-orange-600' :
+          user.auth_status === 'V' ? 'bg-emerald-100 text-emerald-600' :
+          'bg-rose-100 text-rose-600'
+        }`}>
+          {user.auth_status === 'P' ? '승인 대기' : user.auth_status === 'V' ? '승인 완료' : '거절됨'}
         </div>
       </div>
 
-      {isPending && (
-        <div className="mt-6 pt-4 border-t border-gray-50 flex gap-2">
-          <button
-            onClick={() => onApprove(user.id)}
-            className="flex-1 py-2.5 bg-green-500 text-white rounded-xl text-xs font-black hover:bg-green-600 shadow-lg shadow-green-100 active:scale-95 transition-all"
+      <div className="space-y-1">
+        <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">Email Address</p>
+        <p className="text-lg font-black text-gray-900 truncate">{user.email}</p>
+      </div>
+
+      {user.auth_status === 'P' && (
+        <div className="flex gap-2 pt-2">
+          <button 
+            onClick={() => onApprove(user.user_id)}
+            className="flex-1 py-3 bg-brand-600 text-white text-sm font-black rounded-xl hover:bg-brand-700 transition-all active:scale-95 shadow-lg shadow-brand-100"
           >
             승인
           </button>
-          <button
-            onClick={() => onReject(user.id)}
-            className="flex-1 py-2.5 bg-red-50 text-red-500 border border-red-100 rounded-xl text-xs font-black hover:bg-red-500 hover:text-white active:scale-95 transition-all"
+          <button 
+            onClick={() => onReject(user.user_id)}
+            className="flex-1 py-3 bg-gray-50 text-gray-400 text-sm font-black rounded-xl hover:bg-gray-100 transition-all active:scale-95"
           >
             거절
           </button>
         </div>
       )}
-      
-      {!isPending && (
-        <div className="mt-6 pt-4 border-t border-gray-50">
-          <p className="text-center text-[10px] font-bold text-gray-300 uppercase tracking-widest">Processed or Admin</p>
-        </div>
-      )}
-    </Card>
+    </div>
   );
-};
-
-export default UserCard;
+}

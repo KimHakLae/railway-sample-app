@@ -113,7 +113,7 @@ export default function ItemManagementModal({ title, initialData, onClose, onSub
                 disabled={loading}
                 className="flex-[2] py-4 rounded-2xl bg-brand-600 text-white font-bold hover:bg-brand-700 shadow-xl shadow-brand-200 transition-all active:scale-95 disabled:opacity-50"
               >
-                {loading ? "처리 중..." : (initialData ? "수정 완료" : "품목 등록")}
+                {loading ? "처리 중..." : "저장하기"}
               </button>
             </div>
           </form>

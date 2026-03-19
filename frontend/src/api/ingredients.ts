@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000"
+const API_URL = import.meta.env.VITE_API_URL || "" // Vite 프록시 (/api)를 사용하기 위해 상대 경로로 변경
 
 const authHeader = () => ({
   Authorization: `Bearer ${localStorage.getItem("token")}`

@@ -45,9 +45,9 @@ export default function RecipeModal({ isOpen, onClose, onSave, ingredients, init
   };
 
   const addIngredient = () => {
-    if (ingredients.length > 0) {
-      setSelectedIngredients([...selectedIngredients, { ingredientId: ingredients[0].id, amount: '' }]);
-    }
+    // ingredients.length > 0 조건을 제거하여 식재료가 없어도 칸을 추가할 수 있게 함
+    const defaultId = ingredients.length > 0 ? ingredients[0].id : 0;
+    setSelectedIngredients([...selectedIngredients, { ingredientId: defaultId, amount: '' }]);
   };
 
   const removeIngredient = (index: number) => {
@@ -60,17 +60,25 @@ export default function RecipeModal({ isOpen, onClose, onSave, ingredients, init
     setSelectedIngredients(updated);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave({ title, description, instructions, difficulty, cookingTime, ingredients: selectedIngredients });
+  };
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-300">
+      <form 
+        onSubmit={handleSubmit}
+        className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-300"
+      >
         <div className="p-8 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
           <div>
             <h2 className="text-2xl font-black text-gray-900">{initialData ? '레시피 수정' : '새 레시피 등록'}</h2>
             <p className="text-sm font-medium text-gray-500">요리법과 필요한 재료를 입력하세요.</p>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-white rounded-xl transition-colors text-gray-400 hover:text-gray-900 shadow-sm border border-transparent hover:border-gray-100">
+          <button type="button" onClick={onClose} className="p-2 hover:bg-white rounded-xl transition-colors text-gray-400 hover:text-gray-900 shadow-sm border border-transparent hover:border-gray-100">
             <XMarkIcon className="w-6 h-6" />
           </button>
         </div>
@@ -83,6 +91,7 @@ export default function RecipeModal({ isOpen, onClose, onSave, ingredients, init
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="예: 김치볶음밥, 봉골레 파스타"
+              required
               className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all font-bold placeholder:text-gray-300"
             />
           </div>
@@ -126,6 +135,7 @@ export default function RecipeModal({ isOpen, onClose, onSave, ingredients, init
             <div className="flex items-center justify-between bg-brand-50/50 p-3 rounded-2xl border border-brand-100">
               <label className="text-sm font-black text-brand-700 uppercase tracking-wider ml-1">필요 재료 목록</label>
               <button 
+                type="button"
                 onClick={addIngredient}
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-600 text-white text-xs font-black rounded-xl hover:bg-brand-700 transition-all active:scale-95 shadow-sm shadow-brand-100"
               >
@@ -144,12 +154,17 @@ export default function RecipeModal({ isOpen, onClose, onSave, ingredients, init
                     <select 
                       value={item.ingredientId}
                       onChange={(e) => handleIngredientChange(index, 'ingredientId', Number(e.target.value))}
+                      required
                       className="w-full px-4 py-3 bg-white border border-gray-100 rounded-xl font-bold text-sm focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500"
                     >
                       <option value="" disabled>식재료 선택</option>
-                      {ingredients.map(ing => (
-                        <option key={ing.id} value={ing.id}>{ing.name}</option>
-                      ))}
+                      {ingredients.length === 0 ? (
+                        <option value="0" disabled>등록된 식재료가 없습니다</option>
+                      ) : (
+                        ingredients.map(ing => (
+                          <option key={ing.id} value={ing.id}>{ing.name}</option>
+                        ))
+                      )}
                     </select>
                   </div>
                   <div className="w-32">
@@ -158,10 +173,12 @@ export default function RecipeModal({ isOpen, onClose, onSave, ingredients, init
                       placeholder="수량 (예: 200g)"
                       value={item.amount}
                       onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
+                      required
                       className="w-full px-4 py-3 bg-white border border-gray-100 rounded-xl font-bold text-sm focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500"
                     />
                   </div>
                   <button 
+                    type="button"
                     onClick={() => removeIngredient(index)}
                     className="p-3 text-gray-300 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all"
                   >
@@ -187,19 +204,20 @@ export default function RecipeModal({ isOpen, onClose, onSave, ingredients, init
 
         <div className="p-8 bg-gray-50/50 border-t border-gray-100 flex gap-4">
           <button 
+            type="button"
             onClick={onClose}
             className="flex-1 py-4 bg-white border border-gray-200 text-gray-500 font-black rounded-2xl hover:bg-gray-50 transition-all"
           >
             취소
           </button>
           <button 
-            onClick={() => onSave({ title, description, instructions, difficulty, cookingTime, ingredients: selectedIngredients })}
+            type="submit"
             className="flex-1 py-4 bg-brand-600 text-white font-black rounded-2xl hover:bg-brand-700 shadow-lg shadow-brand-200 transition-all active:scale-[0.98]"
           >
             저장하기
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

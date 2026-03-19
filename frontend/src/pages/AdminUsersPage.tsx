@@ -2,48 +2,62 @@ import { useEffect, useState } from "react"
 import UserCard from "../components/admin/UserCard"
 
 interface User {
-  id: number
+  user_id: number // backend follows this naming
   email: string
   auth_status: string
   is_admin: boolean
 }
 
-const API_URL = import.meta.env.VITE_API_URL
-
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
   const token = localStorage.getItem("token")
+  const API_URL = import.meta.env.VITE_API_URL || ""
 
   const fetchUsers = async () => {
     try {
       setLoading(true)
-      const res = await fetch(`${API_URL}/admin/users`, {
+      const res = await fetch(`${API_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${token}` }
       })
+      if (!res.ok) {
+        const errorData = await res.json()
+        throw new Error(errorData.message || "Failed to fetch users")
+      }
       const data = await res.json()
-      setUsers(data)
-    } catch (e) {
+      setUsers(Array.isArray(data) ? data : [])
+    } catch (e: any) {
       console.error(e)
+      alert(e.message)
     } finally {
       setLoading(false)
     }
   }
 
   const approveUser = async (id: number) => {
-    await fetch(`${API_URL}/admin/users/${id}/approve`, {
+    const res = await fetch(`${API_URL}/api/admin/users/${id}/approve`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}` }
     })
-    fetchUsers()
+    if (!res.ok) {
+      const errorData = await res.json()
+      alert(errorData.message || "승인 처리 실패")
+    } else {
+      fetchUsers()
+    }
   }
 
   const rejectUser = async (id: number) => {
-    await fetch(`${API_URL}/admin/users/${id}/reject`, {
+    const res = await fetch(`${API_URL}/api/admin/users/${id}/reject`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}` }
     })
-    fetchUsers()
+    if (!res.ok) {
+      const errorData = await res.json()
+      alert(errorData.message || "거절 처리 실패")
+    } else {
+      fetchUsers()
+    }
   }
 
   useEffect(() => {
@@ -69,7 +83,7 @@ export default function AdminUsersPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {users.map((u) => (
-            <UserCard key={u.id} user={u} onApprove={approveUser} onReject={rejectUser} />
+            <UserCard key={u.user_id} user={u} onApprove={approveUser} onReject={rejectUser} />
           ))}
         </div>
       )}

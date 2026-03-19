@@ -1,10 +1,14 @@
 export type Category = 
-  | "VEGETABLE" 
-  | "MEAT" 
+  | "VEG" 
   | "FRUIT" 
-  | "SEAFOOD" 
+  | "SPICE" 
+  | "SAUCE" 
+  | "MEAT" 
   | "DAIRY" 
   | "GRAIN" 
+  | "SNACK" 
+  | "FOOD" 
+  | "FROZEN_FOOD" 
   | "ETC";
 
 export interface Ingredient {

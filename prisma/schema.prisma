@@ -13,13 +13,12 @@ datasource db {
 }
 
 model Note {
-  id          Int       @id @default(autoincrement())
-  user_id     Int
-  title       String    @db.VarChar(50)
-  content     String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
+  id        Int      @id @default(autoincrement())
+  user_id   Int
+  title     String   @db.VarChar(50)
+  content   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   user      User     @relation(fields: [user_id], references: [user_id])
 
   @@index([user_id])
@@ -27,18 +26,80 @@ model Note {
 }
 
 model User {
-  user_id     Int       @id @default(autoincrement())
-  email       String    @unique
+  user_id     Int      @id @default(autoincrement())
+  email       String   @unique
   password    String
-  auth_status String    @default("P") @db.Char(1)
-  is_admin    Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-
+  auth_status String   @default("P") @db.Char(1)
+  is_admin    Boolean  @default(false)
+  createdAt   DateTime @default(now())
   notes       Note[]
-  stocks      Stock[]
   recipes     Recipe[]
+  stocks      Stock[]
 
   @@map("users")
+}
+
+model Ingredient {
+  id                Int                @id @default(autoincrement())
+  name              String             @db.VarChar(50)
+  version           String?            @db.VarChar(20)
+  category          Category           @default(ETC)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  recipeIngredients RecipeIngredient[]
+  stocks            Stock[]
+
+  @@map("ingredients")
+}
+
+model Stock {
+  id            Int        @id @default(autoincrement())
+  user_id       Int
+  ingredient_id Int
+  storage       Storage    @default(R)
+  entryDate     DateTime
+  expiryDate    DateTime?
+  price         Int?
+  quantity      Int        @default(0)
+  is_urgent     Boolean    @default(false)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  ingredient    Ingredient @relation(fields: [ingredient_id], references: [id])
+  user          User       @relation(fields: [user_id], references: [user_id])
+
+  @@index([user_id])
+  @@index([ingredient_id])
+  @@map("stocks")
+}
+
+model Recipe {
+  id           Int                @id @default(autoincrement())
+  user_id      Int
+  title        String             @db.VarChar(100)
+  description  String?
+  instructions String?
+  difficulty   Int                @default(1)
+  cookTime     Int?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  ingredients  RecipeIngredient[]
+  user         User               @relation(fields: [user_id], references: [user_id])
+
+  @@index([user_id])
+  @@map("recipes")
+}
+
+model RecipeIngredient {
+  id            Int        @id @default(autoincrement())
+  recipe_id     Int
+  ingredient_id Int
+  amount        String?    @db.VarChar(50)
+  ingredient    Ingredient @relation(fields: [ingredient_id], references: [id])
+  recipe        Recipe     @relation(fields: [recipe_id], references: [id])
+
+  @@index([recipe_id])
+  @@index([ingredient_id])
+  @@map("recipe_ingredients")
 }
 
 enum Category {
@@ -47,8 +108,8 @@ enum Category {
   SPICE
   SAUCE
   MEAT
-  DAIRY       // 유제품 추가
-  GRAIN       // 곡물 추가
+  DAIRY
+  GRAIN
   SNACK
   FOOD
   FROZEN_FOOD
@@ -59,71 +120,4 @@ enum Storage {
   R
   F
   RT
-}
-
-model Ingredient {
-  id          Int        @id @default(autoincrement())
-  name        String     @db.VarChar(50)
-  version     String?    @db.VarChar(20)
-  category    Category   @default(ETC)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-
-  stocks      Stock[]
-  recipeIngredients RecipeIngredient[]
-
-  @@map("ingredients")
-}
-
-model Stock {
-  id          Int       @id @default(autoincrement())
-  user        User      @relation(fields: [user_id], references: [user_id])
-  user_id     Int
-
-  ingredient  Ingredient @relation(fields: [ingredient_id], references: [id])
-  ingredient_id Int
-
-  storage     Storage   @default(R)
-  entryDate   DateTime
-  expiryDate  DateTime?
-  price       Int?
-  quantity    Int       @default(0)
-  is_urgent   Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  @@map("stocks")
-  @@index([user_id])
-  @@index([ingredient_id])
-}
-
-model Recipe {
-  id          Int       @id @default(autoincrement())
-  user        User      @relation(fields: [user_id], references: [user_id])
-  user_id     Int
-  title       String    @db.VarChar(100)
-  description String?   @db.Text
-  instructions String?  @db.Text
-  difficulty  Int       @default(1) // 1-5
-  cookTime    Int?      // minutes
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  ingredients RecipeIngredient[]
-
-  @@map("recipes")
-  @@index([user_id])
-}
-
-model RecipeIngredient {
-  id            Int        @id @default(autoincrement())
-  recipe        Recipe     @relation(fields: [recipe_id], references: [id])
-  recipe_id     Int
-  ingredient    Ingredient @relation(fields: [ingredient_id], references: [id])
-  ingredient_id Int
-  amount        String?    @db.VarChar(50) // 예: "200g", "2개"
-
-  @@map("recipe_ingredients")
-  @@index([recipe_id])
-  @@index([ingredient_id])
 }

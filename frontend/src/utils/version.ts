@@ -1,6 +1,6 @@
-export const APP_VERSION = "v2.1.0";
+export const APP_VERSION = "v2.2.0";
 
-export const LAST_UPDATED = "2026-03-18";
+export const LAST_UPDATED = "2026-03-19";
 
 export interface VersionChange {
   version: string;
@@ -9,6 +9,15 @@ export interface VersionChange {
 }
 
 export const VERSION_HISTORY: VersionChange[] = [
+  {
+    version: "v2.2.0",
+    date: "2026-03-19",
+    changes: [
+      "레시피 등록 엔진 수정: 등록된 식재료가 없는 경우에도 재료 칸 추가가 가능하도록 개선",
+      "사용자 편의성 강화: 모든 등록/수정 모달에 엔터 키 저장 기능 및 '저장하기' 명칭 통일",
+      "버전 관리 시스템 개선: 모바일 환경에서도 버전 정보 및 업데이트 이력을 쉽게 확인할 수 있도록 노출 위치 최적화"
+    ]
+  },
   {
     version: "v2.1.0",
     date: "2026-03-18",
